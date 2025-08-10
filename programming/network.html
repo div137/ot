@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Required for Hindi support -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+        }
+    </style>
+    
+    <!-- Required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8e44ad;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #f5f7fa;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --success-color: #2ecc71;
+            --info-color: #3498db;
+            --gray-color: #95a5a6;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: #333;
+            line-height: 1.6;
+            background-image: url('https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
+        
+        body.modal-open::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 99;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+        
+        .modal.show {
+            display: block;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 101;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--dark-color);
+            font-size: 26px;
+            font-weight: 600;
+        }
+        
+        .close {
+            color: var(--gray-color);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .close:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(142, 68, 173, 0.2);
+        }
+        
+        .button-1 {
+            display: inline-block;
+            padding: 16px 32px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(142, 68, 173, 0.3);
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .button-1:hover {
+            background-color: #7d3c98;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(142, 68, 173, 0.4);
+        }
+        
+        .button-1:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(142, 68, 173, 0.3);
+        }
+        
+        .timer-container {
+            background: linear-gradient(135deg, var(--primary-color), #6c3483);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 0 0 12px 12px;
+            margin: 0 auto;
+            max-width: 1200px;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            letter-spacing: 0.5px;
+        }
+        
+        .timer-container.warning {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+        
+        .timer-container.danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .container {
+            display: none;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .left-panel {
+            flex: 3;
+            padding: 40px;
+        }
+        
+        .right-panel {
+            flex: 1;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-left: 1px solid #eee;
+        }
+        
+        .test-title {
+            text-align: center;
+            font-size: 32px;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .test-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .question {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .options {
+            margin-bottom: 40px;
+        }
+        
+        .options label {
+            display: block;
+            padding: 18px 25px;
+            margin: 15px 0;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .options label:hover {
+            background-color: #e8f4fc;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .options label:active {
+            transform: translateX(5px) scale(0.98);
+        }
+        
+        .options input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: var(--primary-color);
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .button-container button {
+            padding: 16px 32px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .button-container button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        
+        .button-container button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        #previousBtn {
+            background-color: var(--gray-color);
+            color: white;
+        }
+        
+        #previousBtn:hover {
+            background-color: #7f8c8d;
+        }
+        
+        #nextBtn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        #nextBtn:hover {
+            background-color: #7d3c98;
+        }
+        
+        #submitBtn {
+            background: linear-gradient(135deg, var(--secondary-color), #27ae60);
+            color: white;
+            padding: 18px 45px;
+            margin-top: 30px;
+            font-size: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        #submitBtn:hover {
+            background: linear-gradient(135deg, #27ae60, #219653);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
+        }
+        
+        .question-numbers {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .question-number {
+            padding: 14px;
+            text-align: center;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        
+        .question-number:hover {
+            background-color: #d6eaf8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .question-number.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(142, 68, 173, 0.4);
+            border-color: white;
+        }
+        
+        .question-number.answered {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .result {
+            padding: 40px;
+            display: none;
+            background-color: white;
+            border-radius: 15px;
+        }
+        
+        .result h2 {
+            color: var(--dark-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .result h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .result-summary {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        
+        .result-summary p {
+            margin: 18px 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-summary p i {
+            margin-right: 15px;
+            width: 24px;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        .correct {
+            color: var(--success-color);
+        }
+        
+        .wrong {
+            color: var(--danger-color);
+        }
+        
+        .progress-container {
+            height: 35px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            margin: 25px 0;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            text-align: center;
+            color: white;
+            line-height: 35px;
+            font-weight: bold;
+            transition: width 0.6s ease-out;
+            font-size: 16px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .grade {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .grade-S {
+            background: linear-gradient(135deg, #9b59b6, var(--primary-color));
+            color: white;
+        }
+        
+        .grade-A {
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+            color: white;
+        }
+        
+        .grade-B {
+            background: linear-gradient(135deg, var(--secondary-color), #27ae60);
+            color: white;
+        }
+        
+        .grade-C {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: white;
+        }
+        
+        .grade-D {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+        }
+        
+        .grade-F {
+            background: linear-gradient(135deg, var(--danger-color), #c0392b);
+            color: white;
+        }
+        
+        .result-item {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item p {
+            margin: 15px 0;
+            font-size: 17px;
+        }
+        
+        .share-btn {
+            padding: 16px 35px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .share-btn:hover {
+            background: linear-gradient(135deg, #128C7E, #25D366);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+        }
+        
+        .share-btn:active {
+            transform: translateY(0);
+        }
+        
+        .download-btn {
+            padding: 16px 35px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-right: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.5);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .creator-note {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--gray-color);
+            font-style: italic;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+            font-size: 16px;
+        }
+        
+        .creator-note a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .creator-note a:hover {
+            text-decoration: underline;
+        }
+        
+        .congrats-banner {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #d35400;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 95%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .right-panel {
+                border-left: none;
+                border-top: 1px solid #eee;
+            }
+            
+            .question-numbers {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .test-title {
+                font-size: 28px;
+            }
+            
+            .question {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .question-numbers {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .modal-content {
+                padding: 25px;
+            }
+            
+            .result h2 {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .question-numbers {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 20% auto;
+            }
+            
+            .result h2 {
+                font-size: 24px;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 25px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+            
+            .options label {
+                padding: 15px 20px;
+            }
+            
+            .button-container button {
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+            
+            #submitBtn {
+                padding: 16px 35px;
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .question-numbers {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .button-container button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal-header h2 {
+                font-size: 22px;
+            }
+            
+            .test-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="nameModal" class="modal show">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Enter Your Name</h2>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="userNameInput" placeholder="Your Name" autofocus>
+                <p style="text-align: left; font-size: 15px; color: #666; margin-top: 10px;">
+                    Please enter your name to start the test.
+                </p>
+            </div>
+            <br>
+            <div class="modal-footer" style="text-align: center;">
+                <a id="startTestBtn" class="button-1">Start Test <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="timer-container" id="timer" style="display: none;">
+        <i class="fas fa-clock"></i> Time Remaining: 40:00
+    </div>
+    
+    <div class="container">
+        <div class="left-panel">
+            <div id="testTitle" class="test-title">Computer Network</div>
+            <div class="quiz-container">
+                <div id="question" class="question"></div>
+                <div id="options" class="options"></div>
+                <div class="button-container">
+                    <button id="previousBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <center><button id="submitBtn"><i class="fas fa-paper-plane"></i> Submit Test</button></center>
+            </div>
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+        <div class="right-panel">
+            <h3><i class="fas fa-list-ol"></i> Questions</h3>
+            <div class="question-numbers" id="questionNumbers"></div>
+        </div>
+    </div>
+<script>
+
+
+// Global variables
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let questions = [];
+let userName = "";
+let timerInterval;
+let timeLeft = 40 * 60;
+let testStarted = false;
+const testName = "General Knowledge Test";
+
+// Fisher-Yates shuffle algorithm
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function shuffleQuestion(question) {
+    const shuffledOptions = [...question.options];
+    const correctAnswer = shuffledOptions[question.answer];
+    
+    for (let i = shuffledOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+    }
+    
+    const newAnswerIndex = shuffledOptions.indexOf(correctAnswer);
+    
+    return {
+        question: question.question,
+        options: shuffledOptions,
+        answer: newAnswerIndex
+    };
+}
+
+// Generate sample questions with Hindi text
+function generateQuestions() {
+    return [
+        {
+            question: "What is the main function of the CPU in a computer system? / कंप्यूटर सिस्टम में CPU का मुख्य कार्य क्या है?",
+            options: [
+                "Store data permanently / डेटा को स्थायी रूप से संग्रहीत करना",
+                "Process instructions and perform calculations / निर्देशों को संसाधित करना और गणना करना",
+                "Display graphics / ग्राफिक्स प्रदर्शित करना",
+                "Connect to the internet / इंटरनेट से कनेक्ट करना"
+            ],
+            answer: 1
+        },
+        {
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },
+		{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },
+		{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },
+		{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },{
+            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
+            options: [
+                "Python / पायथन",
+                "Java / जावा",
+                "HTML / एचटीएमएल",
+                "C++ / सी++"
+            ],
+            answer: 2
+        },
+        {
+            question: "This is a very long question that should wrap to multiple lines in the PDF without being cut off. It demonstrates how the text will flow naturally to the next line when it reaches the end of the page width. The question continues here to ensure it's long enough to test the wrapping functionality properly. / यह एक बहुत लंबा प्रश्न है जिसे पीडीएफ में कई पंक्तियों में लपेटा जाना चाहिए बिना कटे हुए। यह प्रदर्शित करता है कि पाठ स्वाभाविक रूप से अगली पंक्ति में कैसे प्रवाहित होगा जब यह पृष्ठ की चौड़ाई के अंत तक पहुंचता है। प्रश्न यहां जारी है यह सुनिश्चित करने के लिए कि यह रैपिंग कार्यक्षमता का परीक्षण करने के लिए पर्याप्त लंबा है।",
+            options: [
+                "Option 1 for long question / लंबे प्रश्न के लिए विकल्प 1",
+                "Option 2 for long question / लंबे प्रश्न के लिए विकल्प 2",
+                "Option 3 for long question / लंबे प्रश्न के लिए विकल्प 3",
+                "Option 4 for long question / लंबे प्रश्न के लिए विकल्प 4"
+            ],
+            answer: 0
+        }
+    ];
+}
+
+function startTest() {
+    // Get user name
+    userName = document.getElementById('userNameInput').value.trim();
+    
+    if (userName === "") {
+        alert("Please enter your name to continue");
+        return;
+    }
+    
+    // Hide modal
+    document.getElementById('nameModal').classList.remove('show');
+    document.body.classList.remove('modal-open');
+    
+    // Load questions directly
+    questions = generateQuestions();
+    userAnswers = Array(questions.length).fill(null);
+    
+    // Render question numbers
+    const questionNumbersElement = document.getElementById('questionNumbers');
+    questionNumbersElement.innerHTML = '';
+    renderQuestionNumbers();
+    
+    // Show the quiz interface
+    document.querySelector('.container').style.display = 'flex';
+    document.querySelector('.timer-container').style.display = 'block';
+    
+    // Start the timer
+    startTimer();
+    testStarted = true;
+    
+    // Render first question
+    renderQuestion(currentQuestionIndex);
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timeLeft = 40 * 60;
+    updateTimerDisplay();
+    
+    timerInterval = setInterval(function() {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showResults();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    const timerElement = document.getElementById('timer');
+    
+    timerElement.innerHTML = 
+        '<i class="fas fa-clock"></i> Time Remaining: ' + 
+        minutes.toString().padStart(2, '0') + ':' + 
+        seconds.toString().padStart(2, '0');
+    
+    // Update timer styling based on remaining time
+    timerElement.classList.remove('warning', 'danger');
+    if (timeLeft < 300) { // 5 minutes left
+        timerElement.classList.add('warning');
+    }
+    if (timeLeft < 60) { // 1 minute left
+        timerElement.classList.add('danger');
+    }
+}
+
+function renderQuestion(index) {
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+
+    const question = questions[index];
+    questionElement.textContent = (index + 1) + '. ' + question.question;
+
+    optionsElement.innerHTML = "";
+    question.options.forEach(function(option, i) {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "option";
+        input.value = i;
+        if (userAnswers[index] === i) {
+            input.checked = true;
+        }
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(option));
+        optionsElement.appendChild(label);
+
+        input.addEventListener("change", function() {
+            userAnswers[index] = i;
+            updateQuestionNumberStatus(index);
+        });
+    });
+
+    highlightCurrentQuestion(index);
+    updateButtonStates();
+}
+
+function renderQuestionNumbers() {
+    const questionNumbersElement = document.getElementById("questionNumbers");
+
+    questions.forEach(function(_, index) {
+        const numberDiv = document.createElement("div");
+        numberDiv.className = "question-number";
+        numberDiv.textContent = index + 1;
+        numberDiv.onclick = function() {
+            currentQuestionIndex = index;
+            renderQuestion(index);
+        };
+        questionNumbersElement.appendChild(numberDiv);
+    });
+}
+
+function highlightCurrentQuestion(index) {
+    const questionNumbersElement = document.getElementById("questionNumbers");
+    Array.from(questionNumbersElement.children).forEach(function(child, i) {
+        child.classList.toggle("active", i === index);
+        if (userAnswers[i] !== null) {
+            child.classList.add("answered");
+        } else {
+            child.classList.remove("answered");
+        }
+    });
+}
+
+function updateQuestionNumberStatus(index) {
+    const questionNumbersElement = document.getElementById("questionNumbers");
+    const questionNumberDiv = questionNumbersElement.children[index];
+
+    if (userAnswers[index] !== null) {
+        questionNumberDiv.classList.add("answered");
+    } else {
+        questionNumberDiv.classList.remove("answered");
+    }
+}
+
+function showResults() {
+    clearInterval(timerInterval);
+    const resultElement = document.getElementById("result");
+    const quizContainer = document.querySelector('.quiz-container');
+    
+    quizContainer.style.display = 'none';
+    resultElement.style.display = "block";
+    testStarted = false;
+
+    document.querySelector('.timer-container').style.display = 'none';
+
+    let correctCount = 0;
+    let wrongCount = 0;
+    let attemptedCount = 0;
+    let unansweredCount = 0;
+
+    questions.forEach(function(_, index) {
+        if (userAnswers[index] !== null) {
+            attemptedCount++;
+            if (userAnswers[index] === questions[index].answer) {
+                correctCount++;
+            } else {
+                wrongCount++;
+            }
+        } else {
+            unansweredCount++;
+        }
+    });
+
+    const scorePercentage = Math.round((correctCount / questions.length) * 100);
+    
+    let grade, gradeClass, congratsMessage = '';
+    if (scorePercentage >= 90) {
+        grade = 'S';
+        gradeClass = 'grade-S';
+        congratsMessage = '🎉 Congratulations! Outstanding Performance! 🎉';
+    } else if (scorePercentage >= 80) {
+        grade = 'A';
+        gradeClass = 'grade-A';
+        congratsMessage = '🎉 Great Job! Excellent Performance! 🎉';
+    } else if (scorePercentage >= 70) {
+        grade = 'B';
+        gradeClass = 'grade-B';
+        congratsMessage = '👍 Good Work! Keep it up!';
+    } else if (scorePercentage >= 60) {
+        grade = 'C';
+        gradeClass = 'grade-C';
+        congratsMessage = '😊 Not bad! You can do better!';
+    } else if (scorePercentage >= 50) {
+        grade = 'D';
+        gradeClass = 'grade-D';
+        congratsMessage = '🤔 You passed, but need more practice';
+    } else {
+        grade = 'F';
+        gradeClass = 'grade-F';
+        congratsMessage = '😟 Keep practicing! You can improve!';
+    }
+
+    resultElement.innerHTML = `
+        <h2>Hello ${userName}, Your Test Results</h2>
+        ${congratsMessage ? '<div class="congrats-banner">' + congratsMessage + '</div>' : ''}
+        <div class="result-summary">
+            <p><i class="fas fa-file-alt"></i> <strong>Test Name:</strong> ${testName}</p>
+            <p><i class="fas fa-pencil-alt"></i> <strong>Total Questions:</strong> ${questions.length}</p>
+            <p><i class="fas fa-check-circle"></i> <strong>Attempted:</strong> ${attemptedCount}</p>
+            <p class="correct"><i class="fas fa-check-circle"></i> <strong>Correct Answers:</strong> ${correctCount}</p>
+            <p class="wrong"><i class="fas fa-times-circle"></i> <strong>Incorrect Answers:</strong> ${wrongCount}</p>
+            <p><i class="fas fa-question-circle"></i> <strong>Unanswered:</strong> ${unansweredCount}</p>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: ${scorePercentage}%">${scorePercentage}%</div>
+            </div>
+            <p><i class="fas fa-star"></i> <strong>Your Score:</strong> ${correctCount}/${questions.length} (${scorePercentage}%)</p>
+            <div class="grade ${gradeClass}">Grade: ${grade}</div>
+        </div>
+        <h3><i class="fas fa-info-circle"></i> Detailed Results:</h3>
+        <div class="result-details" id="resultDetails"></div>
+        <center>
+            <button class="download-btn" onclick="downloadQuestionsPDF()">
+                <i class="fas fa-download"></i> Download Questions (PDF)
+            </button>
+            <button class="share-btn" onclick="shareOnWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Share on WhatsApp
+            </button>
+        </center>
+        <div class="creator-note">
+            <p>Test by: Divyanshu Yadav Sir | Contact: +91 9532595992</p>
+        </div>
+    `;
+
+    const resultDetails = document.getElementById("resultDetails");
+    // Show all questions with correct answers
+    for (let i = 0; i < questions.length; i++) {
+        const question = questions[i];
+        const userAnswer = userAnswers[i];
+        const isCorrect = userAnswer === question.answer;
+        const isAnswered = userAnswer !== null;
+
+        const resultItem = document.createElement("div");
+        resultItem.className = "result-item";
+        
+        let answerStatus = "";
+        if (!isAnswered) {
+            answerStatus = '<span class="wrong"><i class="fas fa-question-circle"></i> Not Answered</span>';
+        } else if (isCorrect) {
+            answerStatus = '<span class="correct"><i class="fas fa-check-circle"></i> Correct</span>';
+        } else {
+            answerStatus = '<span class="wrong"><i class="fas fa-times-circle"></i> Incorrect</span>';
+        }
+
+        resultItem.innerHTML = `
+            <p><strong>Q${i + 1}:</strong> ${question.question} (${answerStatus})</p>
+            ${isAnswered ? 
+                '<p><i class="fas fa-user"></i> Your answer: <span class="' + (isCorrect ? 'correct' : 'wrong') + '">' +
+                    question.options[userAnswer] +
+                '</span></p>' : ''
+            }
+            <p class="correct"><i class="fas fa-check"></i> Correct answer: ${question.options[question.answer]}</p>
+        `;
+        resultDetails.appendChild(resultItem);
+    }
+}
+
+async function downloadQuestionsPDF() {
+    try {
+        // Create a PDF
+        const pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            hotfixes: ["px_scaling"]
+        });
+
+        const firstPageQuestions = 4;
+        const otherPagesQuestions = 6;
+        const now = new Date();
+
+        // Calculate total pages needed
+        let remainingQuestions = questions.length;
+        let totalPages = 0;
+        
+        if (remainingQuestions > 0) {
+            totalPages++;
+            remainingQuestions = Math.max(0, remainingQuestions - firstPageQuestions);
+            totalPages += Math.ceil(remainingQuestions / otherPagesQuestions);
+        }
+
+        // Header HTML (only for first page)
+        const headerHTML = `
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap');
+                body { font-family: 'Noto Sans Devanagari', Arial, sans-serif; }
+                .question-container { 
+                    margin-bottom: 25px; 
+                    page-break-inside: avoid;
+                }
+            </style>
+            <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e0e0e0;">
+                <h1 style="font-size: 22px; font-weight: 700; color: #2E7D32;"><strong>Computer Network</strong></h1>
+                <h1 style="font-size: 42px; font-weight: 700; color: #2E7D32;">ASIT Institute</h1>
+                <p style="font-size: 18px; font-weight: 700;">Gauhania, Panwari Road, Near GSN Inter College</p>
+                <p style="font-size: 12px; font-weight: 700; margin-bottom: 8px;">Jasra, Allahabad, India 212107, Uttar Pradesh</p>
+                <br>
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                    <div style="text-align: left;">
+                        <p><strong>Student:</strong> ${userName}</p>
+                        <p><strong>Date:</strong> ${now.toLocaleDateString()}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p><strong>Test by:</strong>Er. Divyanshu Sir</p>
+                        <p><strong>Contact:</strong> +91 9532595992</p>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        `;
+
+        let questionIndex = 0;
+        
+        // Process first page (4 questions)
+        if (questions.length > 0) {
+            const endIdx = Math.min(firstPageQuestions, questions.length);
+            const pageQuestions = questions.slice(0, endIdx);
+            questionIndex = endIdx;
+
+            const pdfContent = document.createElement('div');
+            pdfContent.style.width = '210mm';
+            pdfContent.style.padding = '15mm 20mm 25mm 20mm';
+            pdfContent.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
+            pdfContent.style.backgroundColor = '#ffffff';
+            
+            // Add header for first page
+            pdfContent.innerHTML = headerHTML;
+            
+            // Add questions for first page
+            pageQuestions.forEach((q, idx) => {
+                const questionNum = idx + 1;
+                pdfContent.innerHTML += `
+                    <div class="question-container">
+                        <p style="font-weight: 600; font-size: 15px; margin-bottom: 8px; line-height: 1.4;">
+                            Q${questionNum}: ${q.question}
+                        </p>
+                        <div style="margin-left: 15px;">
+                            ${q.options.map((opt, i) => `
+                                <p style="${i === q.answer ? 'color: #2E7D32; font-weight: 500;' : 'color: #555555;'} 
+                                   margin: 6px 0; font-size: 14px; line-height: 1.4;">
+                                    ${String.fromCharCode(97 + i)}. ${opt}
+                                    ${i === q.answer ? '<span style="margin-left: 8px;">(Correct)</span>' : ''}
+                                </p>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.body.appendChild(pdfContent);
+            
+            const canvas = await html2canvas(pdfContent, {
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0
+            });
+            
+            const imgWidth = 210;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            pdf.addImage(canvas, 'PNG', 0, 0, imgWidth, imgHeight);
+            
+            document.body.removeChild(pdfContent);
+        }
+
+        // Process remaining pages (6 questions each)
+        while (questionIndex < questions.length) {
+            const endIdx = Math.min(questionIndex + otherPagesQuestions, questions.length);
+            const pageQuestions = questions.slice(questionIndex, endIdx);
+            questionIndex = endIdx;
+
+            const pdfContent = document.createElement('div');
+            pdfContent.style.width = '210mm';
+            pdfContent.style.padding = '5mm 20mm 25mm 20mm'; // Less top padding
+            pdfContent.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
+            pdfContent.style.backgroundColor = '#ffffff';
+            
+            // Add questions for current page
+            pageQuestions.forEach((q, idx) => {
+                const questionNum = questionIndex - pageQuestions.length + idx + 1;
+                pdfContent.innerHTML += `
+                    <div class="question-container">
+                        <p style="font-weight: 600; font-size: 15px; margin-bottom: 8px; line-height: 1.4;">
+                            Q${questionNum}: ${q.question}
+                        </p>
+                        <div style="margin-left: 15px;">
+                            ${q.options.map((opt, i) => `
+                                <p style="${i === q.answer ? 'color: #2E7D32; font-weight: 500;' : 'color: #555555;'} 
+                                   margin: 6px 0; font-size: 14px; line-height: 1.4;">
+                                    ${String.fromCharCode(97 + i)}. ${opt}
+                                    ${i === q.answer ? '<span style="margin-left: 8px;">(Correct)</span>' : ''}
+                                </p>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.body.appendChild(pdfContent);
+            
+            const canvas = await html2canvas(pdfContent, {
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0
+            });
+            
+            pdf.addPage();
+            const imgWidth = 210;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            pdf.addImage(canvas, 'PNG', 0, 0, imgWidth, imgHeight);
+            
+            document.body.removeChild(pdfContent);
+        }
+        
+        // Add footer to all pages
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            pdf.setFontSize(11);
+            pdf.setTextColor(80);
+            
+            const footerY = pdf.internal.pageSize.height - 15;
+            
+            if (i === totalPages) {
+                pdf.text('This PDF Download From: Test With RD Application', 105, footerY - 10, { align: 'center' });
+                pdf.text('Developed By Divyanshu Sir', 105, footerY - 5, { align: 'center' });
+            }
+            
+            pdf.setFontSize(10);
+            pdf.setTextColor(100);
+            pdf.text(`Page ${i} of ${totalPages}`, 105, footerY, { align: 'center' });
+        }
+        
+        pdf.save(`${testName.replace(/ /g, '_')}_Questions_${userName || 'Student'}.pdf`);
+        
+    } catch (error) {
+        console.error("PDF generation error:", error);
+        alert("Error generating PDF. Please try again.");
+    }
+}
+
+
+function shareOnWhatsApp() {
+    let correctCount = 0;
+    questions.forEach(function(_, index) {
+        if (userAnswers[index] === questions[index].answer) {
+            correctCount++;
+        }
+    });
+
+    const scorePercentage = Math.round((correctCount / questions.length) * 100);
+    
+    let grade;
+    if (scorePercentage >= 90) {
+        grade = 'S';
+    } else if (scorePercentage >= 80) {
+        grade = 'A';
+    } else if (scorePercentage >= 70) {
+        grade = 'B';
+    } else if (scorePercentage >= 60) {
+        grade = 'C';
+    } else if (scorePercentage >= 50) {
+        grade = 'D';
+    } else {
+        grade = 'F';
+    }
+
+    const shareText = `📚 *Test Results* 📚
+        
+📝 *Test Name:* ${testName}
+👤 *Student Name:* ${userName}
+📊 *Total Questions:* ${questions.length}
+✅ *Correct Answers:* ${correctCount}
+❌ *Incorrect Answers:* ${questions.length - correctCount - userAnswers.filter(function(a) { return a === null; }).length}
+❓ *Unanswered:* ${userAnswers.filter(function(a) { return a === null; }).length}
+🏆 *Score:* ${correctCount}/${questions.length} (${scorePercentage}%)
+🎓 *Grade:* ${grade}
+
+Test by: Divyanshu Yadav Sir
+Contact: +91 9532595992`;
+
+    // For Android WebView
+    if (window.Android && window.Android.shareOnWhatsApp) {
+        window.Android.shareOnWhatsApp(shareText);
+    } else {
+        // For regular browsers
+        window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
+    }
+}
+
+function updateButtonStates() {
+    document.getElementById('previousBtn').disabled = currentQuestionIndex === 0;
+    document.getElementById('nextBtn').disabled = currentQuestionIndex === questions.length - 1;
+}
+
+function setupEventListeners() {
+    document.getElementById('startTestBtn').addEventListener('click', startTest);
+
+    window.addEventListener('click', function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = 'none';
+            document.body.classList.remove('modal-open');
+        }
+    });
+
+    document.querySelectorAll('.close').forEach(function(closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            this.closest('.modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+        });
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", function() {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion(currentQuestionIndex);
+        }
+    });
+
+    document.getElementById("previousBtn").addEventListener("click", function() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion(currentQuestionIndex);
+        }
+    });
+
+    document.getElementById("submitBtn").addEventListener("click", function() {
+        if (confirm("Are you sure you want to submit the test?")) {
+            showResults();
+        }
+    });
+
+    document.getElementById('userNameInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            startTest();
+        }
+    });
+}
+
+// For Android WebView integration
+window.downloadQuestionsPDF = downloadQuestionsPDF;
+window.shareOnWhatsApp = shareOnWhatsApp;
+
+// Initialize the app
+document.addEventListener('DOMContentLoaded', function() {
+    setupEventListeners();
+    document.getElementById('nameModal').classList.add('show');
+    document.body.classList.add('modal-open');
+    
+    // Ensure proper text rendering by setting the font family
+    document.body.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
+});
+</script>
+</body>
+</html>
