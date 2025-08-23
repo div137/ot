@@ -801,23 +801,21 @@ function shuffleArray(array) {
     return array;
 }
 
-function shuffleQuestion(question) {
-    const shuffledOptions = [...question.options];
-    const correctAnswer = shuffledOptions[question.answer];
+function shuffleQuestions(questionsArray) {
+    // Only shuffle the array of questions, not the options inside each question
+    const shuffledQuestions = [...questionsArray];
     
-    for (let i = shuffledOptions.length - 1; i > 0; i--) {
+    // Fisher-Yates shuffle algorithm for the questions array
+    for (let i = shuffledQuestions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+        [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
     }
     
-    const newAnswerIndex = shuffledOptions.indexOf(correctAnswer);
-    
-    return {
-        question: question.question,
-        options: shuffledOptions,
-        answer: newAnswerIndex
-    };
+    return shuffledQuestions;
 }
+
+// Usage example:
+// const myShuffledQuestions = shuffleQuestions(questionsArray);
 
 // Generate sample questions with Hindi text
 function generateQuestions() {
