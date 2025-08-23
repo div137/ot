@@ -823,173 +823,834 @@ function shuffleQuestion(question) {
 // Generate sample questions with Hindi text
 function generateQuestions() {
     return [
+       {
+      "id": 1,
+      "question": "What does HTTP stand for? / HTTP का फुल फॉर्म क्या है?",
+      "options": ["HyperText Transfer Protocol", "HyperText Transmission Protocol", "High Transfer Text Protocol", "Hyper Transfer Text Protocol"],
+      "answer": "HyperText Transfer Protocol"
+    },
+    {
+      "id": 2,
+      "question": "What is the default port number for HTTP? / HTTP के लिए डिफॉल्ट पोर्ट नंबर क्या है?",
+      "options": ["80", "25", "443", "21"],
+      "answer": "80"
+    },
+    {
+      "id": 3,
+      "question": "What does URL stand for? / URL का फुल फॉर्म क्या है?",
+      "options": ["Uniform Resource Locator", "Universal Resource Locator", "Uniform Reference Locator", "Universal Reference Locator"],
+      "answer": "Uniform Resource Locator"
+    },
+    {
+      "id": 4,
+      "question": "Which protocol is used for secure communication over a computer network? / कंप्यूटर नेटवर्क पर सुरक्षित संचार के लिए किस प्रोटोकॉल का उपयोग किया जाता है?",
+      "options": ["HTTPS", "FTP", "HTTP", "SMTP"],
+      "answer": "HTTPS"
+    },
+    {
+      "id": 5,
+      "question": "What is the default port for HTTPS? / HTTPS के लिए डिफॉल्ट पोर्ट क्या है?",
+      "options": ["443", "80", "8080", "25"],
+      "answer": "443"
+    },
+    {
+      "id": 6,
+      "question": "Which tag is used to define the root of an HTML document? / HTML दस्तावेज़ की रूट को परिभाषित करने के लिए किस टैग का उपयोग किया जाता है?",
+      "options": ["<html>", "<root>", "<head>", "<!DOCTYPE>"],
+      "answer": "<html>"
+    },
+    {
+      "id": 7,
+      "question": "Which section of an HTML document contains metadata? / HTML दस्तावेज़ का कौन सा section मेटाडेटा रखता है?",
+      "options": ["Head", "Body", "Footer", "Header"],
+      "answer": "Head"
+    },
+    {
+      "id": 8,
+      "question": "Which attribute is used to provide a unique name for an HTML element? / HTML element के लिए unique name प्रदान करने के लिए किस attribute का उपयोग किया जाता है?",
+      "options": ["id", "class", "name", "type"],
+      "answer": "id"
+    },
+    {
+      "id": 9,
+      "question": "What does CSS stand for? / CSS का फुल फॉर्म क्या है?",
+      "options": ["Cascading Style Sheets", "Creative Style System", "Computer Style Sheets", "Colorful Style Sheets"],
+      "answer": "Cascading Style Sheets"
+    },
+    {
+      "id": 10,
+      "question": "Which tag is used to create a hyperlink in HTML? / HTML में hyperlink बनाने के लिए किस tag का use किया जाता है?",
+      "options": ["<a>", "<link>", "<href>", "<hyper>"],
+      "answer": "<a>"
+    },
+    {
+      "id": 11,
+      "question": "Which tag is used to insert an image in HTML? / HTML में image insert करने के लिए किस tag का use किया जाता है?",
+      "options": ["<img>", "<image>", "<pic>", "<src>"],
+      "answer": "<img>"
+    },
+    {
+      "id": 12,
+      "question": "Which attribute is used with the <img> tag to specify the image path? / <img> टैग के साथ image path specify करने के लिए किस attribute का use किया जाता है?",
+      "options": ["src", "href", "link", "source"],
+      "answer": "src"
+    },
+    {
+      "id": 13,
+      "question": "Which tag is used to define a table row in HTML? / HTML में table row define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<tr>", "<td>", "<th>", "<row>"],
+      "answer": "<tr>"
+    },
+    {
+      "id": 14,
+      "question": "Which tag is used to create a numbered list? / Numbered list बनाने के लिए किस tag का use किया जाता है?",
+      "options": ["<ol>", "<ul>", "<li>", "<list>"],
+      "answer": "<ol>"
+    },
+    {
+      "id": 15,
+      "question": "Which tag is used to create a bulleted list? / Bulleted list बनाने के लिए किस tag का use किया जाता है?",
+      "options": ["<ul>", "<ol>", "<li>", "<list>"],
+      "answer": "<ul>"
+    },
+    {
+      "id": 16,
+      "question": "What is the correct way to comment in HTML? / HTML में comment करने का सही तरीका क्या है?",
+      "options": ["<!-- comment -->", "// comment", "/* comment */", "<! comment>"],
+      "answer": "<!-- comment -->"
+    },
+    {
+      "id": 17,
+      "question": "Which element is used for the largest heading? / सबसे बड़े heading के लिए किस element का use किया जाता है?",
+      "options": ["<h1>", "<h6>", "<head>", "<heading>"],
+      "answer": "<h1>"
+    },
+    {
+      "id": 18,
+      "question": "Which tag defines the body of the HTML document? / HTML document के body को कौन सा tag define करता है?",
+      "options": ["<body>", "<main>", "<html>", "<content>"],
+      "answer": "<body>"
+    },
+    {
+      "id": 19,
+      "question": "Which attribute is used to define inline styles? / Inline styles define करने के लिए किस attribute का use किया जाता है?",
+      "options": ["style", "class", "styles", "css"],
+      "answer": "style"
+    },
+    {
+      "id": 20,
+      "question": "Which tag is used to define a paragraph? / Paragraph define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<p>", "<para>", "<text>", "<pg>"],
+      "answer": "<p>"
+    },
+    {
+      "id": 21,
+      "question": "What does FTP stand for? / FTP का फुल फॉर्म क्या है?",
+      "options": ["File Transfer Protocol", "File Transmission Protocol", "File Transfer Process", "File Translation Protocol"],
+      "answer": "File Transfer Protocol"
+    },
+    {
+      "id": 22,
+      "question": "What is the default port for FTP? / FTP के लिए डिफॉल्ट पोर्ट क्या है?",
+      "options": ["21", "20", "22", "25"],
+      "answer": "21"
+    },
+    {
+      "id": 23,
+      "question": "Which tag is used to make text bold? / Text को bold बनाने के लिए किस tag का use किया जाता है?",
+      "options": ["<b>", "<strong>", "<bold>", "<em>"],
+      "answer": "<b>"
+    },
+    {
+      "id": 24,
+      "question": "Which tag is used to make text italic? / Text को italic बनाने के लिए किस tag का use किया जाता है?",
+      "options": ["<i>", "<em>", "<italic>", "<cite>"],
+      "answer": "<i>"
+    },
+    {
+      "id": 25,
+      "question": "What does SMTP stand for? / SMTP का फुल फॉर्म क्या है?",
+      "options": ["Simple Mail Transfer Protocol", "Simple Message Transfer Protocol", "Secure Mail Transfer Protocol", "System Mail Transfer Protocol"],
+      "answer": "Simple Mail Transfer Protocol"
+    },
+    {
+      "id": 26,
+      "question": "What is the default port for SMTP? / SMTP के लिए डिफॉल्ट पोर्ट क्या है?",
+      "options": ["25", "587", "465", "110"],
+      "answer": "25"
+    },
+    {
+      "id": 27,
+      "question": "Which input type defines a checkbox? / Checkbox define करने के लिए किस input type का use किया जाता है?",
+      "options": ["checkbox", "check", "radio", "button"],
+      "answer": "checkbox"
+    },
+    {
+      "id": 28,
+      "question": "Which input type defines a radio button? / Radio button define करने के लिए किस input type का use किया जाता है?",
+      "options": ["radio", "checkbox", "button", "select"],
+      "answer": "radio"
+    },
+    {
+      "id": 29,
+      "question": "Which tag is used to define a drop-down list? / Drop-down list define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<select>", "<list>", "<dropdown>", "<option>"],
+      "answer": "<select>"
+    },
+    {
+      "id": 30,
+      "question": "Which tag is used to define options in a drop-down list? / Drop-down list में options define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<option>", "<item>", "<select>", "<list>"],
+      "answer": "<option>"
+    },
+    {
+      "id": 31,
+      "question": "Which attribute is used to specify that an input field must be filled out? / यह specify करने के लिए कि input field必须 filled out हो, किस attribute का use किया जाता है?",
+      "options": ["required", "must", "necessary", "validate"],
+      "answer": "required"
+    },
+    {
+      "id": 32,
+      "question": "Which tag is used to define a header for a document or section? / Document या section के लिए header define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<header>", "<head>", "<top>", "<section>"],
+      "answer": "<header>"
+    },
+    {
+      "id": 33,
+      "question": "Which tag is used to define a footer for a document or section? / Document या section के लिए footer define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<footer>", "<bottom>", "<foot>", "<end>"],
+      "answer": "<footer>"
+    },
+    {
+      "id": 34,
+      "question": "Which tag is used to define navigation links? / Navigation links define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<nav>", "<navigation>", "<menu>", "<links>"],
+      "answer": "<nav>"
+    },
+    {
+      "id": 35,
+      "question": "Which tag is used to define an article? / Article define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<article>", "<section>", "<content>", "<post>"],
+      "answer": "<article>"
+    },
+    {
+      "id": 36,
+      "question": "Which tag is used to define a section in a document? / Document में section define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<section>", "<div>", "<article>", "<part>"],
+      "answer": "<section>"
+    },
+    {
+      "id": 37,
+      "question": "Which tag is used to define important text? / Important text define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<strong>", "<important>", "<b>", "<imp>"],
+      "answer": "<strong>"
+    },
+    {
+      "id": 38,
+      "question": "Which tag is used to define emphasized text? / Emphasized text define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<em>", "<emphasis>", "<i>", "<highlight>"],
+      "answer": "<em>"
+    },
+    {
+      "id": 39,
+      "question": "Which character is used to indicate an end tag? / End tag indicate करने के लिए किस character का use किया जाता है?",
+      "options": ["/", "\\", "*", "#"],
+      "answer": "/"
+    },
+    {
+      "id": 40,
+      "question": "What is the correct HTML for inserting a background image? / Background image insert करने के लिए सही HTML क्या है?",
+      "options": ["<body style=\"background-image:url('image.gif')\">", "<background img=\"image.gif\">", "<body background=\"image.gif\">", "<img src=\"image.gif\" background>"],
+      "answer": "<body style=\"background-image:url('image.gif')\">"
+    },
+    {
+      "id": 41,
+      "question": "Which tag is used to define a description list? / Description list define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<dl>", "<dt>", "<dd>", "<list>"],
+      "answer": "<dl>"
+    },
+    {
+      "id": 42,
+      "question": "Which tag is used to define a term/name in a description list? / Description list में term/name define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<dt>", "<dd>", "<dl>", "<term>"],
+      "answer": "<dt>"
+    },
+    {
+      "id": 43,
+      "question": "Which tag is used to define a description in a description list? / Description list में description define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<dd>", "<dt>", "<dl>", "<desc>"],
+      "answer": "<dd>"
+    },
+    {
+      "id": 44,
+      "question": "Which input type defines a clickable button? / Clickable button define करने के लिए किस input type का use किया जाता है?",
+      "options": ["button", "submit", "click", "reset"],
+      "answer": "button"
+    },
+    {
+      "id": 45,
+      "question": "Which input type is used for password fields? / Password fields के लिए किस input type का use किया जाता है?",
+      "options": ["password", "text", "hidden", "secret"],
+      "answer": "password"
+    },
+    {
+      "id": 46,
+      "question": "Which attribute specifies a unique identifier for an element? / Element के लिए unique identifier specify करने वाला attribute कौन सा है?",
+      "options": ["id", "class", "name", "identity"],
+      "answer": "id"
+    },
+    {
+      "id": 47,
+      "question": "Which attribute specifies one or more class names for an element? / Element के लिए एक या अधिक class names specify करने वाला attribute कौन सा है?",
+      "options": ["class", "id", "name", "type"],
+      "answer": "class"
+    },
+    {
+      "id": 48,
+      "question": "Which tag is used to define a table header? / Table header define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<th>", "<td>", "<tr>", "<thead>"],
+      "answer": "<th>"
+    },
+    {
+      "id": 49,
+      "question": "Which tag is used to define a table cell? / Table cell define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<td>", "<th>", "<tr>", "<cell>"],
+      "answer": "<td>"
+    },
+    {
+      "id": 50,
+      "question": "Which tag is used to define a table? / Table define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<table>", "<tab>", "<tb>", "<grid>"],
+      "answer": "<table>"
+    },
+    {
+      "id": 51,
+      "question": "What does DNS stand for? / DNS का फुल फॉर्म क्या है?",
+      "options": ["Domain Name System", "Domain Number System", "Dynamic Name Server", "Domain Name Server"],
+      "answer": "Domain Name System"
+    },
+    {
+      "id": 52,
+      "question": "Which tag is used to define a client-side script? / Client-side script define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<script>", "<javascript>", "<js>", "<client-script>"],
+      "answer": "<script>"
+    },
+    {
+      "id": 53,
+      "question": "Which attribute is used to specify the scripting language in the <script> tag? / <script> tag में scripting language specify करने के लिए किस attribute का use किया जाता है?",
+      "options": ["type", "language", "script", "src"],
+      "answer": "type"
+    },
+    {
+      "id": 54,
+      "question": "Which tag is used to define an alternative content for users that do not support client-side scripts? / Client-side scripts support न करने वाले users के लिए alternative content define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<noscript>", "<nojavascript>", "<alt>", "<noclient>"],
+      "answer": "<noscript>"
+    },
+    {
+      "id": 55,
+      "question": "Which tag is used to embed CSS in an HTML document? / HTML document में CSS embed करने के लिए किस tag का use किया जाता है?",
+      "options": ["<style>", "<css>", "<link>", "<script>"],
+      "answer": "<style>"
+    },
+    {
+      "id": 56,
+      "question": "Which tag is used to define a relationship between a document and an external resource? / Document और external resource के बीच relationship define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<link>", "<a>", "<rel>", "<resource>"],
+      "answer": "<link>"
+    },
+    {
+      "id": 57,
+      "question": "Which attribute of the <link> tag specifies the location of the external resource? / <link> tag का कौन सा attribute external resource का location specify करता है?",
+      "options": ["href", "src", "link", "location"],
+      "answer": "href"
+    },
+    {
+      "id": 58,
+      "question": "Which tag is used to define a paragraph? / Paragraph define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<p>", "<para>", "<text>", "<pg>"],
+      "answer": "<p>"
+    },
+    {
+      "id": 59,
+      "question": "Which tag is used to define a line break? / Line break define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<br>", "<lb>", "<break>", "<newline>"],
+      "answer": "<br>"
+    },
+    {
+      "id": 60,
+      "question": "Which tag is used to define a horizontal rule? / Horizontal rule define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<hr>", "<line>", "<rule>", "<hrule>"],
+      "answer": "<hr>"
+    },
+    {
+      "id": 61,
+      "question": "Which attribute is used to specify the URL of the page the link goes to? / Link के destination page के URL specify करने के लिए किस attribute का use किया जाता है?",
+      "options": ["href", "src", "link", "url"],
+      "answer": "href"
+    },
+    {
+      "id": 62,
+      "question": "Which attribute is used to specify that the linked document should be opened in a new window/tab? / Linked document को new window/tab में open करने के लिए किस attribute का use किया जाता है?",
+      "options": ["target=\"_blank\"", "target=\"_new\"", "window=\"new\"", "open=\"new\""],
+      "answer": "target=\"_blank\""
+    },
+    {
+      "id": 63,
+      "question": "Which input type defines a submit button? / Submit button define करने के लिए किस input type का use किया जाता है?",
+      "options": ["submit", "button", "send", "form"],
+      "answer": "submit"
+    },
+    {
+      "id": 64,
+      "question": "Which input type defines a reset button? / Reset button define करने के लिए किस input type का use किया जाता है?",
+      "options": ["reset", "button", "clear", "refresh"],
+      "answer": "reset"
+    },
+    {
+      "id": 65,
+      "question": "Which attribute specifies the name of an <input> element? / <input> element का name specify करने वाला attribute कौन सा है?",
+      "options": ["name", "id", "class", "type"],
+      "answer": "name"
+    },
+    {
+      "id": 66,
+      "question": "Which tag is used to define a multi-line text input control? / Multi-line text input control define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<textarea>", "<input type=\"text\">", "<text>", "<input type=\"textarea\">"],
+      "answer": "<textarea>"
+    },
+    {
+      "id": 67,
+      "question": "Which attribute specifies the visible width of a text area? / Text area की visible width specify करने वाला attribute कौन सा है?",
+      "options": ["cols", "rows", "size", "width"],
+      "answer": "cols"
+    },
+    {
+      "id": 68,
+      "question": "Which attribute specifies the visible number of lines in a text area? / Text area में visible lines की number specify करने वाला attribute कौन सा है?",
+      "options": ["rows", "cols", "lines", "height"],
+      "answer": "rows"
+    },
+    {
+      "id": 69,
+      "question": "Which tag is used to define a label for an <input> element? / <input> element के लिए label define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<label>", "<caption>", "<title>", "<lb>"],
+      "answer": "<label>"
+    },
+    {
+      "id": 70,
+      "question": "Which attribute of the <label> tag specifies which form element a label is bound to? / <label> tag का कौन सा attribute specify करता है कि label किस form element से bound है?",
+      "options": ["for", "id", "name", "bind"],
+      "answer": "for"
+    },
+    {
+      "id": 71,
+      "question": "Which tag is used to group related elements in a form? / Form में related elements को group करने के लिए किस tag का use किया जाता है?",
+      "options": ["<fieldset>", "<group>", "<form-group>", "<div>"],
+      "answer": "<fieldset>"
+    },
+    {
+      "id": 72,
+      "question": "Which tag is used to define a caption for a <fieldset> element? / <fieldset> element के लिए caption define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<legend>", "<caption>", "<title>", "<label>"],
+      "answer": "<legend>"
+    },
+    {
+      "id": 73,
+      "question": "Which tag is used to define an HTML form? / HTML form define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<form>", "<input>", "<fieldset>", "<body>"],
+      "answer": "<form>"
+    },
+    {
+      "id": 74,
+      "question": "Which attribute specifies the HTTP method to use when sending form-data? / Form-data send करते समय HTTP method specify करने वाला attribute कौन सा है?",
+      "options": ["method", "action", "type", "enctype"],
+      "answer": "method"
+    },
+    {
+      "id": 75,
+      "question": "Which attribute specifies where to send the form-data when a form is submitted? / Form submit होने पर form-data कहाँ send करना है, यह specify करने वाला attribute कौन सा है?",
+      "options": ["action", "method", "target", "src"],
+      "answer": "action"
+    },
+    {
+      "id": 76,
+      "question": "Which method is used to send form-data as URL variables? / Form-data को URL variables के रूप में send करने के लिए किस method का use किया जाता है?",
+      "options": ["GET", "POST", "PUT", "SEND"],
+      "answer": "GET"
+    },
+    {
+      "id": 77,
+      "question": "Which method is used to send form-data as an HTTP post transaction? / Form-data को HTTP post transaction के रूप में send करने के लिए किस method का use किया जाता है?",
+      "options": ["POST", "GET", "PUT", "SEND"],
+      "answer": "POST"
+    },
+    {
+      "id": 78,
+      "question": "Which attribute specifies how form-data should be encoded before sending it to the server? / Form-data को server पर send करने से पहले encode कैसे करना है, यह specify करने वाला attribute कौन सा है?",
+      "options": ["enctype", "method", "action", "encoding"],
+      "answer": "enctype"
+    },
+    {
+      "id": 79,
+      "question": "Which enctype value is used for form-data that includes files to be uploaded? / Files upload करने वाले form-data के लिए किस enctype value का use किया जाता है?",
+      "options": ["multipart/form-data", "text/plain", "application/x-www-form-urlencoded", "file/data"],
+      "answer": "multipart/form-data"
+    },
+    {
+      "id": 80,
+      "question": "Which tag is used to define a clickable button? / Clickable button define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<button>", "<input type=\"button\">", "<click>", "<btn>"],
+      "answer": "<button>"
+    },
+    {
+      "id": 81,
+      "question": "What does HTML stand for? / HTML का फुल फॉर्म क्या है?",
+      "options": ["HyperText Markup Language", "HyperText Makeup Language", "HighText Markup Language", "HyperText Marking Language"],
+      "answer": "HyperText Markup Language"
+    },
+    {
+      "id": 82,
+      "question": "Who is known as the father of World Wide Web (WWW)? / World Wide Web (WWW) के जनक के रूप में किसे जाना जाता है?",
+      "options": ["Tim Berners-Lee", "Vint Cerf", "Robert Cailliau", "Bill Gates"],
+      "answer": "Tim Berners-Lee"
+    },
+    {
+      "id": 83,
+      "question": "In which year was the first version of HTML introduced? / HTML का पहला version किस year introduce किया गया था?",
+      "options": ["1991", "1993", "1995", "1989"],
+      "answer": "1991"
+    },
+    {
+      "id": 84,
+      "question": "Which organization is responsible for developing web standards? / Web standards develop करने के लिए कौन सा organization responsible है?",
+      "options": ["World Wide Web Consortium (W3C)", "Internet Engineering Task Force (IETF)", "Institute of Electrical and Electronics Engineers (IEEE)", "International Organization for Standardization (ISO)"],
+      "answer": "World Wide Web Consortium (W3C)"
+    },
+    {
+      "id": 85,
+      "question": "What is the file extension of an HTML document? / HTML document का file extension क्या होता है?",
+      "options": [".html", ".htm", ".web", ".page"],
+      "answer": ".html"
+    },
+    {
+      "id": 86,
+      "question": "Which tag is used to define the document type? / Document type define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<!DOCTYPE>", "<doc type>", "<html>", "<!doc>"],
+      "answer": "<!DOCTYPE>"
+    },
+    {
+      "id": 87,
+      "question": "Which HTML element is used to specify the title of the document? / Document का title specify करने के लिए किस HTML element का use किया जाता है?",
+      "options": ["<title>", "<head>", "<header>", "<caption>"],
+      "answer": "<title>"
+    },
+    {
+      "id": 88,
+      "question": "Which tag is used to provide metadata about the HTML document? / HTML document के बारे में metadata provide करने के लिए किस tag का use किया जाता है?",
+      "options": ["<meta>", "<data>", "<info>", "<head>"],
+      "answer": "<meta>"
+    },
+    {
+      "id": 89,
+      "question": "Which attribute of the <meta> tag is used to specify the character encoding? / Character encoding specify करने के लिए <meta> tag के किस attribute का use किया जाता है?",
+      "options": ["charset", "encoding", "char", "set"],
+      "answer": "charset"
+    },
+    {
+      "id": 90,
+      "question": "Which character encoding is recommended for HTML5? / HTML5 के लिए recommended character encoding कौन सी है?",
+      "options": ["UTF-8", "ISO-8859-1", "ASCII", "UTF-16"],
+      "answer": "UTF-8"
+    },
+    {
+      "id": 91,
+      "question": "Which tag is used to define a section that is quoted from another source? / किसी other source से quoted section define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<blockquote>", "<quote>", "<q>", "<cite>"],
+      "answer": "<blockquote>"
+    },
+    {
+      "id": 92,
+      "question": "Which tag is used for short quotations? / Short quotations के लिए किस tag का use किया जाता है?",
+      "options": ["<q>", "<quote>", "<blockquote>", "<shortquote>"],
+      "answer": "<q>"
+    },
+    {
+      "id": 93,
+      "question": "Which tag defines the abbreviation or an acronym? / Abbreviation या acronym define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<abbr>", "<acronym>", "<abbrev>", "<short>"],
+      "answer": "<abbr>"
+    },
+    {
+      "id": 94,
+      "question": "Which tag is used to define contact information for the author/owner of a document? / Document के author/owner की contact information define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<address>", "<contact>", "<info>", "<author>"],
+      "answer": "<address>"
+    },
+    {
+      "id": 95,
+      "question": "Which tag is used to define a piece of computer code? / Computer code के एक piece को define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<code>", "<programming>", "<pc>", "<script>"],
+      "answer": "<code>"
+    },
+    {
+      "id": 96,
+      "question": "Which tag is used to define keyboard input? / Keyboard input define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<kbd>", "<keyboard>", "<input>", "<key>"],
+      "answer": "<kbd>"
+    },
+    {
+      "id": 97,
+      "question": "Which tag is used to define sample output from a computer program? / Computer program के sample output define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<samp>", "<output>", "<sample>", "<code>"],
+      "answer": "<samp>"
+    },
+    {
+      "id": 98,
+      "question": "Which tag is used to define a variable in programming or mathematical expression? / Programming या mathematical expression में variable define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<var>", "<variable>", "<v>", "<math>"],
+      "answer": "<var>"
+    },
+    {
+      "id": 99,
+      "question": "Which tag is used to define preformatted text? / Preformatted text define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<pre>", "<formatted>", "<text>", "<code>"],
+      "answer": "<pre>"
+    },
+    {
+      "id": 100,
+      "question": "Which tag is used to define a thematic change in the content? / Content में thematic change define करने के लिए किस tag का use किया जाता है?",
+      "options": ["<hr>", "<break>", "<change>", "<thematic>"],
+      "answer": "<hr>"
+    }
+  ]
+},
+//=======================================================================
+    {
+      "testId": 2,
+      "testName": "Math Test 2",
+      "questions": [
         {
-            question: "What is the main function of the CPU in a computer system? / कंप्यूटर सिस्टम में CPU का मुख्य कार्य क्या है?",
-            options: [
-                "Store data permanently / डेटा को स्थायी रूप से संग्रहीत करना",
-                "Process instructions and perform calculations / निर्देशों को संसाधित करना और गणना करना",
-                "Display graphics / ग्राफिक्स प्रदर्शित करना",
-                "Connect to the internet / इंटरनेट से कनेक्ट करना"
-            ],
-            answer: 1
-        },
+          "id": 1,
+          "question": "Square root of 144?",
+          "options": ["10", "11", "12", "13"],
+          "answer": "12"
+        }
+      ]
+    },
+    {
+      "testId": 3,
+      "testName": "Math Test 3",
+      "questions": [
         {
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
+          "id": 1,
+          "question": "50 ÷ 2 = ?",
+          "options": ["20", "25", "30", "40"],
+          "answer": "25"
+        }
+      ]
+    },
+    {
+      "testId": 4,
+      "testName": "Math Test 4",
+      "questions": [
         {
-            question: "This is a very long question that should wrap to multiple lines in the PDF without being cut off. It demonstrates how the text will flow naturally to the next line when it reaches the end of the page width. The question continues here to ensure it's long enough to test the wrapping functionality properly. / यह एक बहुत लंबा प्रश्न है जिसे पीडीएफ में कई पंक्तियों में लपेटा जाना चाहिए बिना कटे हुए। यह प्रदर्शित करता है कि पाठ स्वाभाविक रूप से अगली पंक्ति में कैसे प्रवाहित होगा जब यह पृष्ठ की चौड़ाई के अंत तक पहुंचता है। प्रश्न यहां जारी है यह सुनिश्चित करने के लिए कि यह रैपिंग कार्यक्षमता का परीक्षण करने के लिए पर्याप्त लंबा है।",
-            options: [
-                "Option 1 for long question / लंबे प्रश्न के लिए विकल्प 1",
-                "Option 2 for long question / लंबे प्रश्न के लिए विकल्प 2",
-                "Option 3 for long question / लंबे प्रश्न के लिए विकल्प 3",
-                "Option 4 for long question / लंबे प्रश्न के लिए विकल्प 4"
-            ],
-            answer: 0
+          "id": 1,
+          "question": "10% of 200?",
+          "options": ["10", "15", "20", "25"],
+          "answer": "20"
+        }
+      ]
+    },
+    {
+      "testId": 5,
+      "testName": "Math Test 5",
+      "questions": [
+        {
+          "id": 1,
+          "question": "7 × 8 = ?",
+          "options": ["54", "56", "58", "60"],
+          "answer": "56"
+        }
+      ]
+    },
+    {
+      "testId": 6,
+      "testName": "Math Test 6",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Square of 15?",
+          "options": ["200", "220", "225", "250"],
+          "answer": "225"
+        }
+      ]
+    },
+    {
+      "testId": 7,
+      "testName": "Math Test 7",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Cube root of 27?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "3"
+        }
+      ]
+    },
+    {
+      "testId": 8,
+      "testName": "Math Test 8",
+      "questions": [
+        {
+          "id": 1,
+          "question": "100 ÷ 4 = ?",
+          "options": ["20", "25", "30", "40"],
+          "answer": "25"
+        }
+      ]
+    },
+    {
+      "testId": 9,
+      "testName": "Math Test 9",
+      "questions": [
+        {
+          "id": 1,
+          "question": "12 × 12 = ?",
+          "options": ["124", "142", "144", "146"],
+          "answer": "144"
+        }
+      ]
+    },
+    {
+      "testId": 10,
+      "testName": "Math Test 10",
+      "questions": [
+        {
+          "id": 1,
+          "question": "HCF of 8 and 12?",
+          "options": ["2", "4", "6", "8"],
+          "answer": "4"
+        }
+      ]
+    },
+    {
+      "testId": 11,
+      "testName": "Math Test 11",
+      "questions": [
+        {
+          "id": 1,
+          "question": "LCM of 5 and 7?",
+          "options": ["30", "35", "40", "45"],
+          "answer": "35"
+        }
+      ]
+    },
+    {
+      "testId": 12,
+      "testName": "Math Test 12",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Factorial of 5?",
+          "options": ["100", "120", "150", "200"],
+          "answer": "120"
+        }
+      ]
+    },
+    {
+      "testId": 13,
+      "testName": "Math Test 13",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Percentage of 50 out of 200?",
+          "options": ["20%", "25%", "30%", "40%"],
+          "answer": "25%"
+        }
+      ]
+    },
+    {
+      "testId": 14,
+      "testName": "Math Test 14",
+      "questions": [
+        {
+          "id": 1,
+          "question": "15 × 6 = ?",
+          "options": ["80", "85", "90", "95"],
+          "answer": "90"
+        }
+      ]
+    },
+    {
+      "testId": 15,
+      "testName": "Math Test 15",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Simple interest: P=1000, R=5%, T=2 years?",
+          "options": ["80", "90", "100", "110"],
+          "answer": "100"
+        }
+      ]
+    },
+    {
+      "testId": 16,
+      "testName": "Math Test 16",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Area of square with side 10?",
+          "options": ["50", "80", "100", "120"],
+          "answer": "100"
+        }
+      ]
+    },
+    {
+      "testId": 17,
+      "testName": "Math Test 17",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Perimeter of rectangle (l=20, b=10)?",
+          "options": ["40", "50", "60", "70"],
+          "answer": "60"
+        }
+      ]
+    },
+    {
+      "testId": 18,
+      "testName": "Math Test 18",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Circumference of circle (r=7)? (π=22/7)",
+          "options": ["42", "44", "46", "48"],
+          "answer": "44"
+        }
+      ]
+    },
+    {
+      "testId": 19,
+      "testName": "Math Test 19",
+      "questions": [
+        {
+          "id": 1,
+          "question": "20% of 250?",
+          "options": ["40", "45", "50", "55"],
+          "answer": "50"
+        }
+      ]
+    },
+    {
+      "testId": 20,
+      "testName": "Math Test 20",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Average of 10, 20, 30?",
+          "options": ["15", "20", "25", "30"],
+          "answer": "20"
         }
     ];
 }
