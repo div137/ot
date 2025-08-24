@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADCA</title>
+    <title>ADCA Exam</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- Required for Hindi support -->
+    <!-- Required for Hindi support -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+        }
+        
+        .options label {
+            white-space: pre-line;
         }
     </style>
     
@@ -18,12 +22,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #8e44ad;
@@ -45,8 +49,7 @@
         
         body {
             font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			font-family: 'Noto Sans Devanagari', Arial, sans-serif;
-
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--light-color);
@@ -220,7 +223,6 @@
             display: none;
             max-width: 1200px;
             margin: 20px auto;
-            background-color: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             overflow: hidden;
@@ -270,6 +272,7 @@
             margin-bottom: 35px;
             color: var(--dark-color);
             font-weight: 500;
+            white-space: pre-line;
         }
         
         .options {
@@ -286,6 +289,7 @@
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            white-space: pre-line;
         }
         
         .options label:hover {
@@ -542,6 +546,7 @@
         .result-item p {
             margin: 15px 0;
             font-size: 17px;
+            white-space: pre-line;
         }
         
         .share-btn {
@@ -763,7 +768,7 @@
     
     <div class="container">
         <div class="left-panel">
-            <div id="testTitle" class="test-title"><strong>ADCA</strong></div>
+            <div id="testTitle" class="test-title">ADCA Exam - Computer Fundamentals</div>
             <div class="quiz-container">
                 <div id="question" class="question"></div>
                 <div id="options" class="options"></div>
@@ -780,296 +785,1139 @@
             <div class="question-numbers" id="questionNumbers"></div>
         </div>
     </div>
-<script>
+    <script>
+        // Global variables
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let questions = [];
+        let userName = "";
+        let timerInterval;
+        let timeLeft = 60 * 60; // Changed to 60 minutes
+        let testStarted = false;
+        const testName = "ADCA Exam";
 
-
-// Global variables
-let currentQuestionIndex = 0;
-let userAnswers = [];
-let questions = [];
-let userName = "";
-let timerInterval;
-let timeLeft = 40 * 60;
-let testStarted = false;
-const testName = "General Knowledge Test";
-
-// Fisher-Yates shuffle algorithm
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function shuffleQuestion(question) {
-    const shuffledOptions = [...question.options];
-    const correctAnswer = shuffledOptions[question.answer];
-    
-    for (let i = shuffledOptions.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
-    }
-    
-    const newAnswerIndex = shuffledOptions.indexOf(correctAnswer);
-    
-    return {
-        question: question.question,
-        options: shuffledOptions,
-        answer: newAnswerIndex
-    };
-}
-
-// Generate sample questions with Hindi text
-function generateQuestions() {
-    return [
-        {
-            question: "What is the main function of the CPU in a computer system? / कंप्यूटर सिस्टम में CPU का मुख्य कार्य क्या है?",
-            options: [
-                "Store data permanently / डेटा को स्थायी रूप से संग्रहीत करना",
-                "Process instructions and perform calculations / निर्देशों को संसाधित करना और गणना करना",
-                "Display graphics / ग्राफिक्स प्रदर्शित करना",
-                "Connect to the internet / इंटरनेट से कनेक्ट करना"
-            ],
-            answer: 1
-        },
-        {
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-        {
-            question: "This is a very long question that should wrap to multiple lines in the PDF without being cut off. It demonstrates how the text will flow naturally to the next line when it reaches the end of the page width. The question continues here to ensure it's long enough to test the wrapping functionality properly. / यह एक बहुत लंबा प्रश्न है जिसे पीडीएफ में कई पंक्तियों में लपेटा जाना चाहिए बिना कटे हुए। यह प्रदर्शित करता है कि पाठ स्वाभाविक रूप से अगली पंक्ति में कैसे प्रवाहित होगा जब यह पृष्ठ की चौड़ाई के अंत तक पहुंचता है। प्रश्न यहां जारी है यह सुनिश्चित करने के लिए कि यह रैपिंग कार्यक्षमता का परीक्षण करने के लिए पर्याप्त लंबा है।",
-            options: [
-                "Option 1 for long question / लंबे प्रश्न के लिए विकल्प 1",
-                "Option 2 for long question / लंबे प्रश्न के लिए विकल्प 2",
-                "Option 3 for long question / लंबे प्रश्न के लिए विकल्प 3",
-                "Option 4 for long question / लंबे प्रश्न के लिए विकल्प 4"
-            ],
-            answer: 0
+        // Fisher-Yates shuffle algorithm
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         }
-    ];
-}
 
-function startTest() {
-    // Get user name
-    userName = document.getElementById('userNameInput').value.trim();
-    
-    if (userName === "") {
-        alert("Please enter your name to continue");
-        return;
+        function shuffleQuestions(questionsArray) {
+            // First shuffle the questions array
+            const shuffledQuestions = [...questionsArray];
+            
+            // Fisher-Yates shuffle algorithm for the questions array
+            for (let i = shuffledQuestions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
+            }
+            
+            // Then shuffle options within each question
+            shuffledQuestions.forEach(question => {
+                // Store the correct answer index
+                const correctAnswer = question.options[question.answer];
+                
+                // Shuffle the options array
+                shuffleArray(question.options);
+                
+                // Find the new index of the correct answer
+                question.answer = question.options.indexOf(correctAnswer);
+            });
+            
+            return shuffledQuestions;
+        }
+
+        // Generate sample questions with Hindi text
+        function generateQuestions() {
+            return [ 
+	   
+	   
+
+    {
+        "question": "What is the default file extension for a Microsoft Word document saved in a modern version (2007+)?<br>Microsoft Word के आधुनिक संस्करण (2007+) में सेव किए गए डॉक्यूमेंट की डिफॉल्ट फाइल एक्सटेंशन क्या है?",
+        "options": [
+            ".doc",
+            ".txt",
+            ".docx",
+            ".word"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which tab on the Ribbon contains the most commonly used commands like font formatting and copying/pasting?<br>रिबन पर कौन सा टैब सबसे अधिक उपयोग किए जाने वाले कमांड जैसे फ़ॉन्ट फ़ॉर्मेटिंग और कॉपी/पेस्ट करना रखता है?",
+        "options": [
+            "Insert",
+            "Review",
+            "Home",
+            "View"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What is the primary function of the 'Save As' command?<br>'Save As' कमांड का प्राथमिक कार्य क्या है?",
+        "options": [
+            "To save a document for the first time<br>पहली बार एक दस्तावेज़ सहेजने के लिए",
+            "To save a copy of a document with a new name or location<br>नए नाम या स्थान के साथ दस्तावेज़ की एक प्रति सहेजने के लिए",
+            "To automatically save a backup<br>स्वचालित रूप से एक बैकअप सहेजने के लिए",
+            "To close the document<br>दस्तावेज़ बंद करने के लिए"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which keyboard shortcut is used to undo the last action?<br>अंतिम क्रिया को पूर्ववत करने के लिए किस कीबोर्ड शॉर्टकट का उपयोग किया जाता है?",
+        "options": [
+            "Ctrl + Y",
+            "Ctrl + Z",
+            "Ctrl + X",
+            "Ctrl + C"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the name of the feature that automatically moves text to the next line when it reaches the right margin?<br>उस सुविधा का क्या नाम है जो दाएं मार्जिन तक पहुंचने पर स्वचालित रूप से टेक्स्ट को अगली पंक्ति में ले जाती है?",
+        "options": [
+            "Alignment",
+            "Text Scaling",
+            "Word Wrap",
+            "Line Break"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which view most accurately shows how the document will look when printed?<br>कौन सा दृश्य सबसे सटीक रूप से दिखाता है कि दस्तावेज़ प्रिंट होने पर कैसा दिखेगा?",
+        "options": [
+            "Draft View",
+            "Read Mode",
+            "Web Layout",
+            "Print Layout"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "The blinking vertical line that indicates where text will be inserted is called the:<br>टिमटिमाती ऊर्ध्वाधर रेखा जो इंगित करती है कि टेक्स्ट कहाँ डाला जाएगा, उसे कहते हैं:",
+        "options": [
+            "Pointer",
+            "Insertion Point",
+            "Cursor",
+            "Selection"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which button allows you to see non-printing characters like spaces and paragraph marks (¶)?<br>कौन सा बटन आपको गैर-प्रिंटिंग वर्ण जैसे स्थान और पैराग्राफ चिह्न (¶) देखने की अनुमति देता है?",
+        "options": [
+            "Navigator",
+            "Format Painter",
+            "Show/Hide ¶",
+            "Designer"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What does the keyboard shortcut Ctrl + B do?<br>कीबोर्ड शॉर्टकट Ctrl + B क्या करता है?",
+        "options": [
+            "Copies selected text<br>चयनित पाठ की प्रतिलिपि बनाता है",
+            "Bolds selected text<br>चयनित पाठ को बोल्ड करता है",
+            "Opens the Font dialog box<br>फ़ॉन्ट संवाद बॉक्स खोलता है",
+            "Creates a new document<br>एक नया दस्तावेज़ बनाता है"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What does the keyboard shortcut Ctrl + I do?<br>कीबोर्ड शॉर्टकट Ctrl + I क्या करता है?",
+        "options": [
+            "Increases font size<br>फ़ॉन्ट आकार बढ़ाता है",
+            "Italicizes selected text<br>चयनित पाठ को इटैलिक करता है",
+            "Indents a paragraph<br>एक पैराग्राफ को इंडेंट करता है",
+            "Inserts a hyperlink<br>एक हाइपरलिंक डालता है"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What does the keyboard shortcut Ctrl + U do?<br>कीबोर्ड शॉर्टकट Ctrl + U क्या करता है?",
+        "options": [
+            "Undoes the last action<br>अंतिम क्रिया को पूर्ववत करता है",
+            "Underlines selected text<br>चयनित पाठ को रेखांकित करता है",
+            "Unlocks a field<br>एक फ़ील्ड अनलॉक करता है",
+            "Opens the Page Setup dialog<br>पेज सेटअप संवाद खोलता है"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which feature allows you to reverse the action of 'Undo'?<br>कौन सी सुविधा आपको 'पूर्ववत' की क्रिया को उलटने की अनुमति देती है?",
+        "options": [
+            "Repeat",
+            "Redo",
+            "Restore",
+            "Reverse"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which dialog box allows you to adjust the top, bottom, left, and right edges of the text area on a page?<br>कौन सा संवाद बॉक्स आपको एक पृष्ठ पर टेक्स्ट क्षेत्र के शीर्ष, नीचे, बाएँ और दाएँ किनारों को समायोजित करने की अनुमति देता है?",
+        "options": [
+            "Paragraph dialog",
+            "Format Page",
+            "Page Setup",
+            "Margins"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "Portrait and Landscape are types of what?<br>पोट्रेट और लैंडस्केप किसके प्रकार हैं?",
+        "options": [
+            "Page Borders",
+            "Page Orientation",
+            "Themes",
+            "Page Sizes"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which tool is used to copy the formatting from one piece of text and apply it to another?<br>एक टेक्स्ट से फ़ॉर्मेटिंग कॉपी करने और उसे दूसरे पर लागू करने के लिए किस टूल का उपयोग किया जाता है?",
+        "options": [
+            "Style Brush",
+            "Copy Painter",
+            "Format Painter",
+            "Font Duplicator"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What is the purpose of the Thesaurus tool?<br>थिसॉरस टूल का उद्देश्य क्या है?",
+        "options": [
+            "Check spelling",
+            "Find synonyms and antonyms",
+            "Count words",
+            "Translate text"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which feature automatically corrects common typing mistakes as you type (e.g., changing 'teh' to 'the')?<br>कौन सी सुविधा टाइप करते समय सामान्य टाइपिंग गलतियों को स्वचालित रूप से सही करती है (उदाहरण के लिए, 'teh' को 'the' में बदलना)?",
+        "options": [
+            "AutoText",
+            "AutoFormat",
+            "AutoCorrect",
+            "AutoComplete"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What is the keyboard shortcut for saving a document?<br>किसी दस्तावेज़ को सहेजने के लिए कीबोर्ड शॉर्टकट क्या है?",
+        "options": [
+            "Ctrl + S",
+            "Ctrl + P",
+            "F12",
+            "Alt + S"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "What is the keyboard shortcut for opening a document?<br>दस्तावेज़ खोलने के लिए कीबोर्ड शॉर्टकट क्या है?",
+        "options": [
+            "Ctrl + N",
+            "Ctrl + O",
+            "Ctrl + F",
+            "Ctrl + D"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the keyboard shortcut for creating a new, blank document?<br>एक नया, रिक्त दस्तावेज़ बनाने के लिए कीबोर्ड शॉर्टकट क्या है?",
+        "options": [
+            "Ctrl + O",
+            "Ctrl + N",
+            "Ctrl + W",
+            "Ctrl + M"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which ribbon tab would you use to insert a table, picture, or shape?<br>टेबल, पिक्चर या शेप डालने के लिए आप किस रिबन टैब का उपयोग करेंगे?",
+        "options": [
+            "Home",
+            "Insert",
+            "Design",
+            "Layout"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which ribbon tab contains the commands for 'Track Changes' and adding 'Comments'?<br>किस रिबन टैब में 'ट्रैक परिवर्तन' और 'टिप्पणियाँ' जोड़ने के आदेश होते हैं?",
+        "options": [
+            "References",
+            "Review",
+            "View",
+            "Mailings"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which ribbon tab allows you to adjust the page margins, orientation, and size?<br>कौन सा रिबन टैब आपको पेज मार्जिन, ओरिएंटेशन और आकार समायोजित करने की अनुमति देता है?",
+        "options": [
+            "Design",
+            "Insert",
+            "Layout",
+            "View"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which feature allows you to combine a main document (like a letter) with a data source (like addresses) to create personalized documents?<br>कौन सी सुविधा आपको व्यक्तिगत दस्तावेज़ बनाने के लिए एक मुख्य दस्तावेज़ (जैसे एक पत्र) को डेटा स्रोत (जैसे पते) के साथ जोड़ने की अनुमति देती है?",
+        "options": [
+            "Form Letters",
+            "Mail Merge",
+            "Document Merge",
+            "Data Import"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the name of the pre-designed visual frameworks that affect the colors, fonts, and effects of the entire document?<br>पूर्व-निर्मित दृश्य ढांचे का क्या नाम है जो पूरे दस्तावेज़ के रंगों, फ़ॉन्ट्स और प्रभावों को प्रभावित करता है?",
+        "options": [
+            "Styles",
+            "Templates",
+            "Themes",
+            "Designs"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which item is NOT a type of section break?<br>कौन सा आइटम सेक्शन ब्रेक का प्रकार नहीं है?",
+        "options": [
+            "Next Page",
+            "Continuous",
+            "Even Page",
+            "Page Border"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "Headers and Footers are found in which tab?<br>हेडर और फूटर किस टैब में पाए जाते हैं?",
+        "options": [
+            "Home",
+            "Insert",
+            "Design",
+            "View"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the purpose of a Watermark?<br>वॉटरमार्क का उद्देश्य क्या है?",
+        "options": [
+            "To add a background image<br>एक बैकग्राउंड इमेज जोड़ने के लिए",
+            "To add faint text or an image behind document content (e.g., 'CONFIDENTIAL')<br>दस्तावेज़ सामग्री के पीछे हल्का पाठ या छवि जोड़ने के लिए (उदा., 'गोपनीय')",
+            "To protect the document from editing<br>दस्तावेज़ को संपादन से बचाने के लिए",
+            "To add a border around the page<br>पृष्ठ के चारों ओर एक बॉर्डर जोड़ने के लिए"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which feature allows you to see all changes made by reviewers and choose to accept or reject them?<br>कौन सी सुविधा आपको समीक्षकों द्वारा किए गए सभी परिवर्तनों को देखने और उन्हें स्वीकार या अस्वीकार करने का विकल्प चुनने की अनुमति देती है?",
+        "options": [
+            "Compare",
+            "Version History",
+            "Comments",
+            "Track Changes"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "What is the keyboard shortcut to initiate a spell check?<br>स्पेल चेक शुरू करने के लिए कीबोर्ड शॉर्टकट क्या है?",
+        "options": [
+            "F1",
+            "F7",
+            "F12",
+            "Alt + F7"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which feature allows you to create a reusable block of text or graphics?<br>कौन सी सुविधा आपको टेक्स्ट या ग्राफिक्स का पुन: प्रयोज्य ब्लॉक बनाने की अनुमति देती है?",
+        "options": [
+            "Quick Part",
+            "Format Painter",
+            "Building Block",
+            "AutoText"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "To protect a document with a password so only authorized users can open it, you go to:<br>किसी दस्तावेज़ को पासवर्ड से सुरक्षित करने के लिए ताकि केवल अधिकृत उपयोगकर्ता ही इसे खोल सकें, आप कहाँ जाते हैं?",
+        "options": [
+            "Review > Protect Document",
+            "File > Info > Protect Document",
+            "Home > Restrict Editing",
+            "Insert > Password"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What does the 'Keep with next' paragraph setting prevent?<br>'Keep with next' पैराग्राफ सेटिंग क्या रोकती है?",
+        "options": [
+            "A paragraph from being hyphenated<br>किसी पैराग्राफ को हाइफ़नेटेड होने से रोकना",
+            "A paragraph from splitting across two pages<br>किसी पैराग्राफ के दो पृष्ठों में विभाजित होने से रोकना",
+            "A paragraph from having a page break within it<br>किसी पैराग्राफ के अंदर पेज ब्रेक होने से रोकना",
+            "A heading from being separated from the following paragraph<br>किसी हेडिंग को अगले पैराग्राफ से अलग होने से रोकना"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "Which view displays the document structure as collapsible headings?<br>कौन सा दृश्य दस्तावेज़ संरचना को संकुचित करने योग्य शीर्षकों के रूप में प्रदर्शित करता है?",
+        "options": [
+            "Draft View",
+            "Outline View",
+            "Navigation Pane",
+            "Web Layout"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "'SmartArt' is primarily used for:<br>'SmartArt' मुख्य रूप से किसके लिए उपयोग किया जाता है?",
+        "options": [
+            "Creating mathematical equations<br>गणितीय समीकरण बनाना",
+            "Designing and inserting visual graphics and diagrams<br>दृश्य ग्राफिक्स और आरेख डिजाइन करना और डालना",
+            "Applying artistic effects to images<br>छवियों पर कलात्मक प्रभाव लागू करना",
+            "Generating random text for placeholders<br>प्लेसहोल्डर्स के लिए यादृच्छिक पाठ उत्पन्न करना"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the purpose of a Style in MS Word?<br>MS Word में स्टाइल का उद्देश्य क्या है?",
+        "options": [
+            "To change the theme colors of the entire document<br>पूरे दस्तावेज़ के थीम रंगों को बदलने के लिए",
+            "To apply a set of formatting choices consistently and quickly<br>फ़ॉर्मेटिंग विकल्पों के एक सेट को लगातार और जल्दी से लागू करने के लिए",
+            "To check the document for stylistic writing errors<br>दस्तावेज़ की शैलीगत लेखन त्रुटियों की जांच करने के लिए",
+            "To change the language of the proofing tools<br>प्रूफिंग टूल्स की भाषा बदलने के लिए"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which feature lets you create a list of headings with their corresponding page numbers at the beginning of a document?<br>कौन सी सुविधा आपको दस्तावेज़ की शुरुआत में उनके संबंधित पृष्ठ संख्याओं के साथ शीर्षकों की एक सूची बनाने देती है?",
+        "options": [
+            "Bibliography",
+            "Caption",
+            "Table of Contents",
+            "Index"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which feature is used to add citations and generate a bibliography?<br>उद्धरण जोड़ने और ग्रन्थसूची उत्पन्न करने के लिए किस सुविधा का उपयोग किया जाता है?",
+        "options": [
+            "Footnotes",
+            "Citations & Bibliography",
+            "Captions",
+            "References"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What are endnotes?<br>एंडनोट्स क्या हैं?",
+        "options": [
+            "Notes placed at the end of a section<br>एक अनुभाग के अंत में रखे गए नोट्स",
+            "Notes placed at the end of the document<br>दस्तावेज़ के अंत में रखे गए नोट्स",
+            "Notes placed in the document's margin<br>दस्तावेज़ के मार्जिन में रखे गए नोट्स",
+            "Another name for footnotes<br>फ़ुटनोट्स का दूसरा नाम"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "To quickly jump to a specific page, section, or heading, you should use the:<br>किसी विशिष्ट पृष्ठ, अनुभाग या शीर्षक पर जल्दी से जाने के लिए, आपको इसका उपयोग करना चाहिए:",
+        "options": [
+            "Find tool",
+            "Go To tool",
+            "Navigation Pane",
+            "Browse Object"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What is the keyboard shortcut for the Find command?<br>Find कमांड के लिए कीबोर्ड शॉर्टकट क्या है?",
+        "options": [
+            "Ctrl + G",
+            "Ctrl + H",
+            "Ctrl + F",
+            "Ctrl + D"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What is the keyboard shortcut for the Replace command?<br>Replace कमांड के लिए कीबोर्ड शॉर्टकट क्या है?",
+        "options": [
+            "Ctrl + G",
+            "Ctrl + H",
+            "Ctrl + F",
+            "Ctrl + R"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which option is NOT a text alignment option?<br>कौन सा विकल्प एक टेक्स्ट अलाइनमेंट विकल्प नहीं है?",
+        "options": [
+            "Justify",
+            "Distribute",
+            "Center",
+            "Top"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "Line spacing is adjusted in the __________ dialog box.<br>लाइन स्पेसिंग __________ डायलॉग बॉक्स में समायोजित की जाती है.",
+        "options": [
+            "Font",
+            "Paragraph",
+            "Page Setup",
+            "Styles"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What does the Format Painter button look like?<br>फ़ॉर्मेट पेंटर बटन कैसा दिखता है?",
+        "options": [
+            "A clipboard",
+            "A magnifying glass",
+            "A paintbrush",
+            "A eyedropper"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which feature allows you to practice reading a document without editing it?<br>कौन सी सुविधा आपको बिना संपादन किए दस्तावेज़ पढ़ने का अभ्यास करने की अनुमति देती है?",
+        "options": [
+            "Read Mode",
+            "Print Layout",
+            "Draft View",
+            "Web Layout"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "The 'Zoom' slider is located in which corner of the Word window?<br>'ज़ूम' स्लाइडर वर्ड विंडो के किस कोने में स्थित होता है?",
+        "options": [
+            "Top-left",
+            "Top-right",
+            "Bottom-left",
+            "Bottom-right"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "What is the purpose of the Navigation Pane?<br>नेविगेशन पेन का उद्देश्य क्या है?",
+        "options": [
+            "To manage styles",
+            "To search and navigate through headings, pages, and results",
+            "To review comments",
+            "To insert navigation buttons"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which key do you hold down to select multiple non-adjacent items?<br>कई गैर-आसन्न आइटमों का चयन करने के लिए आप किस कुंजी को दबाए रखते हैं?",
+        "options": [
+            "Shift",
+            "Alt",
+            "Ctrl",
+            "Tab"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "To select an entire sentence, hold down the Ctrl key and:<br>पूरे वाक्य का चयन करने के लिए, Ctrl कुंजी दबाए रखें और:",
+        "options": [
+            "Double-click anywhere in the sentence",
+            "Click once anywhere in the sentence",
+            "Triple-click anywhere in the sentence",
+            "Drag over the sentence"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "To select an entire paragraph, you can:<br>पूरे पैराग्राफ का चयन करने के लिए, आप कर सकते हैं:",
+        "options": [
+            "Click once in the left margin",
+            "Double-click in the left margin",
+            "Triple-click anywhere in the paragraph",
+            "Both b and c"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "What is the keyboard shortcut to select the entire document?<br>पूरे दस्तावेज़ का चयन करने के लिए कीबोर्ड शॉर्टकट क्या है?",
+        "options": [
+            "Ctrl + A",
+            "Ctrl + S",
+            "Ctrl + D",
+            "Ctrl + E"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "Which feature lets you position text in a specific location, like a form, by clicking to move the insertion point there?<br>कौन सी सुविधा आपको एक विशिष्ट स्थान पर, जैसे किसी फ़ॉर्म में, टेक्स्ट को रखने की अनुमति देती है, वहां इंसर्शन पॉइंट ले जाने के लिए क्लिक करके?",
+        "options": [
+            "Spaces",
+            "Tabs",
+            "Click and Type",
+            "Text Boxes"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which type of tab stop adds a line before the text?<br>किस प्रकार का टैब स्टॉप टेक्स्ट से पहले एक रेखा जोड़ता है?",
+        "options": [
+            "Left Tab",
+            "Right Tab",
+            "Bar Tab",
+            "Decimal Tab"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which key is used to manually force a line break without starting a new paragraph?<br>नया पैराग्राफ शुरू किए बिना मैन्युअल रूप से लाइन ब्रेक फोर्स करने के लिए किस कुंजी का उपयोग किया जाता है?",
+        "options": [
+            "Enter",
+            "Tab",
+            "Shift + Enter",
+            "Ctrl + Enter"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What does pressing Ctrl + Enter do?<br>Ctrl + Enter दबाने से क्या होता है?",
+        "options": [
+            "Inserts a page break",
+            "Inserts a section break",
+            "Inserts a column break",
+            "Inserts a line break"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "Which type of break allows you to have different formatting (like columns) on the same page?<br>किस प्रकार का ब्रेक आपको एक ही पृष्ठ पर अलग-अलग फ़ॉर्मेटिंग (जैसे कॉलम) रखने की अनुमति देता है?",
+        "options": [
+            "Page Break",
+            "Column Break",
+            "Continuous Section Break",
+            "Next Page Section Break"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which dialog box allows you to control hyphenation in a document?<br>कौन सा डायलॉग बॉक्स आपको दस्तावेज़ में हाइफ़नेशन नियंत्रित करने की अनुमति देता है?",
+        "options": [
+            "Paragraph dialog",
+            "Hyphenation dialog",
+            "Page Setup dialog",
+            "Font dialog"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the default printer paper size in the U.S.?<br>अमेरिका में डिफ़ॉल्ट प्रिंटर पेपर आकार क्या है?",
+        "options": [
+            "A4",
+            "Legal",
+            "Letter",
+            "Executive"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Which feature would you use to add a decorative line around the outside of a page?<br>पृष्ठ के बाहरी हिस्से के चारों ओर एक सजावटी रेखा जोड़ने के लिए आप किस सुविधा का उपयोग करेंगे?",
+        "options": [
+            "Page Border",
+            "Page Color",
+            "Watermark",
+            "Paragraph Border"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "What are the small circles and squares that appear around a selected object called, which allow you to resize it?<br>चयनित वस्तु के चारों ओर दिखने वाले छोटे वृत्त और वर्गों को क्या कहा जाता है, जो आपको इसका आकार बदलने की अनुमति देते हैं?",
+        "options": [
+            "Anchors",
+            "Handles",
+            "Points",
+            "Selectors"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "The 'Wrap Text' options for an image define the relationship between the image and the surrounding:<br>किसी छवि के लिए 'टेक्स्ट रैप' विकल्प छवि और आसपास के बीच के संबंध को परिभाषित करते हैं:",
+        "options": [
+            "Page",
+            "Text",
+            "Margin",
+            "Border"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which option places an image on the page behind the text?<br>कौन सा विकल्प टेक्स्ट के पीछे पेज पर एक छवि रखता है?",
+        "options": [
+            "In Front of Text",
+            "Behind Text",
+            "In Line with Text",
+            "Square"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the anchor symbol that appears when an image is not In Line with Text?<br>एंकर प्रतीक क्या है जो तब दिखाई देता है जब कोई छवि टेक्स्ट के साथ लाइन में नहीं होती है?",
+        "options": [
+            "It shows the image is locked",
+            "It shows the paragraph to which the image is attached",
+            "It shows the image is selected",
+            "It shows the image is a hyperlink"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "To combine multiple shapes or objects into a single unit, you would use the Group command after selecting them while holding the:<br>कई आकृतियों या वस्तुओं को एक इकाई में संयोजित करने के लिए, आप उन्हें चुनते समय दबाए रखने के बाद Group कमांड का उपयोग करेंगे:",
+        "options": [
+            "Alt key",
+            "Shift key",
+            "Ctrl key",
+            "Tab key"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which feature allows you to create a duplicate of an object by dragging it while holding a key?<br>कौन सी सुविधा आपको एक कुंजी दबाए रखते हुए किसी वस्तु को खींचकर उसकी एक प्रति बनाने की अनुमति देती है?",
+        "options": [
+            "Hold Alt and drag",
+            "Hold Ctrl and drag",
+            "Hold Shift and drag",
+            "Hold Tab and drag"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which chart type is best for showing trends over time?<br>समय के साथ रुझान दिखाने के लिए कौन सा चार्ट प्रकार सबसे अच्छा है?",
+        "options": [
+            "Pie Chart",
+            "Column or Line Chart",
+            "Radar Chart",
+            "Scatter Chart"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which key allows you to constrain the proportions of a shape while resizing it?<br>कौन सी कुंजी आपको किसी आकृति का आकार बदलते समय उसके अनुपात को सीमित करने की अनुमति देती है?",
+        "options": [
+            "Alt",
+            "Ctrl",
+            "Shift",
+            "Tab"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What is the purpose of the 'Selection Pane'?<br>'Selection Pane' का उद्देश्य क्या है?",
+        "options": [
+            "To select different page layouts",
+            "To view and manage all objects on the page, especially when they are overlapping",
+            "To select text with similar formatting",
+            "To manage selection options"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which feature lets you remove the background from an image?<br>कौन सी सुविधा आपको किसी छवि से पृष्ठभूमि हटाने देती है?",
+        "options": [
+            "Color Correction",
+            "Artistic Effects",
+            "Remove Background",
+            "Crop"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "To make text flow from one text box to another, you create a:<br>एक टेक्स्ट बॉक्स से दूसरे टेक्स्ट बॉक्स में टेक्स्ट को फ्लो करने के लिए, आप एक बनाते हैं:",
+        "options": [
+            "Link",
+            "Bond",
+            "Connection",
+            "Bridge"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "What is the main purpose of using a table?<br>टेबल का उपयोग करने का मुख्य उद्देश्य क्या है?",
+        "options": [
+            "To perform calculations",
+            "To organize and present data in rows and columns",
+            "To create forms",
+            "To enhance page layout"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which key moves the insertion point to the next cell in a table?<br>कौन सी कुंजी इंसर्शन पॉइंट को टेबल में अगले सेल में ले जाती है?",
+        "options": [
+            "Enter",
+            "Spacebar",
+            "Tab",
+            "Arrow keys"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "To combine two or more table cells into one, you use the command:<br>दो या दो से अधिक टेबल सेल को एक में जोड़ने के लिए, आप कमांड का उपयोग करते हैं:",
+        "options": [
+            "Merge Cells",
+            "Combine Cells",
+            "Join Cells",
+            "Unsplit Cells"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "The formula used in a Word table to calculate the sum of values above the current cell is:<br>वर्तमान सेल के ऊपर के मानों के योग की गणना करने के लिए Word टेबल में उपयोग किया जाने वाला फॉर्मूला है:",
+        "options": [
+            "=SUM(ABOVE)",
+            "=TOTAL(UP)",
+            "=ADD(TOP)",
+            "=CALCULATE(SUPERIOR)"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "Which tab appears when a table is selected, containing table-specific tools?<br>टेबल के चयनित होने पर कौन सा टैब दिखाई देता है, जिसमें टेबल-विशिष्ट टूल्स होते हैं?",
+        "options": [
+            "Table Design",
+            "Layout",
+            "Table Tools",
+            "Both a and b (Table Design and Layout)"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "To sort data in a table alphabetically, you use the Sort command found on the _________ tab.<br>टेबल में डेटा को वर्णानुक्रम में क्रमबद्ध करने के लिए, आप _________ टैब पर पाए जाने वाले Sort कमांड का उपयोग करते हैं.",
+        "options": [
+            "Home",
+            "Insert",
+            "Layout (under Table Tools)",
+            "Review"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Rows in a table run:<br>टेबल में पंक्तियाँ चलती हैं:",
+        "options": [
+            "Vertically",
+            "Horizontally",
+            "Diagonally",
+            "They are called columns"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is a macro?<br>मैक्रो क्या है?",
+        "options": [
+            "A type of virus",
+            "A recorded series of commands to automate a task",
+            "A large image",
+            "A data source for mail merge"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Macros are typically created and edited using which language?<br>मैक्रो आमतौर पर किस भाषा का उपयोग करके बनाए और संपादित किए जाते हैं?",
+        "options": [
+            "Python",
+            "Java",
+            "VBA (Visual Basic for Applications)",
+            "C++"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "Where are macro-related options located?<br>मैक्रो-संबंधित विकल्प कहाँ स्थित हैं?",
+        "options": [
+            "The View tab",
+            "The Developer tab",
+            "The File > Options menu",
+            "The Review tab"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is a template (.dotx file)?<br>टेम्पलेट (.dotx फ़ाइल) क्या है?",
+        "options": [
+            "A finished document",
+            "A pre-designed document that provides a starting point for new documents",
+            "A type of style",
+            "A locked document"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Where are custom templates stored to be accessed from the 'New' menu?<br>कस्टम टेम्पलेट्स कहाँ संग्रहीत किए जाते हैं ताकि उन्हें 'New' मेनू से एक्सेस किया जा सके?",
+        "options": [
+            "The Documents folder",
+            "The Custom Office Templates folder",
+            "The Desktop",
+            "The Downloads folder"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "The 'Document Inspector' is used to:<br>'Document Inspector' का उपयोग किसके लिए किया जाता है?",
+        "options": [
+            "Check for spelling errors",
+            "Check for grammatical errors",
+            "Find and remove hidden metadata and personal information",
+            "Inspect the document's design"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "What feature allows you to see previous versions of a document that were automatically saved?<br>कौन सी सुविधा आपको दस्तावेज़ के पिछले संस्करणों को देखने की अनुमति देती है जो स्वचालित रूप से सहेजे गए थे?",
+        "options": [
+            "Track Changes",
+            "Document History",
+            "Version History",
+            "Compare"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "To translate a selected word or phrase, you can use the Translate tool in the _________ tab.<br>चयनित शब्द या वाक्यांश का अनुवाद करने के लिए, आप _________ टैब में अनुवाद टूल का उपयोग कर सकते हैं.",
+        "options": [
+            "Review",
+            "View",
+            "References",
+            "Insert"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "Which feature lets you add descriptive text that appears when you hover the mouse over a word or phrase?<br>कौन सी सुविधा आपको वर्णनात्मक पाठ जोड़ने देती है जो तब दिखाई देता है जब आप माउस को किसी शब्द या वाक्यांश पर घुमाते हैं?",
+        "options": [
+            "Caption",
+            "ScreenTip",
+            "Comment",
+            "Footnote"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What is the purpose of adding 'Alt Text' to an image?<br>किसी छवि में 'Alt Text' जोड़ने का उद्देश्य क्या है?",
+        "options": [
+            "To improve its resolution",
+            "To provide a description for accessibility tools like screen readers",
+            "To add a copyright notice",
+            "To make it load faster on the web"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "To create a fillable form with checkboxes and text fields, you would use controls from the:<br>चेकबॉक्स और टेक्स्ट फ़ील्ड के साथ एक भरने योग्य फ़ॉर्म बनाने के लिए, आप नियंत्रणों का उपयोग करेंगे:",
+        "options": [
+            "Insert tab",
+            "Developer tab",
+            "Design tab",
+            "Layout tab"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "What does the 'Restrict Editing' feature do?<br>'Restrict Editing' सुविधा क्या करती है?",
+        "options": [
+            "Prevents the document from being opened",
+            "Limits how others can format and edit the document",
+            "Converts the document to a PDF",
+            "Encrypts the document"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which option is used to find the number of words in a document?<br>दस्तावेज़ में शब्दों की संख्या ज्ञात करने के लिए किस विकल्प का उपयोग किया जाता है?",
+        "options": [
+            "File > Info",
+            "Review > Word Count",
+            "View > Statistics",
+            "References > Index"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "The keyboard shortcut F12 is used for:<br>कीबोर्ड शॉर्टकट F12 का उपयोग किसके लिए किया जाता है?",
+        "options": [
+            "Saving the document",
+            "Opening the Save As dialog box",
+            "Printing the document",
+            "Opening the Open dialog box"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "The keyboard shortcut Shift + F3 does what to selected text?<br>कीबोर्ड शॉर्टकट Shift + F3 चयनित पाठ के साथ क्या करता है?",
+        "options": [
+            "Changes case (e.g., UPPERCASE, lowercase, Capitalize Each Word)",
+            "Makes it bold",
+            "Increases font size",
+            "Opens the Font dialog box"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "What is the purpose of bookmarks?<br>बुकमार्क का उद्देश्य क्या है?",
+        "options": [
+            "To mark a place in a document you want to quickly return to",
+            "To save a website link",
+            "To mark important pages for printing",
+            "To create a table of contents"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "Cross-references are used to refer to items like headings, figures, and tables elsewhere in the document and are found in the _________ tab.<br>क्रॉस-रेफरेंस का उपयोग दस्तावेज़ में अन्य स्थानों पर शीर्षक, चित्र और तालिकाओं जैसी वस्तुओं को संदर्भित करने के लिए किया जाता है और ये _________ टैब में पाए जाते हैं.",
+        "options": [
+            "Insert",
+            "References",
+            "Links",
+            "Review"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "To add a caption (e.g., 'Figure 1') to an image, you use the Insert Caption command in the _________ tab.<br>किसी छवि में एक कैप्शन (उदा., 'Figure 1') जोड़ने के लिए, आप _________ टैब में Insert Caption कमांड का उपयोग करते हैं.",
+        "options": [
+            "Insert",
+            "References",
+            "Review",
+            "Layout"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "Which view hides the Ribbon to maximize screen space for reading the document?<br>दस्तावेज़ पढ़ने के लिए स्क्रीन स्थान को अधिकतम करने के लिए कौन सा दृश्य रिबन को छुपाता है?",
+        "options": [
+            "Read Mode",
+            "Full Screen Reading",
+            "Print Layout",
+            "Collapse the Ribbon"
+        ],
+        "answer": 0
+    },
+    {
+        "question": "To split the document window into two panes that can scroll independently, you use the command:<br>दस्तावेज़ विंडो को दो पैनों में विभाजित करने के लिए जो स्वतंत्र रूप से स्क्रॉल कर सकते हैं, आप कमांड का उपयोग करते हैं:",
+        "options": [
+            "New Window",
+            "Arrange All",
+            "Split",
+            "View Side by Side"
+        ],
+        "answer": 2
+    },
+    {
+        "question": "The 'Compare' feature is used to:<br>'Compare' सुविधा का उपयोग किसके लिए किया जाता है?",
+        "options": [
+            "Compare prices of software",
+            "Combine revisions from multiple documents into one",
+            "Check the difference between two documents",
+            "Both b and c"
+        ],
+        "answer": 3
+    },
+    {
+        "question": "What is the purpose of the 'Document Recovery' pane that sometimes appears when Word reopens after a crash?<br>'Document Recovery' पेन का उद्देश्य क्या है जो कभी-कभी क्रैश के बाद Word के फिर से खुलने पर दिखाई देता है?",
+        "options": [
+            "To diagnose the crash",
+            "To recover unsaved changes from auto-saved versions of the document",
+            "To repair the Word installation",
+            "To report the problem to Microsoft"
+        ],
+        "answer": 1
     }
-    
-    // Hide modal
-    document.getElementById('nameModal').classList.remove('show');
-    document.body.classList.remove('modal-open');
-    
-    // Load questions directly
-    questions = generateQuestions();
-    userAnswers = Array(questions.length).fill(null);
-    
-    // Render question numbers
-    const questionNumbersElement = document.getElementById('questionNumbers');
-    questionNumbersElement.innerHTML = '';
-    renderQuestionNumbers();
-    
-    // Show the quiz interface
-    document.querySelector('.container').style.display = 'flex';
-    document.querySelector('.timer-container').style.display = 'block';
-    
-    // Start the timer
-    startTimer();
-    testStarted = true;
-    
-    // Render first question
-    renderQuestion(currentQuestionIndex);
-}
+	   
+	   
+	   
+	 ];
+        }
 
-function startTimer() {
-    clearInterval(timerInterval);
-    timeLeft = 40 * 60;
-    updateTimerDisplay();
-    
-    timerInterval = setInterval(function() {
-        timeLeft--;
-        updateTimerDisplay();
-        
-        if (timeLeft <= 0) {
+        function startTest() {
+            // Get user name
+            userName = document.getElementById('userNameInput').value.trim();
+            
+            if (userName === "") {
+                alert("Please enter your name to continue");
+                return;
+            }
+            
+            // Hide modal
+            document.getElementById('nameModal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+            
+            // Load and shuffle questions
+            questions = shuffleQuestions(generateQuestions());
+            userAnswers = Array(questions.length).fill(null);
+            
+            // Render question numbers
+            const questionNumbersElement = document.getElementById('questionNumbers');
+            questionNumbersElement.innerHTML = '';
+            renderQuestionNumbers();
+            
+            // Show the quiz interface
+            document.querySelector('.container').style.display = 'flex';
+            document.querySelector('.timer-container').style.display = 'block';
+            
+            // Start the timer
+            startTimer();
+            testStarted = true;
+            
+            // Render first question
+            renderQuestion(currentQuestionIndex);
+        }
+
+        function startTimer() {
             clearInterval(timerInterval);
-            showResults();
+            timeLeft = 60 * 60; // 60 minutes
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
         }
-    }, 1000);
-}
 
-function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    const timerElement = document.getElementById('timer');
-    
-    timerElement.innerHTML = 
-        '<i class="fas fa-clock"></i> Time Remaining: ' + 
-        minutes.toString().padStart(2, '0') + ':' + 
-        seconds.toString().padStart(2, '0');
-    
-    // Update timer styling based on remaining time
-    timerElement.classList.remove('warning', 'danger');
-    if (timeLeft < 300) { // 5 minutes left
-        timerElement.classList.add('warning');
-    }
-    if (timeLeft < 60) { // 1 minute left
-        timerElement.classList.add('danger');
-    }
-}
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timerElement = document.getElementById('timer');
+            
+            timerElement.innerHTML = 
+                '<i class="fas fa-clock"></i> Time Remaining: ' + 
+                minutes.toString().padStart(2, '0') + ':' + 
+                seconds.toString().padStart(2, '0');
+            
+            // Update timer styling based on remaining time
+            timerElement.classList.remove('warning', 'danger');
+            if (timeLeft < 300) { // 5 minutes left
+                timerElement.classList.add('warning');
+            }
+            if (timeLeft < 60) { // 1 minute left
+                timerElement.classList.add('danger');
+            }
+        }
 
-function renderQuestion(index) {
+       function renderQuestion(index) {
     const questionElement = document.getElementById("question");
     const optionsElement = document.getElementById("options");
 
     const question = questions[index];
-    questionElement.textContent = (index + 1) + '. ' + question.question;
+    questionElement.innerHTML = (index + 1) + '. ' + question.question;
 
     optionsElement.innerHTML = "";
     question.options.forEach(function(option, i) {
@@ -1082,8 +1930,12 @@ function renderQuestion(index) {
             input.checked = true;
         }
 
+        // Create a span for the option text to handle line breaks
+        const optionText = document.createElement("span");
+        optionText.innerHTML = option.replace(/\n/g, '<br>');
+        
         label.appendChild(input);
-        label.appendChild(document.createTextNode(option));
+        label.appendChild(optionText);
         optionsElement.appendChild(label);
 
         input.addEventListener("change", function() {
@@ -1096,384 +1948,383 @@ function renderQuestion(index) {
     updateButtonStates();
 }
 
-function renderQuestionNumbers() {
-    const questionNumbersElement = document.getElementById("questionNumbers");
+        function renderQuestionNumbers() {
+            const questionNumbersElement = document.getElementById("questionNumbers");
 
-    questions.forEach(function(_, index) {
-        const numberDiv = document.createElement("div");
-        numberDiv.className = "question-number";
-        numberDiv.textContent = index + 1;
-        numberDiv.onclick = function() {
-            currentQuestionIndex = index;
-            renderQuestion(index);
-        };
-        questionNumbersElement.appendChild(numberDiv);
-    });
-}
-
-function highlightCurrentQuestion(index) {
-    const questionNumbersElement = document.getElementById("questionNumbers");
-    Array.from(questionNumbersElement.children).forEach(function(child, i) {
-        child.classList.toggle("active", i === index);
-        if (userAnswers[i] !== null) {
-            child.classList.add("answered");
-        } else {
-            child.classList.remove("answered");
-        }
-    });
-}
-
-function updateQuestionNumberStatus(index) {
-    const questionNumbersElement = document.getElementById("questionNumbers");
-    const questionNumberDiv = questionNumbersElement.children[index];
-
-    if (userAnswers[index] !== null) {
-        questionNumberDiv.classList.add("answered");
-    } else {
-        questionNumberDiv.classList.remove("answered");
-    }
-}
-
-function showResults() {
-    clearInterval(timerInterval);
-    const resultElement = document.getElementById("result");
-    const quizContainer = document.querySelector('.quiz-container');
-    
-    quizContainer.style.display = 'none';
-    resultElement.style.display = "block";
-    testStarted = false;
-
-    document.querySelector('.timer-container').style.display = 'none';
-
-    let correctCount = 0;
-    let wrongCount = 0;
-    let attemptedCount = 0;
-    let unansweredCount = 0;
-
-    questions.forEach(function(_, index) {
-        if (userAnswers[index] !== null) {
-            attemptedCount++;
-            if (userAnswers[index] === questions[index].answer) {
-                correctCount++;
-            } else {
-                wrongCount++;
-            }
-        } else {
-            unansweredCount++;
-        }
-    });
-
-    const scorePercentage = Math.round((correctCount / questions.length) * 100);
-    
-    let grade, gradeClass, congratsMessage = '';
-    if (scorePercentage >= 90) {
-        grade = 'S';
-        gradeClass = 'grade-S';
-        congratsMessage = '🎉 Congratulations! Outstanding Performance! 🎉';
-    } else if (scorePercentage >= 80) {
-        grade = 'A';
-        gradeClass = 'grade-A';
-        congratsMessage = '🎉 Great Job! Excellent Performance! 🎉';
-    } else if (scorePercentage >= 70) {
-        grade = 'B';
-        gradeClass = 'grade-B';
-        congratsMessage = '👍 Good Work! Keep it up!';
-    } else if (scorePercentage >= 60) {
-        grade = 'C';
-        gradeClass = 'grade-C';
-        congratsMessage = '😊 Not bad! You can do better!';
-    } else if (scorePercentage >= 50) {
-        grade = 'D';
-        gradeClass = 'grade-D';
-        congratsMessage = '🤔 You passed, but need more practice';
-    } else {
-        grade = 'F';
-        gradeClass = 'grade-F';
-        congratsMessage = '😟 Keep practicing! You can improve!';
-    }
-
-    resultElement.innerHTML = `
-        <h2>Hello ${userName}, Your Test Results</h2>
-        ${congratsMessage ? '<div class="congrats-banner">' + congratsMessage + '</div>' : ''}
-        <div class="result-summary">
-            <p><i class="fas fa-file-alt"></i> <strong>Test Name:</strong> ${testName}</p>
-            <p><i class="fas fa-pencil-alt"></i> <strong>Total Questions:</strong> ${questions.length}</p>
-            <p><i class="fas fa-check-circle"></i> <strong>Attempted:</strong> ${attemptedCount}</p>
-            <p class="correct"><i class="fas fa-check-circle"></i> <strong>Correct Answers:</strong> ${correctCount}</p>
-            <p class="wrong"><i class="fas fa-times-circle"></i> <strong>Incorrect Answers:</strong> ${wrongCount}</p>
-            <p><i class="fas fa-question-circle"></i> <strong>Unanswered:</strong> ${unansweredCount}</p>
-            <div class="progress-container">
-                <div class="progress-bar" style="width: ${scorePercentage}%">${scorePercentage}%</div>
-            </div>
-            <p><i class="fas fa-star"></i> <strong>Your Score:</strong> ${correctCount}/${questions.length} (${scorePercentage}%)</p>
-            <div class="grade ${gradeClass}">Grade: ${grade}</div>
-        </div>
-        <h3><i class="fas fa-info-circle"></i> Detailed Results:</h3>
-        <div class="result-details" id="resultDetails"></div>
-        <center>
-            <button class="download-btn" onclick="downloadQuestionsPDF()">
-                <i class="fas fa-download"></i> Download Questions (PDF)
-            </button>
-            <button class="share-btn" onclick="shareOnWhatsApp()">
-                <i class="fab fa-whatsapp"></i> Share on WhatsApp
-            </button>
-        </center>
-        <div class="creator-note">
-            <p>Test by: Divyanshu Yadav Sir | Contact: +91 9532595992</p>
-        </div>
-    `;
-
-    const resultDetails = document.getElementById("resultDetails");
-    // Show all questions with correct answers
-    for (let i = 0; i < questions.length; i++) {
-        const question = questions[i];
-        const userAnswer = userAnswers[i];
-        const isCorrect = userAnswer === question.answer;
-        const isAnswered = userAnswer !== null;
-
-        const resultItem = document.createElement("div");
-        resultItem.className = "result-item";
-        
-        let answerStatus = "";
-        if (!isAnswered) {
-            answerStatus = '<span class="wrong"><i class="fas fa-question-circle"></i> Not Answered</span>';
-        } else if (isCorrect) {
-            answerStatus = '<span class="correct"><i class="fas fa-check-circle"></i> Correct</span>';
-        } else {
-            answerStatus = '<span class="wrong"><i class="fas fa-times-circle"></i> Incorrect</span>';
+            questions.forEach(function(_, index) {
+                const numberDiv = document.createElement("div");
+                numberDiv.className = "question-number";
+                numberDiv.textContent = index + 1;
+                numberDiv.onclick = function() {
+                    currentQuestionIndex = index;
+                    renderQuestion(index);
+                };
+                questionNumbersElement.appendChild(numberDiv);
+            });
         }
 
-        resultItem.innerHTML = `
-            <p><strong>Q${i + 1}:</strong> ${question.question} (${answerStatus})</p>
-            ${isAnswered ? 
-                '<p><i class="fas fa-user"></i> Your answer: <span class="' + (isCorrect ? 'correct' : 'wrong') + '">' +
-                    question.options[userAnswer] +
-                '</span></p>' : ''
-            }
-            <p class="correct"><i class="fas fa-check"></i> Correct answer: ${question.options[question.answer]}</p>
-        `;
-        resultDetails.appendChild(resultItem);
-    }
-}
-
-async function downloadQuestionsPDF() {
-    try {
-        // Create a PDF
-        const pdf = new jspdf.jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4',
-            hotfixes: ["px_scaling"]
-        });
-
-        const firstPageQuestions = 4;
-        const otherPagesQuestions = 6;
-        const now = new Date();
-
-        // Calculate total pages needed
-        let remainingQuestions = questions.length;
-        let totalPages = 0;
-        
-        if (remainingQuestions > 0) {
-            totalPages++;
-            remainingQuestions = Math.max(0, remainingQuestions - firstPageQuestions);
-            totalPages += Math.ceil(remainingQuestions / otherPagesQuestions);
-        }
-
-        // Header HTML (only for first page)
-        const headerHTML = `
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap');
-                body { font-family: 'Noto Sans Devanagari', Arial, sans-serif; }
-                .question-container { 
-                    margin-bottom: 25px; 
-                    page-break-inside: avoid;
+        function highlightCurrentQuestion(index) {
+            const questionNumbersElement = document.getElementById("questionNumbers");
+            Array.from(questionNumbersElement.children).forEach(function(child, i) {
+                child.classList.toggle("active", i === index);
+                if (userAnswers[i] !== null) {
+                    child.classList.add("answered");
+                } else {
+                    child.classList.remove("answered");
                 }
-            </style>
-            <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e0e0e0;">
-                <h1 style="font-size: 22px; font-weight: 700; color: #2E7D32;"><strong>ADCA</strong></h1>
-                <h1 style="font-size: 42px; font-weight: 700; color: #2E7D32;">ASIT Institute</h1>
-                <p style="font-size: 18px; font-weight: 700;">Gauhania, Panwari Road, Near GSN Inter College</p>
-                <p style="font-size: 12px; font-weight: 700; margin-bottom: 8px;">Jasra, Allahabad, India 212107, Uttar Pradesh</p>
-                <br>
-                <div style="display: flex; justify-content: space-between; font-size: 13px;">
-                    <div style="text-align: left;">
-                        <p><strong>Student:</strong> ${userName}</p>
-                        <p><strong>Date:</strong> ${now.toLocaleDateString()}</p>
-                    </div>
-                    <div style="text-align: right;">
-                        <p><strong>Test by:</strong>Er. Divyanshu Sir</p>
-                        <p><strong>Contact:</strong> +91 9532595992</p>
-                    </div>
-                </div>
-                <hr>
-            </div>
-        `;
-
-        let questionIndex = 0;
-        
-        // Process first page (4 questions)
-        if (questions.length > 0) {
-            const endIdx = Math.min(firstPageQuestions, questions.length);
-            const pageQuestions = questions.slice(0, endIdx);
-            questionIndex = endIdx;
-
-            const pdfContent = document.createElement('div');
-            pdfContent.style.width = '210mm';
-            pdfContent.style.padding = '15mm 20mm 25mm 20mm';
-            pdfContent.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
-            pdfContent.style.backgroundColor = '#ffffff';
-            
-            // Add header for first page
-            pdfContent.innerHTML = headerHTML;
-            
-            // Add questions for first page
-            pageQuestions.forEach((q, idx) => {
-                const questionNum = idx + 1;
-                pdfContent.innerHTML += `
-                    <div class="question-container">
-                        <p style="font-weight: 600; font-size: 15px; margin-bottom: 8px; line-height: 1.4;">
-                            Q${questionNum}: ${q.question}
-                        </p>
-                        <div style="margin-left: 15px;">
-                            ${q.options.map((opt, i) => `
-                                <p style="${i === q.answer ? 'color: #2E7D32; font-weight: 500;' : 'color: #555555;'} 
-                                   margin: 6px 0; font-size: 14px; line-height: 1.4;">
-                                    ${String.fromCharCode(97 + i)}. ${opt}
-                                    ${i === q.answer ? '<span style="margin-left: 8px;">(Correct)</span>' : ''}
-                                </p>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
             });
-
-            document.body.appendChild(pdfContent);
-            
-            const canvas = await html2canvas(pdfContent, {
-                scale: 2,
-                logging: false,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: '#ffffff',
-                scrollX: 0,
-                scrollY: 0
-            });
-            
-            const imgWidth = 210;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            pdf.addImage(canvas, 'PNG', 0, 0, imgWidth, imgHeight);
-            
-            document.body.removeChild(pdfContent);
         }
 
-        // Process remaining pages (6 questions each)
-        while (questionIndex < questions.length) {
-            const endIdx = Math.min(questionIndex + otherPagesQuestions, questions.length);
-            const pageQuestions = questions.slice(questionIndex, endIdx);
-            questionIndex = endIdx;
+        function updateQuestionNumberStatus(index) {
+            const questionNumbersElement = document.getElementById("questionNumbers");
+            const questionNumberDiv = questionNumbersElement.children[index];
 
-            const pdfContent = document.createElement('div');
-            pdfContent.style.width = '210mm';
-            pdfContent.style.padding = '5mm 20mm 25mm 20mm'; // Less top padding
-            pdfContent.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
-            pdfContent.style.backgroundColor = '#ffffff';
-            
-            // Add questions for current page
-            pageQuestions.forEach((q, idx) => {
-                const questionNum = questionIndex - pageQuestions.length + idx + 1;
-                pdfContent.innerHTML += `
-                    <div class="question-container">
-                        <p style="font-weight: 600; font-size: 15px; margin-bottom: 8px; line-height: 1.4;">
-                            Q${questionNum}: ${q.question}
-                        </p>
-                        <div style="margin-left: 15px;">
-                            ${q.options.map((opt, i) => `
-                                <p style="${i === q.answer ? 'color: #2E7D32; font-weight: 500;' : 'color: #555555;'} 
-                                   margin: 6px 0; font-size: 14px; line-height: 1.4;">
-                                    ${String.fromCharCode(97 + i)}. ${opt}
-                                    ${i === q.answer ? '<span style="margin-left: 8px;">(Correct)</span>' : ''}
-                                </p>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            });
-
-            document.body.appendChild(pdfContent);
-            
-            const canvas = await html2canvas(pdfContent, {
-                scale: 2,
-                logging: false,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: '#ffffff',
-                scrollX: 0,
-                scrollY: 0
-            });
-            
-            pdf.addPage();
-            const imgWidth = 210;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            pdf.addImage(canvas, 'PNG', 0, 0, imgWidth, imgHeight);
-            
-            document.body.removeChild(pdfContent);
-        }
-        
-        // Add footer to all pages
-        for (let i = 1; i <= totalPages; i++) {
-            pdf.setPage(i);
-            pdf.setFontSize(11);
-            pdf.setTextColor(80);
-            
-            const footerY = pdf.internal.pageSize.height - 15;
-            
-            if (i === totalPages) {
-                pdf.text('This PDF Download From: Test With RD Application', 105, footerY - 10, { align: 'center' });
-                pdf.text('Developed By Divyanshu Sir', 105, footerY - 5, { align: 'center' });
+            if (userAnswers[index] !== null) {
+                questionNumberDiv.classList.add("answered");
+            } else {
+                questionNumberDiv.classList.remove("answered");
             }
+        }
+
+        function showResults() {
+            clearInterval(timerInterval);
+            const resultElement = document.getElementById("result");
+            const quizContainer = document.querySelector('.quiz-container');
             
-            pdf.setFontSize(10);
-            pdf.setTextColor(100);
-            pdf.text(`Page ${i} of ${totalPages}`, 105, footerY, { align: 'center' });
+            quizContainer.style.display = 'none';
+            resultElement.style.display = "block";
+            testStarted = false;
+
+            document.querySelector('.timer-container').style.display = 'none';
+
+            let correctCount = 0;
+            let wrongCount = 0;
+            let attemptedCount = 0;
+            let unansweredCount = 0;
+
+            questions.forEach(function(_, index) {
+                if (userAnswers[index] !== null) {
+                    attemptedCount++;
+                    if (userAnswers[index] === questions[index].answer) {
+                        correctCount++;
+                    } else {
+                        wrongCount++;
+                    }
+                } else {
+                    unansweredCount++;
+                }
+            });
+
+            const scorePercentage = Math.round((correctCount / questions.length) * 100);
+            
+            let grade, gradeClass, congratsMessage = '';
+            if (scorePercentage >= 90) {
+                grade = 'S';
+                gradeClass = 'grade-S';
+                congratsMessage = '🎉 Congratulations! Outstanding Performance! 🎉';
+            } else if (scorePercentage >= 80) {
+                grade = 'A';
+                gradeClass = 'grade-A';
+                congratsMessage = '🎉 Great Job! Excellent Performance! 🎉';
+            } else if (scorePercentage >= 70) {
+                grade = 'B';
+                gradeClass = 'grade-B';
+                congratsMessage = '👍 Good Work! Keep it up!';
+            } else if (scorePercentage >= 60) {
+                grade = 'C';
+                gradeClass = 'grade-C';
+                congratsMessage = '😊 Not bad! You can do better!';
+            } else if (scorePercentage >= 50) {
+                grade = 'D';
+                gradeClass = 'grade-D';
+                congratsMessage = '🤔 You passed, but need more practice';
+            } else {
+                grade = 'F';
+                gradeClass = 'grade-F';
+                congratsMessage = '😟 Keep practicing! You can improve!';
+            }
+
+            resultElement.innerHTML = `
+                <h2>Hello ${userName}, Your Test Results</h2>
+                ${congratsMessage ? '<div class="congrats-banner">' + congratsMessage + '</div>' : ''}
+                <div class="result-summary">
+                    <p><i class="fas fa-file-alt"></i> <strong>Test Name:</strong> ADCA Exam</p>
+                    <p><i class="fas fa-pencil-alt"></i> <strong>Total Questions:</strong> ${questions.length}</p>
+                    <p><i class="fas fa-check-circle"></i> <strong>Attempted:</strong> ${attemptedCount}</p>
+                    <p class="correct"><i class="fas fa-check-circle"></i> <strong>Correct Answers:</strong> ${correctCount}</p>
+                    <p class="wrong"><i class="fas fa-times-circle"></i> <strong>Incorrect Answers:</strong> ${wrongCount}</p>
+                    <p><i class="fas fa-question-circle"></i> <strong>Unanswered:</strong> ${unansweredCount}</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: ${scorePercentage}%">${scorePercentage}%</div>
+                    </div>
+                    <p><i class="fas fa-star"></i> <strong>Your Score:</strong> ${correctCount}/${questions.length} (${scorePercentage}%)</p>
+                    <div class="grade ${gradeClass}">Grade: ${grade}</div>
+                </div>
+                <h3><i class="fas fa-info-circle"></i> Detailed Results:</h3>
+                <div class="result-details" id="resultDetails"></div>
+                <center>
+                    <button class="download-btn" onclick="downloadQuestionsPDF()">
+                        <i class="fas fa-download"></i> Download Questions (PDF)
+                    </button>
+                    <button class="share-btn" onclick="shareOnWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Share on WhatsApp
+                    </button>
+                </center>
+                <div class="creator-note">
+                    <p>Test by: Divyanshu Yadav Sir | Contact: +91 9532595992</p>
+                </div>
+            `;
+
+            const resultDetails = document.getElementById("resultDetails");
+            // Show all questions with correct answers
+            for (let i = 0; i < questions.length; i++) {
+                const question = questions[i];
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === question.answer;
+                const isAnswered = userAnswer !== null;
+
+                const resultItem = document.createElement("div");
+                resultItem.className = "result-item";
+                
+                let answerStatus = "";
+                if (!isAnswered) {
+                    answerStatus = '<span class="wrong"><i class="fas fa-question-circle"></i> Not Answered</span>';
+                } else if (isCorrect) {
+                    answerStatus = '<span class="correct"><i class="fas fa-check-circle"></i> Correct</span>';
+                } else {
+                    answerStatus = '<span class="wrong"><i class="fas fa-times-circle"></i> Incorrect</span>';
+                }
+
+                resultItem.innerHTML = `
+                    <p><strong>Q${i + 1}:</strong> ${question.question} (${answerStatus})</p>
+                    ${isAnswered ? 
+                        '<p><i class="fas fa-user"></i> Your answer: <span class="' + (isCorrect ? 'correct' : 'wrong') + '">' +
+                            question.options[userAnswer] +
+                        '</span></p>' : ''
+                    }
+                    <p class="correct"><i class="fas fa-check"></i> Correct answer: ${question.options[question.answer]}</p>
+                `;
+                resultDetails.appendChild(resultItem);
+            }
         }
-        
-        pdf.save(`${testName.replace(/ /g, '_')}_Questions_${userName || 'Student'}.pdf`);
-        
-    } catch (error) {
-        console.error("PDF generation error:", error);
-        alert("Error generating PDF. Please try again.");
-    }
-}
 
+        async function downloadQuestionsPDF() {
+            try {
+                // Create a PDF
+                const pdf = new jspdf.jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4',
+                    hotfixes: ["px_scaling"]
+                });
 
-function shareOnWhatsApp() {
-    let correctCount = 0;
-    questions.forEach(function(_, index) {
-        if (userAnswers[index] === questions[index].answer) {
-            correctCount++;
+                const firstPageQuestions = 4;
+                const otherPagesQuestions = 6;
+                const now = new Date();
+
+                // Calculate total pages needed
+                let remainingQuestions = questions.length;
+                let totalPages = 0;
+                
+                if (remainingQuestions > 0) {
+                    totalPages++;
+                    remainingQuestions = Math.max(0, remainingQuestions - firstPageQuestions);
+                    totalPages += Math.ceil(remainingQuestions / otherPagesQuestions);
+                }
+
+                // Header HTML (only for first page)
+                const headerHTML = `
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap');
+                        body { font-family: 'Noto Sans Devanagari', Arial, sans-serif; }
+                        .question-container { 
+                            margin-bottom: 25px; 
+                            page-break-inside: avoid;
+                        }
+                    </style>
+                    <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e0e0e0;">
+                        <h1 style="font-size: 22px; font-weight: 700; color: #gray;">ADCA Exam</h1>
+                        <h1 style="font-size: 42px; font-weight: 700; color: #2E7D32;">ASIT Institute</h1>
+                        <p style="font-size: 18px; font-weight: 700;">Gauhania, Panwari Road, Near GSN Inter College</p>
+                        <p style="font-size: 12px; font-weight: 700; margin-bottom: 8px;">Jasra, Allahabad, India 212107, Uttar Pradesh</p>
+                        <br>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                            <div style="text-align: left;">
+                                <p><strong>Student:</strong> ${userName}</p>
+                                <p><strong>Date:</strong> ${now.toLocaleDateString()}</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <p><strong>Test by:</strong><font color="red">Er. Divyanshu Sir</font></p>
+                                <p><strong>Contact:</strong> +91 9532595992</p>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                `;
+
+                let questionIndex = 0;
+                
+                // Process first page (4 questions)
+                if (questions.length > 0) {
+                    const endIdx = Math.min(firstPageQuestions, questions.length);
+                    const pageQuestions = questions.slice(0, endIdx);
+                    questionIndex = endIdx;
+
+                    const pdfContent = document.createElement('div');
+                    pdfContent.style.width = '210mm';
+                    pdfContent.style.padding = '15mm 20mm 25mm 20mm';
+                    pdfContent.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
+                    pdfContent.style.backgroundColor = '#ffffff';
+                    
+                    // Add header for first page
+                    pdfContent.innerHTML = headerHTML;
+                    
+                    // Add questions for first page
+                    pageQuestions.forEach((q, idx) => {
+                        const questionNum = idx + 1;
+                        pdfContent.innerHTML += `
+                            <div class="question-container">
+                                <p style="font-weight: 600; font-size: 15px; margin-bottom: 8px; line-height: 1.4;">
+                                    Q${questionNum}: ${q.question}
+                                </p>
+                                <div style="margin-left: 15px;">
+                                    ${q.options.map((opt, i) => `
+                                        <p style="${i === q.answer ? 'color: #2E7D32; font-weight: 500;' : 'color: #555555;'} 
+                                           margin: 6px 0; font-size: 14px; line-height: 1.4;">
+                                            ${String.fromCharCode(97 + i)}. ${opt}
+                                            ${i === q.answer ? '<span style="margin-left: 8px;">(Correct)</span>' : ''}
+                                        </p>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    document.body.appendChild(pdfContent);
+                    
+                    const canvas = await html2canvas(pdfContent, {
+                        scale: 2,
+                        logging: false,
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: '#ffffff',
+                        scrollX: 0,
+                        scrollY: 0
+                    });
+                    
+                    const imgWidth = 210;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    pdf.addImage(canvas, 'PNG', 0, 0, imgWidth, imgHeight);
+                    
+                    document.body.removeChild(pdfContent);
+                }
+
+                // Process remaining pages (6 questions each)
+                while (questionIndex < questions.length) {
+                    const endIdx = Math.min(questionIndex + otherPagesQuestions, questions.length);
+                    const pageQuestions = questions.slice(questionIndex, endIdx);
+                    questionIndex = endIdx;
+
+                    const pdfContent = document.createElement('div');
+                    pdfContent.style.width = '210mm';
+                    pdfContent.style.padding = '5mm 20mm 25mm 20mm'; // Less top padding
+                    pdfContent.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
+                    pdfContent.style.backgroundColor = '#ffffff';
+                    
+                    // Add questions for current page
+                    pageQuestions.forEach((q, idx) => {
+                        const questionNum = questionIndex - pageQuestions.length + idx + 1;
+                        pdfContent.innerHTML += `
+                            <div class="question-container">
+                                <p style="font-weight: 600; font-size: 15px; margin-bottom: 8px; line-height: 1.4;">
+                                    Q${questionNum}: ${q.question}
+                                </p>
+                                <div style="margin-left: 15px;">
+                                    ${q.options.map((opt, i) => `
+                                        <p style="${i === q.answer ? 'color: #2E7D32; font-weight: 500;' : 'color: #555555;'} 
+                                           margin: 6px 0; font-size: 14px; line-height: 1.4;">
+                                            ${String.fromCharCode(97 + i)}. ${opt}
+                                            ${i === q.answer ? '<span style="margin-left: 8px;">(Correct)</span>' : ''}
+                                        </p>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    document.body.appendChild(pdfContent);
+                    
+                    const canvas = await html2canvas(pdfContent, {
+                        scale: 2,
+                        logging: false,
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: '#ffffff',
+                        scrollX: 0,
+                        scrollY: 0
+                    });
+                    
+                    pdf.addPage();
+                    const imgWidth = 210;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    pdf.addImage(canvas, 'PNG', 0, 0, imgWidth, imgHeight);
+                    
+                    document.body.removeChild(pdfContent);
+                }
+                
+                // Add footer to all pages
+                for (let i = 1; i <= totalPages; i++) {
+                    pdf.setPage(i);
+                    pdf.setFontSize(11);
+                    pdf.setTextColor(80);
+                    
+                    const footerY = pdf.internal.pageSize.height - 15;
+                    
+                    if (i === totalPages) {
+                        pdf.text('This PDF Download From: Test With RD Application', 105, footerY - 10, { align: 'center' });
+                        pdf.text('Developed By Divyanshu Sir', 105, footerY - 5, { align: 'center' });
+                    }
+                    
+                    pdf.setFontSize(10);
+                    pdf.setTextColor(100);
+                    pdf.text(`Page ${i} of ${totalPages}`, 105, footerY, { align: 'center' });
+                }
+                
+                pdf.save(`${testName.replace(/ /g, '_')}_Questions_${userName || 'Student'}.pdf`);
+                
+            } catch (error) {
+                console.error("PDF generation error:", error);
+                alert("Error generating PDF. Please try again.");
+            }
         }
-    });
 
-    const scorePercentage = Math.round((correctCount / questions.length) * 100);
-    
-    let grade;
-    if (scorePercentage >= 90) {
-        grade = 'S';
-    } else if (scorePercentage >= 80) {
-        grade = 'A';
-    } else if (scorePercentage >= 70) {
-        grade = 'B';
-    } else if (scorePercentage >= 60) {
-        grade = 'C';
-    } else if (scorePercentage >= 50) {
-        grade = 'D';
-    } else {
-        grade = 'F';
-    }
+        function shareOnWhatsApp() {
+            let correctCount = 0;
+            questions.forEach(function(_, index) {
+                if (userAnswers[index] === questions[index].answer) {
+                    correctCount++;
+                }
+            });
 
-    const shareText = `📚 *Test Results* 📚
-        
+            const scorePercentage = Math.round((correctCount / questions.length) * 100);
+            
+            let grade;
+            if (scorePercentage >= 90) {
+                grade = 'S';
+            } else if (scorePercentage >= 80) {
+                grade = 'A';
+            } else if (scorePercentage >= 70) {
+                grade = 'B';
+            } else if (scorePercentage >= 60) {
+                grade = 'C';
+            } else if (scorePercentage >= 50) {
+                grade = 'D';
+            } else {
+                grade = 'F';
+            }
+
+            const shareText = `📚 *Test Results* 📚
+                
 📝 *Test Name:* ${testName}
 👤 *Student Name:* ${userName}
 📊 *Total Questions:* ${questions.length}
@@ -1486,77 +2337,77 @@ function shareOnWhatsApp() {
 Test by: Divyanshu Yadav Sir
 Contact: +91 9532595992`;
 
-    // For Android WebView
-    if (window.Android && window.Android.shareOnWhatsApp) {
-        window.Android.shareOnWhatsApp(shareText);
-    } else {
-        // For regular browsers
-        window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
-    }
-}
-
-function updateButtonStates() {
-    document.getElementById('previousBtn').disabled = currentQuestionIndex === 0;
-    document.getElementById('nextBtn').disabled = currentQuestionIndex === questions.length - 1;
-}
-
-function setupEventListeners() {
-    document.getElementById('startTestBtn').addEventListener('click', startTest);
-
-    window.addEventListener('click', function(event) {
-        if (event.target.className === 'modal') {
-            event.target.style.display = 'none';
-            document.body.classList.remove('modal-open');
+            // For Android WebView
+            if (window.Android && window.Android.shareOnWhatsApp) {
+                window.Android.shareOnWhatsApp(shareText);
+            } else {
+                // For regular browsers
+                window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
+            }
         }
-    });
 
-    document.querySelectorAll('.close').forEach(function(closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            this.closest('.modal').classList.remove('show');
-            document.body.classList.remove('modal-open');
+        function updateButtonStates() {
+            document.getElementById('previousBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentQuestionIndex === questions.length - 1;
+        }
+
+        function setupEventListeners() {
+            document.getElementById('startTestBtn').addEventListener('click', startTest);
+
+            window.addEventListener('click', function(event) {
+                if (event.target.className === 'modal') {
+                    event.target.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                }
+            });
+
+            document.querySelectorAll('.close').forEach(function(closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal').classList.remove('show');
+                    document.body.classList.remove('modal-open');
+                });
+            });
+
+            document.getElementById("nextBtn").addEventListener("click", function() {
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion(currentQuestionIndex);
+                }
+            });
+
+            document.getElementById("previousBtn").addEventListener("click", function() {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    renderQuestion(currentQuestionIndex);
+                }
+            });
+
+            document.getElementById("submitBtn").addEventListener("click", function() {
+                if (confirm("Are you sure you want to submit the test?")) {
+                    showResults();
+                }
+            });
+
+            document.getElementById('userNameInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    startTest();
+                }
+            });
+        }
+
+        // For Android WebView integration
+        window.downloadQuestionsPDF = downloadQuestionsPDF;
+        window.shareOnWhatsApp = shareOnWhatsApp;
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            document.getElementById('nameModal').classList.add('show');
+            document.body.classList.add('modal-open');
+            
+            // Ensure proper text rendering by setting the font family
+            document.body.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
         });
-    });
-
-    document.getElementById("nextBtn").addEventListener("click", function() {
-        if (currentQuestionIndex < questions.length - 1) {
-            currentQuestionIndex++;
-            renderQuestion(currentQuestionIndex);
-        }
-    });
-
-    document.getElementById("previousBtn").addEventListener("click", function() {
-        if (currentQuestionIndex > 0) {
-            currentQuestionIndex--;
-            renderQuestion(currentQuestionIndex);
-        }
-    });
-
-    document.getElementById("submitBtn").addEventListener("click", function() {
-        if (confirm("Are you sure you want to submit the test?")) {
-            showResults();
-        }
-    });
-
-    document.getElementById('userNameInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            startTest();
-        }
-    });
-}
-
-// For Android WebView integration
-window.downloadQuestionsPDF = downloadQuestionsPDF;
-window.shareOnWhatsApp = shareOnWhatsApp;
-
-// Initialize the app
-document.addEventListener('DOMContentLoaded', function() {
-    setupEventListeners();
-    document.getElementById('nameModal').classList.add('show');
-    document.body.classList.add('modal-open');
-    
-    // Ensure proper text rendering by setting the font family
-    document.body.style.fontFamily = "'Noto Sans Devanagari', Arial, sans-serif";
-});
-</script>
+    </script>
 </body>
 </html>
