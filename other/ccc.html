@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ccc</title>
+    <title>CCC Exam</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <!-- Required for Hindi support -->
@@ -220,7 +220,6 @@
             display: none;
             max-width: 1200px;
             margin: 20px auto;
-            background-color: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             overflow: hidden;
@@ -763,7 +762,7 @@
     
     <div class="container">
         <div class="left-panel">
-            <div id="testTitle" class="test-title"><strong>CCC</strong></div>
+            <div id="testTitle" class="test-title"> Programming and Problem Solving Through Python Language : M3</div>
             <div class="quiz-container">
                 <div id="question" class="question"></div>
                 <div id="options" class="options"></div>
@@ -780,18 +779,15 @@
             <div class="question-numbers" id="questionNumbers"></div>
         </div>
     </div>
-<script>
-
-
-// Global variables
+	<script>// Global variables
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let questions = [];
 let userName = "";
 let timerInterval;
-let timeLeft = 40 * 60;
+let timeLeft = 60 * 60; // Changed to 60 minutes
 let testStarted = false;
-const testName = "General Knowledge Test";
+const testName = "CCC Exam";
 
 // Fisher-Yates shuffle algorithm
 function shuffleArray(array) {
@@ -802,195 +798,1012 @@ function shuffleArray(array) {
     return array;
 }
 
-function shuffleQuestion(question) {
-    const shuffledOptions = [...question.options];
-    const correctAnswer = shuffledOptions[question.answer];
+function shuffleQuestions(questionsArray) {
+    // First shuffle the questions array
+    const shuffledQuestions = [...questionsArray];
     
-    for (let i = shuffledOptions.length - 1; i > 0; i--) {
+    // Fisher-Yates shuffle algorithm for the questions array
+    for (let i = shuffledQuestions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+        [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
     }
     
-    const newAnswerIndex = shuffledOptions.indexOf(correctAnswer);
+    // Then shuffle options within each question
+    shuffledQuestions.forEach(question => {
+        // Store the correct answer index
+        const correctAnswer = question.options[question.answer];
+        
+        // Shuffle the options array
+        shuffleArray(question.options);
+        
+        // Find the new index of the correct answer
+        question.answer = question.options.indexOf(correctAnswer);
+    });
     
-    return {
-        question: question.question,
-        options: shuffledOptions,
-        answer: newAnswerIndex
-    };
+    return shuffledQuestions;
 }
 
 // Generate sample questions with Hindi text
 function generateQuestions() {
     return [
-        {
-            question: "What is the main function of the CPU in a computer system? / कंप्यूटर सिस्टम में CPU का मुख्य कार्य क्या है?",
-            options: [
-                "Store data permanently / डेटा को स्थायी रूप से संग्रहीत करना",
-                "Process instructions and perform calculations / निर्देशों को संसाधित करना और गणना करना",
-                "Display graphics / ग्राफिक्स प्रदर्शित करना",
-                "Connect to the internet / इंटरनेट से कनेक्ट करना"
-            ],
-            answer: 1
-        },
-        {
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-        {
-            question: "This is a very long question that should wrap to multiple lines in the PDF without being cut off. It demonstrates how the text will flow naturally to the next line when it reaches the end of the page width. The question continues here to ensure it's long enough to test the wrapping functionality properly. / यह एक बहुत लंबा प्रश्न है जिसे पीडीएफ में कई पंक्तियों में लपेटा जाना चाहिए बिना कटे हुए। यह प्रदर्शित करता है कि पाठ स्वाभाविक रूप से अगली पंक्ति में कैसे प्रवाहित होगा जब यह पृष्ठ की चौड़ाई के अंत तक पहुंचता है। प्रश्न यहां जारी है यह सुनिश्चित करने के लिए कि यह रैपिंग कार्यक्षमता का परीक्षण करने के लिए पर्याप्त लंबा है।",
-            options: [
-                "Option 1 for long question / लंबे प्रश्न के लिए विकल्प 1",
-                "Option 2 for long question / लंबे प्रश्न के लिए विकल्प 2",
-                "Option 3 for long question / लंबे प्रश्न के लिए विकल्प 3",
-                "Option 4 for long question / लंबे प्रश्न के लिए विकल्प 4"
-            ],
-            answer: 0
-        }
+       
+	   
+	   
+	   
+
+{
+    question: "What is the full form of 'COMPUTER'?<br>'COMPUTER' का फुल फॉर्म क्या है?",
+    options: [
+        "Common Operating Machine Purposely Used for Technological and Educational Research",
+        "Commonly Operated Machine Particularly Used for Technical and Educational Research",
+        "Common Operating Machine Particularly Used for Training Education and Reporting",
+        "Commonly Operated Machine Particularly Used for Technical Entertainment and Research"
+    ],
+    answer: 1
+},
+{
+    question: "Who is known as the 'father of the computer'?<br>किसे 'कंप्यूटर का जनक' कहा जाता है?",
+    options: [
+        "Charles Babbage",
+        "Bill Gates",
+        "Alan Turing",
+        "Tim Berners-Lee"
+    ],
+    answer: 0
+},
+{
+    question: "Which was the first general-purpose electronic computer?<br>पहला जनरल-पर्पज इलेक्ट्रॉनिक कंप्यूटर कौन सा था?",
+    options: [
+        "ENIAC",
+        "UNIVAC",
+        "IBM PC",
+        "Apple I"
+    ],
+    answer: 0
+},
+{
+    question: "IC chips used in computers are usually made of which material?<br>कंप्यूटर में उपयोग की जाने वाली IC चिप्स आमतौर पर किस पदार्थ से बनी होती हैं?",
+    options: [
+        "Silicon",
+        "Copper",
+        "Gold",
+        "Iron"
+    ],
+    answer: 0
+},
+{
+    question: "Which generation of computers used Vacuum Tubes?<br>कंप्यूटर की किस पीढ़ी में वैक्यूम ट्यूब का उपयोग किया गया था?",
+    options: [
+        "First Generation",
+        "Second Generation",
+        "Third Generation",
+        "Fourth Generation"
+    ],
+    answer: 0
+},
+{
+    question: "What is the main function of the ALU?<br>ALU का मुख्य कार्य क्या है?",
+    options: [
+        "Perform arithmetic and logical operations",
+        "Store data permanently",
+        "Control all computer operations",
+        "Display output on the screen"
+    ],
+    answer: 0
+},
+{
+    question: "What is the permanent memory built into your computer called?<br>आपके कंप्यूटर में बनी हुई स्थायी मेमोरी को क्या कहा जाता है?",
+    options: [
+        "ROM",
+        "RAM",
+        "CPU",
+        "CD-ROM"
+    ],
+    answer: 0
+},
+{
+    question: "Which of the following is the smallest unit of data in a computer?<br>निम्नलिखित में से कंप्यूटर में डेटा की सबसे छोटी इकाई कौन सी है?",
+    options: [
+        "Bit",
+        "Byte",
+        "Kilobyte",
+        "Megabyte"
+    ],
+    answer: 0
+},
+{
+    question: "1 Gigabyte (GB) is equal to?<br>1 गीगाबाइट (GB) किसके बराबर है?",
+    options: [
+        "1024 Megabytes",
+        "1000 Kilobytes",
+        "1024 Bits",
+        "1000 Megabytes"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'OS' stand for in computing?<br>कंप्यूटिंग में 'OS' का क्या अर्थ है?",
+    options: [
+        "Operating System",
+        "Open Software",
+        "Operating Service",
+        "Output System"
+    ],
+    answer: 0
+},
+{
+    question: "Which of the following is an input device?<br>निम्नलिखित में से कौन एक इनपुट डिवाइस है?",
+    options: [
+        "Keyboard",
+        "Printer",
+        "Monitor",
+        "Speaker"
+    ],
+    answer: 0
+},
+{
+    question: "Which of the following is an output device?<br>निम्नलिखित में से कौन एक आउटपुट डिवाइस है?",
+    options: [
+        "Projector",
+        "Mouse",
+        "Scanner",
+        "Joystick"
+    ],
+    answer: 0
+},
+{
+    question: "A device used to convert handwritten text into digital text is called a?<br>हस्तलिखित टेक्स्ट को डिजिटल टेक्स्ट में बदलने के लिए उपयोग किए जाने वाले डिवाइस को क्या कहा जाता है?",
+    options: [
+        "Scanner",
+        "Printer",
+        "OCR",
+        "OMR"
+    ],
+    answer: 2
+},
+{
+    question: "What is the full form of OMR?<br>OMR का फुल फॉर्म क्या है?",
+    options: [
+        "Optical Mark Recognition",
+        "Optical Magnetic Reader",
+        "Online Mark Reading",
+        "Optical Machine Recognition"
+    ],
+    answer: 0
+},
+{
+    question: "Which device is used to play sound output from a computer?<br>कंप्यूटर से साउंड आउटपुट चलाने के लिए किस डिवाइस का उपयोग किया जाता है?",
+    options: [
+        "Speaker",
+        "Microphone",
+        "Headphones (both input and output)",
+        "Sound Card"
+    ],
+    answer: 2
+},
+{
+    question: "A touchscreen is an example of which type of device?<br>टचस्क्रीन किस प्रकार के डिवाइस का एक उदाहरण है?",
+    options: [
+        "Both Input and Output device",
+        "Input device",
+        "Output device",
+        "Storage device"
+    ],
+    answer: 0
+},
+{
+    question: "Which printer uses a toner and heat to create an image on paper?<br>कौन सा प्रिंटर पेपर पर इमेज बनाने के लिए टोनर और गर्मी का उपयोग करता है?",
+    options: [
+        "Laser Printer",
+        "Inkjet Printer",
+        "Dot Matrix Printer",
+        "Plotter"
+    ],
+    answer: 0
+},
+{
+    question: "What is the primary function of a barcode reader?<br>बारकोड रीडर का प्राथमिक कार्य क्या है?",
+    options: [
+        "To read and input data from barcodes",
+        "To print barcodes on products",
+        "To display barcode information",
+        "To create barcode images"
+    ],
+    answer: 0
+},
+{
+    question: "Which device captures images and transfers them to a computer?<br>कौन सा डिवाइस इमेज कैप्चर करता है और उन्हें कंप्यूटर में ट्रांसफर करता है?",
+    options: [
+        "Web Camera",
+        "Monitor",
+        "Projector",
+        "Plotter"
+    ],
+    answer: 0
+},
+{
+    question: "What does VDU stand for?<br>VDU का क्या अर्थ है?",
+    options: [
+        "Visual Display Unit",
+        "Video Display Unit",
+        "Virtual Data Unit",
+        "Video Data Unit"
+    ],
+    answer: 1
+},
+{
+    question: "What is the default file extension for a Microsoft Word document?<br>Microsoft Word डॉक्यूमेंट के लिए डिफॉल्ट फाइल एक्सटेंशन क्या है?",
+    options: [
+        ".docx",
+        ".txt",
+        ".xlsx",
+        ".pptx"
+    ],
+    answer: 0
+},
+{
+    question: "In MS Word, which feature is used to combine data from a source into a document?<br>MS Word में, डेटा को एक स्रोत से डॉक्यूमेंट में जोड़ने के लिए किस फीचर का उपयोग किया जाता है?",
+    options: [
+        "Mail Merge",
+        "Macro",
+        "Template",
+        "Thesaurus"
+    ],
+    answer: 0
+},
+{
+    question: "Which menu in MS Word is used to add a Header or Footer?<br>MS Word में हैडर या फूटर जोड़ने के लिए किस मेनू का उपयोग किया जाता है?",
+    options: [
+        "Insert",
+        "View",
+        "Layout",
+        "References"
+    ],
+    answer: 0
+},
+{
+    question: "What is the shortcut key to check spelling and grammar in MS Word?<br>MS Word में स्पेलिंग और ग्रामर चेक करने की शॉर्टकट कुंजी क्या है?",
+    options: [
+        "F7",
+        "F1",
+        "F5",
+        "Ctrl + S"
+    ],
+    answer: 0
+},
+{
+    question: "In MS Excel, what is a collection of worksheets called?<br>MS Excel में, वर्कशीट के कलेक्शन को क्या कहा जाता है?",
+    options: [
+        "Workbook",
+        "Spreadsheet",
+        "Notebook",
+        "Sheet Tab"
+    ],
+    answer: 0
+},
+{
+    question: "Which function in MS Excel is used to add a range of cells?<br>MS Excel में सेल्स की एक रेंज जोड़ने के लिए किस फंक्शन का उपयोग किया जाता है?",
+    options: [
+        "SUM",
+        "AVERAGE",
+        "COUNT",
+        "MAX"
+    ],
+    answer: 0
+},
+{
+    question: "In an Excel worksheet, what is the intersection of a row and a column called?<br>एक Excel वर्कशीट में, एक row और एक column के प्रतिच्छेदन को क्या कहा जाता है?",
+    options: [
+        "Cell",
+        "Box",
+        "Field",
+        "Table"
+    ],
+    answer: 0
+},
+{
+    question: "What is the default file extension for a Microsoft PowerPoint presentation?<br>Microsoft PowerPoint प्रेजेंटेशन के लिए डिफॉल्ट फाइल एक्सटेंशन क्या है?",
+    options: [
+        ".pptx",
+        ".ppt",
+        ".docx",
+        ".xlsx"
+    ],
+    answer: 0
+},
+{
+    question: "In PowerPoint, which view is used to see all slides at once?<br>PowerPoint में, सभी स्लाइड्स को एक साथ देखने के लिए किस व्यू का उपयोग किया जाता है?",
+    options: [
+        "Slide Sorter view",
+        "Normal view",
+        "Reading view",
+        "Slide Show view"
+    ],
+    answer: 0
+},
+{
+    question: "Which feature in PowerPoint is used to apply a set of consistent colors, fonts, and effects to all slides?<br>PowerPoint में सभी स्लाइड्स पर एक समान सेट of colors, fonts, और effects apply करने के लिए किस फीचर का उपयोग किया जाता है?",
+    options: [
+        "Theme",
+        "Template",
+        "Slide Master",
+        "Animation"
+    ],
+    answer: 0
+},
+{
+    question: "What is the shortcut key to create a new file in most applications?<br>ज्यादातर एप्लिकेशन में नई फाइल बनाने की शॉर्टकट कुंजी क्या है?",
+    options: [
+        "Ctrl + N",
+        "Ctrl + O",
+        "Ctrl + S",
+        "Ctrl + P"
+    ],
+    answer: 0
+},
+{
+    question: "Which shortcut key is used to save a file?<br>फाइल सेव करने के लिए किस शॉर्टकट कुंजी का उपयोग किया जाता है?",
+    options: [
+        "Ctrl + S",
+        "Ctrl + V",
+        "Ctrl + C",
+        "Ctrl + X"
+    ],
+    answer: 0
+},
+{
+    question: "What is the function of the shortcut key 'Ctrl + C'?<br>शॉर्टकट कुंजी 'Ctrl + C' का कार्य क्या है?",
+    options: [
+        "Copy the selected item",
+        "Cut the selected item",
+        "Paste the selected item",
+        "Close the window"
+    ],
+    answer: 0
+},
+{
+    question: "Which shortcut key is used to paste the copied content?<br>कॉपी किए गए कंटेंट को पेस्ट करने के लिए किस शॉर्टकट कुंजी का उपयोग किया जाता है?",
+    options: [
+        "Ctrl + V",
+        "Ctrl + P",
+        "Ctrl + Z",
+        "Ctrl + Y"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'Ctrl + Z' do?<br>'Ctrl + Z' क्या करता है?",
+    options: [
+        "Undo the last action",
+        "Redo the last action",
+        "Zoom in",
+        "Close the application"
+    ],
+    answer: 0
+},
+{
+    question: "Which key is used to refresh a webpage in a browser?<br>ब्राउज़र में एक वेबपेज को रिफ्रेश करने के लिए किस कुंजी का उपयोग किया जाता है?",
+    options: [
+        "F5",
+        "F1",
+        "F2",
+        "F11"
+    ],
+    answer: 0
+},
+{
+    question: "What is the function of the 'Alt + F4' shortcut key?<br>'Alt + F4' शॉर्टकट कुंजी का कार्य क्या है?",
+    options: [
+        "Close the active item or quit the active application",
+        "Open the start menu",
+        "Switch between open applications",
+        "Rename a selected item"
+    ],
+    answer: 0
+},
+{
+    question: "Which shortcut key is used to select all text or items in a document?<br>डॉक्यूमेंट में सभी टेक्स्ट या आइटम्स को सेलेक्ट करने के लिए किस शॉर्टकट कुंजी का उपयोग किया जाता है?",
+    options: [
+        "Ctrl + A",
+        "Ctrl + S",
+        "Ctrl + F",
+        "Ctrl + D"
+    ],
+    answer: 0
+},
+{
+    question: "What is the use of 'Ctrl + F'?<br>'Ctrl + F' का उपयोग क्या है?",
+    options: [
+        "Open the Find box to search text",
+        "Open the Font dialog box",
+        "Open the File menu",
+        "Open the Format dialog box"
+    ],
+    answer: 0
+},
+{
+    question: "Which shortcut key is used to open the Print dialog box?<br>प्रिंट डायलॉग बॉक्स खोलने के लिए किस शॉर्टकट कुंजी का उपयोग किया जाता है?",
+    options: [
+        "Ctrl + P",
+        "Ctrl + R",
+        "Ctrl + T",
+        "Ctrl + Q"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'URL'?<br>'URL' का फुल फॉर्म क्या है?",
+    options: [
+        "Uniform Resource Locator",
+        "Universal Resource Link",
+        "Uniform Registered Locator",
+        "Universal Reference Link"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'HTML' stand for?<br>'HTML' का क्या अर्थ है?",
+    options: [
+        "HyperText Markup Language",
+        "HighText Machine Language",
+        "Hyperlinks and Text Markup Language",
+        "Home Tool Markup Language"
+    ],
+    answer: 0
+},
+{
+    question: "Which of the following is a web browser?<br>निम्नलिखित में से कौन एक वेब ब्राउज़र है?",
+    options: [
+        "Google Chrome",
+        "Microsoft Word",
+        "Adobe Photoshop",
+        "Windows Explorer"
+    ],
+    answer: 0
+},
+{
+    question: "What is the purpose of a Search Engine?<br>सर्च इंजन का उद्देश्य क्या है?",
+    options: [
+        "To help users find information on the World Wide Web",
+        "To provide internet connectivity",
+        "To store websites on a local computer",
+        "To create websites"
+    ],
+    answer: 0
+},
+{
+    question: "What is 'Downloading'?<br>'डाउनलोडिंग' क्या है?",
+    options: [
+        "Receiving data from a remote system to a local system",
+        "Sending data from a local system to a remote system",
+        "Deleting data from a remote system",
+        "Browsing data on a remote system"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'HTTP'?<br>'HTTP' का फुल फॉर्म क्या है?",
+    options: [
+        "HyperText Transfer Protocol",
+        "HyperText Transmission Protocol",
+        "High Transfer Text Protocol",
+        "Hyper Transfer Text Process"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'www' stand for in a website address?<br>वेबसाइट एड्रेस में 'www' का क्या अर्थ है?",
+    options: [
+        "World Wide Web",
+        "Web World Wide",
+        "Wide World Web",
+        "World Web Wide"
+    ],
+    answer: 0
+},
+{
+    question: "Which protocol is used for secure communication over a computer network?<br>कंप्यूटर नेटवर्क पर सुरक्षित संचार के लिए किस प्रोटोकॉल का उपयोग किया जाता है?",
+    options: [
+        "HTTPS",
+        "HTTP",
+        "FTP",
+        "SMTP"
+    ],
+    answer: 0
+},
+{
+    question: "What is a 'Cookie' in the context of web browsing?<br>वेब ब्राउज़िंग के संदर्भ में 'कुकी' क्या है?",
+    options: [
+        "A small piece of data stored on the user's computer by the web browser",
+        "A type of virus",
+        "A hardware device",
+        "A programming language"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'LAN'?<br>'LAN' का फुल फॉर्म क्या है?",
+    options: [
+        "Local Area Network",
+        "Large Area Network",
+        "Local Access Network",
+        "Long Area Network"
+    ],
+    answer: 0
+},
+{
+    question: "What is a 'Modem' used for?<br>'मॉडेम' का उपयोग किस लिए किया जाता है?",
+    options: [
+        "To convert digital signals to analog and vice versa for communication over telephone lines",
+        "To increase computer speed",
+        "To store data",
+        "To display output"
+    ],
+    answer: 0
+},
+{
+    question: "Which device connects multiple computers in a network?<br>कौन सा डिवाइस एक नेटवर्क में कई कंप्यूटरों को जोड़ता है?",
+    options: [
+        "Switch or Hub",
+        "Printer",
+        "Monitor",
+        "CPU"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'Wi-Fi'?<br>'Wi-Fi' का फुल फॉर्म क्या है?",
+    options: [
+        "Wireless Fidelity",
+        "Wired Fidelity",
+        "Wireless Frequency",
+        "Wired Frequency"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'VPN' stand for?<br>'VPN' का क्या अर्थ है?",
+    options: [
+        "Virtual Private Network",
+        "Virtual Public Network",
+        "Verified Private Network",
+        "Virtual Phone Network"
+    ],
+    answer: 0
+},
+{
+    question: "What is the primary purpose of a firewall?<br>फायरवॉल का प्राथमिक उद्देश्य क्या है?",
+    options: [
+        "To protect a network from unauthorized access",
+        "To increase internet speed",
+        "To create a website",
+        "To store backup data"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'ISP'?<br>'ISP' का फुल फॉर्म क्या है?",
+    options: [
+        "Internet Service Provider",
+        "Internet System Protocol",
+        "Internal Service Provider",
+        "International Service Protocol"
+    ],
+    answer: 0
+},
+{
+    question: "What is 'Bandwidth' in networking?<br>नेटवर्किंग में 'बैंडविड्थ' क्या है?",
+    options: [
+        "The maximum rate of data transfer across a given path",
+        "The physical width of a network cable",
+        "The strength of a wireless signal",
+        "The number of devices on a network"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'EMAIL'?<br>'EMAIL' का फुल फॉर्म क्या है?",
+    options: [
+        "Electronic Mail",
+        "Electric Mail",
+        "Easy Mail",
+        "Efficient Mail"
+    ],
+    answer: 0
+},
+{
+    question: "What is the purpose of the 'CC' field in an email?<br>ईमेल में 'CC' फील्ड का उद्देश्य क्या है?",
+    options: [
+        "To send a copy to recipients for their information (Carbon Copy)",
+        "To send a blind copy where other recipients are hidden",
+        "To mark the email as important",
+        "To attach a file"
+    ],
+    answer: 0
+},
+{
+    question: "What is the purpose of the 'BCC' field in an email?<br>ईमेल में 'BCC' फील्ड का उद्देश्य क्या है?",
+    options: [
+        "To send a blind copy where primary and CC recipients cannot see this recipient",
+        "To send a carbon copy to the recipient",
+        "To mark the email as confidential",
+        "To block the recipient"
+    ],
+    answer: 0
+},
+{
+    question: "Which of the following is a valid component of an email address?<br>निम्नलिखित में से कौन सा ईमेल एड्रेस का एक वैध घटक है?",
+    options: [
+        "@ symbol",
+        "# symbol",
+        "$ symbol",
+        "! symbol"
+    ],
+    answer: 0
+},
+{
+    question: "What is an 'Email Attachment'?<br>'ईमेल अटैचमेंट' क्या है?",
+    options: [
+        "A file sent along with an email message",
+        "The subject line of an email",
+        "The recipient's address",
+        "The body text of an email"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'Inbox' refer to in email?<br>ईमेल में 'इनबॉक्स' क्या refers करता है?",
+    options: [
+        "The folder where received messages are stored",
+        "The folder where sent messages are stored",
+        "The folder where draft messages are saved",
+        "The folder where spam messages are filtered"
+    ],
+    answer: 0
+},
+{
+    question: "What is 'Spam' email?<br>'स्पैम' ईमेल क्या है?",
+    options: [
+        "Unsolicited and unwanted junk email",
+        "An important official email",
+        "A personal email from a friend",
+        "An email with attachments"
+    ],
+    answer: 0
+},
+{
+    question: "Gmail is a product of which company?<br>Gmail किस कंपनी का उत्पाद है?",
+    options: [
+        "Google",
+        "Microsoft",
+        "Yahoo",
+        "Apple"
+    ],
+    answer: 0
+},
+{
+    question: "What is the purpose of the 'Star' in Gmail?<br>Gmail में 'स्टार' का उद्देश्य क्या है?",
+    options: [
+        "To mark an important email for easy finding later",
+        "To delete an email",
+        "To reply to the sender",
+        "To forward an email"
+    ],
+    answer: 0
+},
+{
+    question: "Which tab in Gmail automatically filters promotional emails?<br>Gmail में कौन सा टैब स्वचालित रूप से प्रमोशनल ईमेल को फिल्टर करता है?",
+    options: [
+        "Promotions",
+        "Primary",
+        "Social",
+        "Updates"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'PDF'?<br>'PDF' का फुल फॉर्म क्या है?",
+    options: [
+        "Portable Document Format",
+        "Printable Document File",
+        "Personal Data Format",
+        "Public Document Form"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'CPU' stand for?<br>'CPU' का क्या अर्थ है?",
+    options: [
+        "Central Processing Unit",
+        "Computer Processing Unit",
+        "Central Program Utility",
+        "Control Processing Unit"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'USB'?<br>'USB' का फुल फॉर्म क्या है?",
+    options: [
+        "Universal Serial Bus",
+        "United Serial Bus",
+        "Universal Service Bus",
+        "United Service Bus"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'RAM' stand for?<br>'RAM' का क्या अर्थ है?",
+    options: [
+        "Random Access Memory",
+        "Read Access Memory",
+        "Random Available Memory",
+        "Read Only Memory"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'BIOS'?<br>'BIOS' का फुल फॉर्म क्या है?",
+    options: [
+        "Basic Input Output System",
+        "Binary Input Output System",
+        "Basic Integrated Operating System",
+        "Binary Integrated Operating System"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'CAD' stand for?<br>'CAD' का क्या अर्थ है?",
+    options: [
+        "Computer-Aided Design",
+        "Computer Application Design",
+        "Computer-Aided Drafting",
+        "Computer Application Development"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'CAM'?<br>'CAM' का फुल फॉर्म क्या है?",
+    options: [
+        "Computer-Aided Manufacturing",
+        "Computer-Aided Management",
+        "Computer Application Manufacturing",
+        "Central Application Management"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'SQL' stand for?<br>'SQL' का क्या अर्थ है?",
+    options: [
+        "Structured Query Language",
+        "Simple Query Language",
+        "Structured Question Language",
+        "Simple Question Language"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'VIRUS' in computing?<br>कंप्यूटिंग में 'VIRUS' का फुल फॉर्म क्या है?",
+    options: [
+        "Vital Information Resources Under Siege",
+        "Virtual Information Under System",
+        "Virus Is a Resource Under Siege",
+        "Very Important Resource Under Scan"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'GPS' stand for?<br>'GPS' का क्या अर्थ है?",
+    options: [
+        "Global Positioning System",
+        "Global Pointing System",
+        "General Positioning System",
+        "General Pointing Service"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'SMPS'?<br>'SMPS' का फुल फॉर्म क्या है?",
+    options: [
+        "Switched Mode Power Supply",
+        "System Mode Power Supply",
+        "Simple Mode Power Supply",
+        "Switched Motherboard Power Supply"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'LED' stand for?<br>'LED' का क्या अर्थ है?",
+    options: [
+        "Light Emitting Diode",
+        "Light Emitting Device",
+        "Laser Emitting Diode",
+        "Low Energy Device"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'CRT'?<br>'CRT' का फुल फॉर्म क्या है?",
+    options: [
+        "Cathode Ray Tube",
+        "Color Ray Tube",
+        "Computer Ray Technology",
+        "Cathode Radio Tube"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'LCD' stand for?<br>'LCD' का क्या अर्थ है?",
+    options: [
+        "Liquid Crystal Display",
+        "Laser Crystal Display",
+        "Liquid Color Display",
+        "Light Crystal Device"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'POST' in computer startup?<br>कंप्यूटर स्टार्टअप में 'POST' का फुल फॉर्म क्या है?",
+    options: [
+        "Power On Self Test",
+        "Program On System Test",
+        "Power Off System Test",
+        "Program Off Self Test"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'DBMS' stand for?<br>'DBMS' का क्या अर्थ है?",
+    options: [
+        "Database Management System",
+        "Data Basic Management System",
+        "Database Memory System",
+        "Data Bus Management System"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'ASCII'?<br>'ASCII' का फुल फॉर्म क्या है?",
+    options: [
+        "American Standard Code for Information Interchange",
+        "American Standard Code for Internet Information",
+        "Asian Standard Code for Information Interchange",
+        "American System Code for Integrated Information"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'MAC' address stand for?<br>'MAC' एड्रेस का क्या अर्थ है?",
+    options: [
+        "Media Access Control",
+        "Memory Access Control",
+        "Media Address Control",
+        "Memory Address Code"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'IP' address?<br>'IP' एड्रेस का फुल फॉर्म क्या है?",
+    options: [
+        "Internet Protocol",
+        "Internet Program",
+        "Internal Protocol",
+        "Internal Program"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'DNS' stand for?<br>'DNS' का क्या अर्थ है?",
+    options: [
+        "Domain Name System",
+        "Domain Network System",
+        "Dynamic Name Server",
+        "Domain Number System"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'FTP'?<br>'FTP' का फुल फॉर्म क्या है?",
+    options: [
+        "File Transfer Protocol",
+        "File Transmission Protocol",
+        "File Transfer Process",
+        "File Translation Protocol"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'SSD' stand for in data storage?<br>डेटा स्टोरेज में 'SSD' का क्या अर्थ है?",
+    options: [
+        "Solid State Drive",
+        "Super Speed Drive",
+        "System Storage Device",
+        "Solid Storage Disk"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'HDD'?<br>'HDD' का फुल फॉर्म क्या है?",
+    options: [
+        "Hard Disk Drive",
+        "High Definition Drive",
+        "Hard Drive Disk",
+        "High Density Disk"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'URL' stand for?<br>'URL' का क्या अर्थ है?",
+    options: [
+        "Uniform Resource Locator",
+        "Universal Resource Locator",
+        "Uniform Reference Locator",
+        "Universal Reference Link"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'WiMAX'?<br>'WiMAX' का फुल फॉर्म क्या है?",
+    options: [
+        "Worldwide Interoperability for Microwave Access",
+        "Wireless Interoperability for Microwave Access",
+        "Worldwide Internet Microwave Access",
+        "Wireless Internet Maximum Access"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'SIM' stand for?<br>'SIM' का क्या अर्थ है?",
+    options: [
+        "Subscriber Identity Module",
+        "Subscriber Identification Mobile",
+        "System Identity Module",
+        "Simple Identity Module"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'PIN'?<br>'PIN' का फुल फॉर्म क्या है?",
+    options: [
+        "Personal Identification Number",
+        "Personal Identity Number",
+        "Public Identification Number",
+        "Private Identity Number"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'ATM' stand for in banking?<br>बैंकिंग में 'ATM' का क्या अर्थ है?",
+    options: [
+        "Automated Teller Machine",
+        "Automatic Teller Machine",
+        "Automated Transaction Machine",
+        "Automatic Transaction Module"
+    ],
+    answer: 0
+},
+{
+    question: "What is the full form of 'NIC'?<br>'NIC' का फुल फॉर्म क्या है?",
+    options: [
+        "Network Interface Card",
+        "National Internet Card",
+        "Network Internet Connection",
+        "New Interface Card"
+    ],
+    answer: 0
+},
+{
+    question: "What does 'OTG' stand for?<br>'OTG' का क्या अर्थ है?",
+    options: [
+        "On-The-Go",
+        "Off-The-Ground",
+        "On-The-Group",
+        "Off-The-Grid"
+    ],
+    answer: 0
+}	   
+	   
+	   
+	   
     ];
 }
 
@@ -1007,8 +1820,8 @@ function startTest() {
     document.getElementById('nameModal').classList.remove('show');
     document.body.classList.remove('modal-open');
     
-    // Load questions directly
-    questions = generateQuestions();
+    // Load and shuffle questions
+    questions = shuffleQuestions(generateQuestions());
     userAnswers = Array(questions.length).fill(null);
     
     // Render question numbers
@@ -1030,7 +1843,7 @@ function startTest() {
 
 function startTimer() {
     clearInterval(timerInterval);
-    timeLeft = 40 * 60;
+    timeLeft = 60 * 60; // 60 minutes
     updateTimerDisplay();
     
     timerInterval = setInterval(function() {
@@ -1069,7 +1882,7 @@ function renderQuestion(index) {
     const optionsElement = document.getElementById("options");
 
     const question = questions[index];
-    questionElement.textContent = (index + 1) + '. ' + question.question;
+    questionElement.innerHTML = (index + 1) + '. ' + question.question;
 
     optionsElement.innerHTML = "";
     question.options.forEach(function(option, i) {
@@ -1196,7 +2009,7 @@ function showResults() {
         <h2>Hello ${userName}, Your Test Results</h2>
         ${congratsMessage ? '<div class="congrats-banner">' + congratsMessage + '</div>' : ''}
         <div class="result-summary">
-            <p><i class="fas fa-file-alt"></i> <strong>Test Name:</strong> ${testName}</p>
+            <p><i class="fas fa-file-alt"></i> <strong>Test Name:</strong> CCC Exam</p>
             <p><i class="fas fa-pencil-alt"></i> <strong>Total Questions:</strong> ${questions.length}</p>
             <p><i class="fas fa-check-circle"></i> <strong>Attempted:</strong> ${attemptedCount}</p>
             <p class="correct"><i class="fas fa-check-circle"></i> <strong>Correct Answers:</strong> ${correctCount}</p>
@@ -1291,7 +2104,7 @@ async function downloadQuestionsPDF() {
                 }
             </style>
             <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e0e0e0;">
-                <h1 style="font-size: 22px; font-weight: 700; color: #2E7D32;">Information Technology Tools and Network Basics <strong>: M1</strong></h1>
+                <h1 style="font-size: 22px; font-weight: 700; color: #gray;">CCC Exam</h1>
                 <h1 style="font-size: 42px; font-weight: 700; color: #2E7D32;">ASIT Institute</h1>
                 <p style="font-size: 18px; font-weight: 700;">Gauhania, Panwari Road, Near GSN Inter College</p>
                 <p style="font-size: 12px; font-weight: 700; margin-bottom: 8px;">Jasra, Allahabad, India 212107, Uttar Pradesh</p>
@@ -1302,7 +2115,7 @@ async function downloadQuestionsPDF() {
                         <p><strong>Date:</strong> ${now.toLocaleDateString()}</p>
                     </div>
                     <div style="text-align: right;">
-                        <p><strong>Test by:</strong>Er. Divyanshu Sir</p>
+                        <p><strong>Test by:</strong><font color="red">Er. Divyanshu Sir</font></p>
                         <p><strong>Contact:</strong> +91 9532595992</p>
                     </div>
                 </div>
@@ -1445,7 +2258,6 @@ async function downloadQuestionsPDF() {
         alert("Error generating PDF. Please try again.");
     }
 }
-
 
 function shareOnWhatsApp() {
     let correctCount = 0;
