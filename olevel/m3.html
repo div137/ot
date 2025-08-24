@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming and Problem Solving Through Python Language</title>
+    <title> Programming and Problem Solving Through Python Language : M3</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <!-- Required for Hindi support -->
@@ -220,7 +220,6 @@
             display: none;
             max-width: 1200px;
             margin: 20px auto;
-            background-color: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             overflow: hidden;
@@ -763,7 +762,7 @@
     
     <div class="container">
         <div class="left-panel">
-            <div id="testTitle" class="test-title">Programming and Problem Solving Through Python Language <strong>: M3</strong></div>
+            <div id="testTitle" class="test-title"> Programming and Problem Solving Through Python Language : M3</div>
             <div class="quiz-container">
                 <div id="question" class="question"></div>
                 <div id="options" class="options"></div>
@@ -780,18 +779,15 @@
             <div class="question-numbers" id="questionNumbers"></div>
         </div>
     </div>
-<script>
-
-
-// Global variables
+	<script>// Global variables
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let questions = [];
 let userName = "";
 let timerInterval;
-let timeLeft = 40 * 60;
+let timeLeft = 60 * 60; // Changed to 60 minutes
 let testStarted = false;
-const testName = "General Knowledge Test";
+const testName = "Web Designing and Publishing: M2";
 
 // Fisher-Yates shuffle algorithm
 function shuffleArray(array) {
@@ -802,195 +798,1104 @@ function shuffleArray(array) {
     return array;
 }
 
-function shuffleQuestion(question) {
-    const shuffledOptions = [...question.options];
-    const correctAnswer = shuffledOptions[question.answer];
+function shuffleQuestions(questionsArray) {
+    // First shuffle the questions array
+    const shuffledQuestions = [...questionsArray];
     
-    for (let i = shuffledOptions.length - 1; i > 0; i--) {
+    // Fisher-Yates shuffle algorithm for the questions array
+    for (let i = shuffledQuestions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+        [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
     }
     
-    const newAnswerIndex = shuffledOptions.indexOf(correctAnswer);
+    // Then shuffle options within each question
+    shuffledQuestions.forEach(question => {
+        // Store the correct answer index
+        const correctAnswer = question.options[question.answer];
+        
+        // Shuffle the options array
+        shuffleArray(question.options);
+        
+        // Find the new index of the correct answer
+        question.answer = question.options.indexOf(correctAnswer);
+    });
     
-    return {
-        question: question.question,
-        options: shuffledOptions,
-        answer: newAnswerIndex
-    };
+    return shuffledQuestions;
 }
 
 // Generate sample questions with Hindi text
 function generateQuestions() {
     return [
-        {
-            question: "What is the main function of the CPU in a computer system? / कंप्यूटर सिस्टम में CPU का मुख्य कार्य क्या है?",
-            options: [
-                "Store data permanently / डेटा को स्थायी रूप से संग्रहीत करना",
-                "Process instructions and perform calculations / निर्देशों को संसाधित करना और गणना करना",
-                "Display graphics / ग्राफिक्स प्रदर्शित करना",
-                "Connect to the internet / इंटरनेट से कनेक्ट करना"
-            ],
-            answer: 1
-        },
-        {
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-		{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },{
-            question: "Which of the following is not a programming language? / निम्नलिखित में से कौन सी प्रोग्रामिंग भाषा नहीं है?",
-            options: [
-                "Python / पायथन",
-                "Java / जावा",
-                "HTML / एचटीएमएल",
-                "C++ / सी++"
-            ],
-            answer: 2
-        },
-        {
-            question: "This is a very long question that should wrap to multiple lines in the PDF without being cut off. It demonstrates how the text will flow naturally to the next line when it reaches the end of the page width. The question continues here to ensure it's long enough to test the wrapping functionality properly. / यह एक बहुत लंबा प्रश्न है जिसे पीडीएफ में कई पंक्तियों में लपेटा जाना चाहिए बिना कटे हुए। यह प्रदर्शित करता है कि पाठ स्वाभाविक रूप से अगली पंक्ति में कैसे प्रवाहित होगा जब यह पृष्ठ की चौड़ाई के अंत तक पहुंचता है। प्रश्न यहां जारी है यह सुनिश्चित करने के लिए कि यह रैपिंग कार्यक्षमता का परीक्षण करने के लिए पर्याप्त लंबा है।",
-            options: [
-                "Option 1 for long question / लंबे प्रश्न के लिए विकल्प 1",
-                "Option 2 for long question / लंबे प्रश्न के लिए विकल्प 2",
-                "Option 3 for long question / लंबे प्रश्न के लिए विकल्प 3",
-                "Option 4 for long question / लंबे प्रश्न के लिए विकल्प 4"
-            ],
-            answer: 0
-        }
+       
+	   
+	   
+	   
+
+{
+    question: "What is the primary purpose of an algorithm?<br>Algorithm का प्राथमिक उद्देश्य क्या है?",
+    options: [
+        "To write code in a specific programming language",
+        "To provide a step-by-step procedure to solve a problem",
+        "To execute a program faster",
+        "To make code look complex"
+    ],
+    answer: 1
+},
+{
+    question: "Which of these is a disadvantage of using an algorithm?<br>Algorithm के उपयोग का एक नुकसान क्या है?",
+    options: [
+        "It is language-independent.",
+        "It helps in understanding the logic.",
+        "It can be time-consuming to design for complex problems.",
+        "It reduces ambiguity."
+    ],
+    answer: 2
+},
+{
+    question: "What is the main goal of testing a program?<br>एक प्रोग्राम का testing करने का मुख्य लक्ष्य क्या है?",
+    options: [
+        "To compile the code",
+        "To write documentation",
+        "To find and fix errors (bugs)",
+        "To make the code longer"
+    ],
+    answer: 2
+},
+{
+    question: "What does a compiler do?<br>Compiler क्या करता है?",
+    options: [
+        "Executes the program line by line",
+        "Checks for logical errors in the algorithm",
+        "Translates the entire source code into machine code at once",
+        "Loads the program into memory"
+    ],
+    answer: 2
+},
+{
+    question: "What is the function of a loader?<br>Loader का कार्य क्या है?",
+    options: [
+        "To translate high-level code to assembly code",
+        "To load the executable program into the main memory for execution",
+        "To find syntax errors in the code",
+        "To design the algorithm for the program"
+    ],
+    answer: 1
+},
+{
+    question: "What will be the output of the following pseudocode?<br>निम्नलिखित pseudocode का आउटपुट क्या होगा?<br>SET x TO 5<br>SET y TO 3<br>SET result TO x + y<br>PRINT result",
+    options: [
+        "8",
+        "53",
+        "x + y",
+        "15"
+    ],
+    answer: 0
+},
+{
+    question: "What is the error in this pseudocode?<br>इस pseudocode में error क्या है?<br>SET number TO 10<br>IF number > 5 THEN<br>PRINT 'Large'<br>ELSE<br>PRINT 'Small'",
+    options: [
+        "Missing END IF statement",
+        "The condition should be number < 5",
+        "The PRINT statements are incorrect",
+        "There is no error"
+    ],
+    answer: 3
+},
+{
+    question: "In a flowchart, which symbol is used to represent a decision?<br>Flowchart में, decision को दर्शाने के लिए किस symbol का use किया जाता है?",
+    options: [
+        "Rectangle",
+        "Parallelogram",
+        "Diamond",
+        "Oval"
+    ],
+    answer: 2
+},
+{
+    question: "In a flowchart, what does a parallelogram represent?<br>Flowchart में, parallelogram क्या represent करता है?",
+    options: [
+        "Start/End",
+        "Process",
+        "Input/Output",
+        "Decision"
+    ],
+    answer: 2
+},
+{
+    question: "What is the calculated output of this algorithm?<br>इस algorithm का calculated output क्या है?<br>Step 1: Start<br>Step 2: Read A, B<br>Step 3: If A > B, then Print A, else Print B<br>Step 4: Stop<br>(Assume A=7, B=9)",
+    options: [
+        "7",
+        "9",
+        "16",
+        "2"
+    ],
+    answer: 1
+},
+{
+    question: "What is the purpose of a connector symbol in a flowchart?<br>Flowchart में connector symbol का purpose क्या है?",
+    options: [
+        "To connect different pages of the flowchart",
+        "To represent a calculation",
+        "To indicate the start of the program",
+        "To represent a decision point"
+    ],
+    answer: 0
+},
+{
+    question: "What is the error in this flowchart logic?<br>इस flowchart logic में error क्या है?<br>[Start] -> [Initialize counter=1] -> [Print counter] -> [Increment counter by 1] -> [Is counter <= 5?] -> (Yes) -> [Print counter]",
+    options: [
+        "It will print numbers from 1 to 6.",
+        "There is no condition to stop the loop.",
+        "The increment step is missing.",
+        "There is no error; it is correct."
+    ],
+    answer: 1
+},
+{
+    question: "What does this pseudocode do?<br>यह pseudocode क्या करती है?<br>SET n TO 5<br>SET fact TO 1<br>FOR i FROM 1 TO n<br>  SET fact TO fact * i<br>END FOR<br>PRINT fact",
+    options: [
+        "Calculates the sum of first 5 natural numbers",
+        "Calculates the 5th Fibonacci number",
+        "Calculates the factorial of 5 (5!)",
+        "Checks if 5 is a prime number"
+    ],
+    answer: 2
+},
+{
+    question: "What is the output of this GCD algorithm step for numbers 8 and 12?<br>numbers 8 और 12 के लिए इस GCD algorithm step का output क्या है?<br>Step: While remainder (12 mod 8) is not 0:<br>       8 becomes 12, 4 becomes 8.<br>       Find new remainder (8 mod 4). Now remainder is 0. GCD is 4.",
+    options: [
+        "2",
+        "4",
+        "8",
+        "12"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>SET num TO 17<br>SET is_prime TO TRUE<br>FOR i FROM 2 TO num/2<br>  IF num MOD i == 0 THEN<br>    SET is_prime TO FALSE<br>    BREAK<br>  END IF<br>END FOR<br>IF is_prime THEN PRINT 'Prime' ELSE PRINT 'Not Prime'",
+    options: [
+        "Prime",
+        "Not Prime",
+        "17",
+        "TRUE"
+    ],
+    answer: 0
+},
+{
+    question: "What is the error in this prime number pseudocode?<br>इस prime number pseudocode में error क्या है?<br>SET num TO 9<br>SET flag TO 0<br>FOR i FROM 1 TO num<br>  IF num MOD i == 0 THEN<br>    INCREMENT flag BY 1<br>  END IF<br>END FOR<br>IF flag == 2 THEN PRINT 'Prime'",
+    options: [
+        "The loop should run from 2 to num/2 for efficiency.",
+        "It will correctly identify 9 as a prime number.",
+        "The variable 'flag' should be set to 1, not 0.",
+        "There is no error; the logic is correct."
+    ],
+    answer: 1
+},
+{
+    question: "What does this algorithm do?<br>यह algorithm क्या करती है?<br>Step 1: Start<br>Step 2: Read Number N<br>Step 3: Reverse = 0<br>Step 4: While N > 0:<br>        Remainder = N % 10<br>        Reverse = (Reverse * 10) + Remainder<br>        N = N // 10<br>Step 5: Print Reverse<br>Step 6: Stop",
+    options: [
+        "Checks if a number is palindrome",
+        "Calculates the sum of digits of a number",
+        "Reverses the digits of a number",
+        "Finds the largest digit in a number"
+    ],
+    answer: 2
+},
+{
+    question: "What is the primary advantage of using a flowchart?<br>Flowchart use करने का primary advantage क्या है?",
+    options: [
+        "It executes the program faster.",
+        "It is a substitute for writing code.",
+        "It provides a visual representation of the logic.",
+        "It automatically finds errors."
+    ],
+    answer: 2
+},
+{
+    question: "What is a key disadvantage of a flowchart?<br>Flowchart का एक key disadvantage क्या है?",
+    options: [
+        "It is easy to understand.",
+        "It is difficult to modify for complex logic.",
+        "It is language-independent.",
+        "It helps in debugging."
+    ],
+    answer: 1
+},
+{
+    question: "What is the purpose of the terminal symbol in a flowchart?<br>Flowchart में terminal symbol का purpose क्या है?",
+    options: [
+        "To perform a calculation",
+        "To represent the start and end of the process",
+        "To handle input and output",
+        "To make a decision"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode output?<br>यह pseudocode क्या output देगी?<br>SET a TO 5<br>SET b TO 10<br>SET temp TO a<br>SET a TO b<br>SET b TO temp<br>PRINT a, b",
+    options: [
+        "5 10",
+        "10 5",
+        "5 5",
+        "10 10"
+    ],
+    answer: 1
+},
+{
+    question: "What concept does the above pseudocode demonstrate?<br>उपरोक्त pseudocode कौन सा concept demonstrate करती है?",
+    options: [
+        "Addition of two variables",
+        "Swapping values of two variables",
+        "Comparing two variables",
+        "Finding the maximum of two variables"
+    ],
+    answer: 1
+},
+{
+    question: "What is the error in this loop pseudocode?<br>इस loop pseudocode में error क्या है?<br>SET i TO 1<br>WHILE i < 5<br>  PRINT i<br>END WHILE",
+    options: [
+        "The condition should be i <= 5",
+        "The variable 'i' is never incremented, causing an infinite loop.",
+        "The PRINT statement is wrong.",
+        "It should use a FOR loop instead."
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this factorial pseudocode for n=0?<br>n=0 के लिए इस factorial pseudocode का output क्या है?<br>FUNCTION factorial(n)<br>  IF n == 0 OR n == 1 THEN<br>    RETURN 1<br>  ELSE<br>    RETURN n * factorial(n-1)<br>  END IF<br>END FUNCTION<br>PRINT factorial(0)",
+    options: [
+        "0",
+        "1",
+        "Error",
+        "Undefined"
+    ],
+    answer: 1
+},
+{
+    question: "What type of function is 'factorial' in the previous question?<br>पिछले question में 'factorial' function किस type का है?",
+    options: [
+        "An iterative function",
+        "A recursive function",
+        "A built-in function",
+        "A mathematical function"
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET x TO '5'<br>SET y TO '3'<br>SET z TO x + y<br>PRINT z",
+    options: [
+        "8",
+        "53",
+        "Error",
+        "15"
+    ],
+    answer: 1
+},
+{
+    question: "What does the following flowchart symbol represent?<br>निम्नलिखित flowchart symbol क्या represent करता है? -> [()]",
+    options: [
+        "Process",
+        "Input/Output",
+        "Decision",
+        "Terminal (Start/End)"
+    ],
+    answer: 3
+},
+{
+    question: "What does the following flowchart symbol represent?<br>निम्नलिखित flowchart symbol क्या represent करता है? -> [/\]",
+    options: [
+        "Process",
+        "Input/Output",
+        "Decision",
+        "Terminal"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>FOR i FROM 1 TO 3<br>  FOR j FROM 1 TO 2<br>    PRINT i, j<br>  END FOR<br>END FOR",
+    options: [
+        "1,1 1,2 2,1 2,2 3,1 3,2",
+        "1,2 2,2 3,2",
+        "1,1 2,2 3,3",
+        "1,1 2,1 3,1 1,2 2,2 3,2"
+    ],
+    answer: 0
+},
+{
+    question: "What is this pattern of control flow called?<br>Control flow के इस pattern को क्या कहते हैं?",
+    options: [
+        "Sequential flow",
+        "Conditional flow",
+        "Nested loop",
+        "Switch case"
+    ],
+    answer: 2
+},
+{
+    question: "What is the purpose of a 'BREAK' statement in a loop?<br>Loop में 'BREAK' statement का purpose क्या है?",
+    options: [
+        "To skip the current iteration and continue with the next one.",
+        "To exit the loop immediately.",
+        "To restart the loop from the beginning.",
+        "To pause the loop temporarily."
+    ],
+    answer: 1
+},
+{
+    question: "What is the purpose of a 'CONTINUE' statement?<br>'CONTINUE' statement का purpose क्या है?",
+    options: [
+        "To exit the loop immediately.",
+        "To skip the current iteration and continue with the next one.",
+        "To terminate the program.",
+        "To check a condition."
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode output?<br>यह pseudocode क्या output देगी?<br>SET count TO 0<br>FOR i FROM 1 TO 10<br>  IF i % 2 == 0 THEN<br>    CONTINUE<br>  END IF<br>  INCREMENT count BY 1<br>END FOR<br>PRINT count",
+    options: [
+        "5",
+        "10",
+        "0",
+        "4"
+    ],
+    answer: 0
+},
+{
+    question: "What does the above code count?<br>उपरोक्त code क्या count करता है?",
+    options: [
+        "Count of even numbers from 1 to 10",
+        "Count of odd numbers from 1 to 10",
+        "Count of all numbers from 1 to 10",
+        "Count of numbers divisible by 3"
+    ],
+    answer: 1
+},
+{
+    question: "What is the error in this pseudocode for finding the maximum number in an array?<br>Array में maximum number find करने वाली इस pseudocode में error क्या है?<br>SET arr TO [5, 9, 2, 11, 3]<br>SET max TO 0<br>FOR EACH number IN arr<br>  IF number > max THEN<br>    SET max TO number<br>  END IF<br>END FOR<br>PRINT max",
+    options: [
+        "It will work correctly for all arrays.",
+        "It initializes 'max' to 0. If all numbers are negative, it will return 0 which is wrong.",
+        "The FOR EACH loop syntax is incorrect.",
+        "It should use a WHILE loop."
+    ],
+    answer: 1
+},
+{
+    question: "What is the correct way to initialize 'max' for the previous algorithm?<br>पिछले algorithm के लिए 'max' को initialize करने का correct तरीका क्या है?",
+    options: [
+        "SET max TO 0",
+        "SET max TO the first element of the array",
+        "SET max to a very large number",
+        "SET max to NULL"
+    ],
+    answer: 1
+},
+{
+    question: "What does this pseudocode do?<br>यह pseudocode क्या करती है?<br>READ n<br>SET a TO 0<br>SET b TO 1<br>PRINT a<br>PRINT b<br>FOR i FROM 3 TO n<br>  SET c TO a + b<br>  PRINT c<br>  SET a TO b<br>  SET b TO c<br>END FOR",
+    options: [
+        "Prints the factorial series",
+        "Prints the prime numbers up to n",
+        "Prints the Fibonacci series up to n terms",
+        "Prints the multiplication table of n"
+    ],
+    answer: 2
+},
+{
+    question: "What is the base case in a recursive function?<br>Recursive function में base case क्या होता है?",
+    options: [
+        "The most complex case that requires the most computation.",
+        "The condition that stops the recursion by providing a result without a recursive call.",
+        "The first call made to the function.",
+        "A case that is never reached."
+    ],
+    answer: 1
+},
+{
+    question: "What is the potential problem with recursion if not implemented carefully?<br>Recursion के साथ potential problem क्या है अगर इसे carefully implement नहीं किया गया?",
+    options: [
+        "It always runs slower than iteration.",
+        "It can lead to stack overflow errors if the base case is not reached.",
+        "It cannot solve mathematical problems.",
+        "It is not supported by all programming languages."
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>FUNCTION func(n)<br>  IF n <= 1<br>    RETURN n<br>  ELSE<br>    RETURN func(n-1) + n<br>  END IF<br>END FUNCTION<br>PRINT func(4)",
+    options: [
+        "10",
+        "6",
+        "24",
+        "4"
+    ],
+    answer: 0
+},
+{
+    question: "What is the error in this pseudocode for linear search?<br>Linear search की इस pseudocode में error क्या है?<br>SET list TO [10, 20, 30, 40]<br>SET target TO 50<br>SET found TO FALSE<br>SET index TO 0<br>WHILE index < LENGTH(list)<br>  IF list[index] == target THEN<br>    SET found TO TRUE<br>  END IF<br>  INCREMENT index BY 1<br>END WHILE<br>PRINT found",
+    options: [
+        "It will not work if the target is found.",
+        "It does not break out of the loop when the target is found, leading to inefficiency.",
+        "The condition in the WHILE loop is wrong.",
+        "It should use a FOR loop."
+    ],
+    answer: 1
+},
+{
+    question: "What is the main advantage of a binary search over a linear search?<br>Linear search पर binary search का main advantage क्या है?",
+    options: [
+        "It is simpler to implement.",
+        "It works on unsorted arrays.",
+        "It is much faster for large sorted arrays (logarithmic time).",
+        "It uses less memory."
+    ],
+    answer: 2
+},
+{
+    question: "What is the main disadvantage of a binary search?<br>Binary search का main disadvantage क्या है?",
+    options: [
+        "It is slow.",
+        "The array must be sorted first.",
+        "It is complex to implement.",
+        "It cannot be implemented using recursion."
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>SET str TO 'hello'<br>SET new_str TO ''<br>FOR i FROM LENGTH(str)-1 DOWNTO 0<br>  SET new_str TO new_str + str[i]<br>END FOR<br>PRINT new_str",
+    options: [
+        "hello",
+        "olleh",
+        "h e l l o",
+        "Error (index out of bounds)"
+    ],
+    answer: 1
+},
+{
+    question: "What concept does the above pseudocode demonstrate?<br>उपरोक्त pseudocode कौन सा concept demonstrate करती है?",
+    options: [
+        "String copying",
+        "String reversal",
+        "Finding string length",
+        "String concatenation"
+    ],
+    answer: 1
+},
+{
+    question: "What is the error in this pseudocode?<br>इस pseudocode में error क्या है?<br>SET number TO 4<br>IF number = 4 THEN<br>  PRINT 'Four'<br>END IF",
+    options: [
+        "The assignment operator '=' is used instead of the equality operator '=='.",
+        "The PRINT statement is missing quotes.",
+        "The END IF is not needed.",
+        "The variable 'number' is not declared."
+    ],
+    answer: 0
+},
+{
+    question: "What is the purpose of a function in programming?<br>Programming में function का purpose क्या है?",
+    options: [
+        "To make the code run faster",
+        "To perform a specific task and avoid code repetition (reusability)",
+        "To store data",
+        "To create loops"
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>PRINT 15 // 4",
+    options: [
+        "3.75",
+        "3",
+        "4",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What does the '//' operator typically represent in pseudocode?<br>Pseudocode में '//' operator typically क्या represent करता है?",
+    options: [
+        "Division that returns a float",
+        "Integer division (floor division)",
+        "Comment",
+        "Exponentiation"
+    ],
+    answer: 1
+},
+{
+    question: "What does the '%' operator do?<br>'%' operator क्या करता है?",
+    options: [
+        "Divides two numbers",
+        "Calculates percentage",
+        "Returns the remainder of a division",
+        "Multiplies two numbers"
+    ],
+    answer: 2
+},
+{
+    question: "What will 'PRINT 17 % 5' output?<br>'PRINT 17 % 5' क्या output देगा?",
+    options: [
+        "3.4",
+        "3",
+        "2",
+        "12"
+    ],
+    answer: 2
+},
+{
+    question: "What is the purpose of a flowchart in the program development cycle?<br>Program development cycle में flowchart का purpose क्या है?",
+    options: [
+        "To write the final code",
+        "To test the program for bugs",
+        "To design the logic of the program before coding",
+        "To document the user manual"
+    ],
+    answer: 2
+},
+{
+    question: "What is the main difference between a compiler and an interpreter?<br>Compiler और interpreter में main difference क्या है?",
+    options: [
+        "A compiler translates the entire program at once, while an interpreter translates line by line.",
+        "An interpreter is faster than a compiler.",
+        "A compiler is used for scripting languages, an interpreter for compiled languages.",
+        "An interpreter generates an executable file."
+    ],
+    answer: 0
+},
+{
+    question: "What is the symbol for a pre-defined process (like a function call) in a flowchart?<br>Flowchart में pre-defined process (जैसे function call) के लिए symbol क्या है?",
+    options: [
+        "Rectangle",
+        "Diamond",
+        "Parallelogram",
+        "A rectangle with extra vertical lines"
+    ],
+    answer: 3
+},
+{
+    question: "What is the error in this GCD calculation logic?<br>इस GCD calculation logic में error क्या है?<br>FUNCTION gcd(a, b)<br>  IF b == 0<br>    RETURN a<br>  ELSE<br>    RETURN gcd(b, a % b)<br>  END IF<br>END FUNCTION<br>PRINT gcd(0, 5)",
+    options: [
+        "It will cause a division by zero error.",
+        "It will return 0, which is incorrect. GCD(0,5) is 5.",
+        "The recursion is implemented wrong.",
+        "It should use a loop instead of recursion."
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET x TO True<br>SET y TO False<br>PRINT x AND y",
+    options: [
+        "True",
+        "False",
+        "None",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET x TO True<br>SET y TO False<br>PRINT NOT x OR y",
+    options: [
+        "True",
+        "False",
+        "None",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What does this pseudocode do?<br>यह pseudocode क्या करती है?<br>READ n<br>SET sum TO 0<br>SET i TO 1<br>WHILE i <= n<br>  SET sum TO sum + i<br>  SET i TO i + 1<br>END WHILE<br>PRINT sum",
+    options: [
+        "Calculates the average of first n natural numbers",
+        "Calculates the sum of first n natural numbers",
+        "Calculates the factorial of n",
+        "Prints the numbers from 1 to n"
+    ],
+    answer: 1
+},
+{
+    question: "What is the time complexity of the above summation algorithm?<br>उपरोक्त summation algorithm की time complexity क्या है?",
+    options: [
+        "O(1) - Constant Time",
+        "O(log n) - Logarithmic Time",
+        "O(n) - Linear Time",
+        "O(n²) - Quadratic Time"
+    ],
+    answer: 2
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>SET numbers TO [1, 2, 3, 4, 5]<br>SET total TO 0<br>FOR EACH num IN numbers<br>  total += num<br>END FOR<br>PRINT total / LENGTH(numbers)",
+    options: [
+        "15",
+        "3",
+        "5",
+        "1.5"
+    ],
+    answer: 1
+},
+{
+    question: "What does the above pseudocode calculate?<br>उपरोक्त pseudocode क्या calculate करती है?",
+    options: [
+        "Sum of the list",
+        "Length of the list",
+        "Average of the list",
+        "Maximum value in the list"
+    ],
+    answer: 2
+},
+{
+    question: "What is the error in this pseudocode for checking a palindrome string?<br>Palindrome string check करने वाली इस pseudocode में error क्या है?<br>SET str TO 'radar'<br>SET rev TO ''<br>FOR i FROM 0 TO LENGTH(str)-1<br>  rev = str[i] + rev<br>END FOR<br>IF str == rev THEN<br>  PRINT 'Palindrome'<br>ELSE<br>  PRINT 'Not Palindrome'<br>END IF",
+    options: [
+        "The FOR loop runs in the wrong direction.",
+        "It will always print 'Not Palindrome'.",
+        "The string 'radar' is not a palindrome.",
+        "There is no error; it will work correctly."
+    ],
+    answer: 3
+},
+{
+    question: "What is the purpose of a trace table?<br>Trace table का purpose क्या है?",
+    options: [
+        "To store data in a tabular format.",
+        "To track the values of variables step-by-step to debug logic.",
+        "To draw a flowchart.",
+        "To define the structure of a database."
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET a TO [1, 2, 3]<br>SET b TO a<br>SET b[0] TO 99<br>PRINT a[0]",
+    options: [
+        "1",
+        "99",
+        "0",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What concept does the above code demonstrate?<br>उपरोक्त code कौन सा concept demonstrate करता है?",
+    options: [
+        "Copying an array by value",
+        "Copying an array by reference (both variables point to the same data)",
+        "Nested arrays",
+        "Array indexing"
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>PRINT INT(7.9)",
+    options: [
+        "7",
+        "8",
+        "7.9",
+        "7.0"
+    ],
+    answer: 0
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>PRINT ROUND(7.5)",
+    options: [
+        "7",
+        "8",
+        "7.5",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>SET x TO 10<br>FUNCTION change()<br>  SET x TO 20<br>END FUNCTION<br>change()<br>PRINT x",
+    options: [
+        "10",
+        "20",
+        "0",
+        "Error (x is undefined)"
+    ],
+    answer: 1
+},
+{
+    question: "What scope does the variable 'x' have in the previous question?<br>पिछले question में variable 'x' का scope क्या है?",
+    options: [
+        "Local scope",
+        "Global scope",
+        "Block scope",
+        "Function scope"
+    ],
+    answer: 1
+},
+{
+    question: "What is the error in this pseudocode?<br>इस pseudocode में error क्या है?<br>FUNCTION multiply(a, b)<br>  product = a * b<br>  RETURN product<br>END FUNCTION<br>PRINT multiply(5)",
+    options: [
+        "The function is called with one argument but expects two.",
+        "The variable 'product' is not declared with SET.",
+        "The RETURN statement is missing.",
+        "The function name is misspelled in the call."
+    ],
+    answer: 0
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>PRINT FLOOR(8.1)",
+    options: [
+        "8",
+        "9",
+        "8.1",
+        "8.0"
+    ],
+    answer: 0
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>PRINT CEIL(8.1)",
+    options: [
+        "8",
+        "9",
+        "8.1",
+        "8.0"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>SET counter TO 1<br>REPEAT<br>  PRINT counter<br>  INCREMENT counter BY 1<br>UNTIL counter > 3",
+    options: [
+        "1",
+        "1 2",
+        "1 2 3",
+        "1 2 3 4"
+    ],
+    answer: 2
+},
+{
+    question: "What is the key difference between a REPEAT-UNTIL and a WHILE loop?<br>REPEAT-UNTIL और WHILE loop में key difference क्या है?",
+    options: [
+        "A REPEAT-UNTIL loop always runs at least once, a WHILE loop may not.",
+        "A WHILE loop always runs at least once, a REPEAT-UNTIL may not.",
+        "There is no difference.",
+        "REPEAT-UNTIL is faster."
+    ],
+    answer: 0
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET list TO [10, 20, 30]<br>APPEND 40 TO list<br>PRINT list[3]",
+    options: [
+        "30",
+        "40",
+        "Error (Index out of bounds)",
+        "10"
+    ],
+    answer: 1
+},
+{
+    question: "What does the 'APPEND' operation do?<br>'APPEND' operation क्या करता है?",
+    options: [
+        "Adds an element to the beginning of a list",
+        "Adds an element to the end of a list",
+        "Removes an element from a list",
+        "Sorts the list"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>SET s TO 'Hello World'<br>PRINT SUBSTRING(s, 6, 5)",
+    options: [
+        "World",
+        "Hello",
+        " Worl",
+        "Error"
+    ],
+    answer: 0
+},
+{
+    question: "What does the SUBSTRING function do?<br>SUBSTRING function क्या करती है?",
+    options: [
+        "Finds the length of a string",
+        "Converts a string to uppercase",
+        "Extracts a part of a string based on start index and length",
+        "Splits a string into words"
+    ],
+    answer: 2
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>PRINT '5' + 2",
+    options: [
+        "7",
+        "52",
+        "Error",
+        "'7'"
+    ],
+    answer: 1
+},
+{
+    question: "What concept does the above code demonstrate?<br>उपरोक्त code कौन सा concept demonstrate करता है?",
+    options: [
+        "Type conversion (coercion) to string",
+        "Arithmetic addition",
+        "String manipulation",
+        "Logical operation"
+    ],
+    answer: 0
+},
+{
+    question: "What is the error in this pseudocode?<br>इस pseudocode में error क्या है?<br>SET number TO 5<br>SWITCH number<br>  CASE 1: PRINT 'One'<br>  CASE 5: PRINT 'Five'<br>END SWITCH",
+    options: [
+        "Missing BREAK statements after each CASE.",
+        "The SWITCH syntax is wrong; it should be IF-ELSE.",
+        "There is no DEFAULT case.",
+        "There is no error; it will print 'Five'."
+    ],
+    answer: 3
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET x TO 0<br>IF x >= 0:<br>  PRINT 'Non-negative'<br>ELSE:<br>  PRINT 'Negative'<br>END IF",
+    options: [
+        "Non-negative",
+        "Negative",
+        "0",
+        "Error"
+    ],
+    answer: 0
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET i TO 0<br>WHILE i < 3<br>  i += 1<br>END WHILE<br>PRINT i",
+    options: [
+        "0",
+        "1",
+        "2",
+        "3"
+    ],
+    answer: 3
+},
+{
+    question: "What is the final value of 'i' in the previous question?<br>पिछले question में 'i' की final value क्या है?",
+    options: [
+        "0",
+        "1",
+        "2",
+        "3"
+    ],
+    answer: 3
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>PRINT 2 ** 3",
+    options: [
+        "6",
+        "8",
+        "23",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What does the '**' operator typically represent?<br>'**' operator typically क्या represent करता है?",
+    options: [
+        "Multiplication",
+        "Exponentiation (to the power of)",
+        "Addition",
+        "Comment"
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET result TO 10<br>result += 5<br>PRINT result",
+    options: [
+        "10",
+        "15",
+        "105",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What does the '+=' operator do?<br>'+=' operator क्या करता है?",
+    options: [
+        "Compares two values",
+        "Adds the right operand to the left operand and assigns the result to the left operand.",
+        "Concatenates two strings",
+        "Checks for equality"
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET arr TO [ [1, 2], [3, 4] ]<br>PRINT arr[1][0]",
+    options: [
+        "1",
+        "2",
+        "3",
+        "4"
+    ],
+    answer: 2
+},
+{
+    question: "What is the data structure 'arr' in the previous question?<br>पििछले question में data structure 'arr' क्या है?",
+    options: [
+        "A one-dimensional array",
+        "A two-dimensional array (matrix)",
+        "A string",
+        "A list of strings"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>PRINT RANDOM(1, 10) > 5",
+    options: [
+        "A number between 1 and 10",
+        "True or False",
+        "5",
+        "Error"
+    ],
+    answer: 1
+},
+{
+    question: "What is the purpose of the RANDOM function?<br>RANDOM function का purpose क्या है?",
+    options: [
+        "To generate a random number within a specified range",
+        "To round a number",
+        "To sort a list randomly",
+        "To select a random element from a list"
+    ],
+    answer: 0
+},
+{
+    question: "What is the error in this pseudocode?<br>इस pseudocode में error क्या है?<br>PRINT 'The answer is ' + 42",
+    options: [
+        "It will work correctly in all languages.",
+        "It may cause an error because of mixing string and number without conversion.",
+        "The quotes are missing.",
+        "The '+' operator is used for numbers, not strings."
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET dict TO {'name': 'Alice', 'age': 25}<br>PRINT dict['age']",
+    options: [
+        "name",
+        "Alice",
+        "25",
+        "Error"
+    ],
+    answer: 2
+},
+{
+    question: "What is the data structure 'dict' called?<br>Data structure 'dict' को क्या कहते हैं?",
+    options: [
+        "Array",
+        "List",
+        "Dictionary (key-value pairs)",
+        "Set"
+    ],
+    answer: 2
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>SET x TO NULL<br>IF x IS NULL THEN<br>  PRINT 'Empty'<br>ELSE<br>  PRINT 'Full'<br>END IF",
+    options: [
+        "Empty",
+        "Full",
+        "NULL",
+        "Error"
+    ],
+    answer: 0
+},
+{
+    question: "What does NULL represent?<br>NULL क्या represent करता है?",
+    options: [
+        "The number zero",
+        "An empty string",
+        "The absence of a value",
+        "A boolean value"
+    ],
+    answer: 2
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET numbers TO [5, 2, 8, 1]<br>SORT numbers<br>PRINT numbers[0]",
+    options: [
+        "5",
+        "1",
+        "8",
+        "2"
+    ],
+    answer: 1
+},
+{
+    question: "What does the SORT function do by default?<br>SORT function by default क्या करती है?",
+    options: [
+        "Sorts the list in descending order",
+        "Sorts the list in ascending order",
+        "Reverses the list",
+        "Shuffles the list randomly"
+    ],
+    answer: 1
+},
+{
+    question: "What will this pseudocode print?<br>यह pseudocode क्या print करेगी?<br>FUNCTION changeValue(num)<br>  num = num + 10<br>  RETURN num<br>END FUNCTION<br>SET value TO 5<br>changeValue(value)<br>PRINT value",
+    options: [
+        "5",
+        "15",
+        "10",
+        "Error"
+    ],
+    answer: 0
+},
+{
+    question: "What concept does the above code demonstrate?<br>उपरोक्त code कौन सा concept demonstrate करता है?",
+    options: [
+        "Call by reference (the original variable is modified)",
+        "Call by value (a copy of the value is passed, original is unchanged)",
+        "Global variable modification",
+        "Recursive function call"
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>PRINT LENGTH('OpenAI')",
+    options: [
+        "OpenAI",
+        "6",
+        "5",
+        "O"
+    ],
+    answer: 1
+},
+{
+    question: "What is the purpose of the LENGTH function?<br>LENGTH function का purpose क्या है?",
+    options: [
+        "To find the width of a string on screen",
+        "To return the number of characters in a string or elements in a list",
+        "To calculate the size of a number",
+        "To measure the memory usage"
+    ],
+    answer: 1
+},
+{
+    question: "What is the error in this pseudocode for a simple calculator?<br>Simple calculator की इस pseudocode में error क्या है?<br>READ num1, operator, num2<br>IF operator == '+' THEN<br>  result = num1 + num2<br>ELSE IF operator == '-' THEN<br>  result = num1 - num2<br>END IF<br>PRINT result",
+    options: [
+        "It does not handle multiplication or division.",
+        "The variable 'result' might be used before it is assigned if the operator is invalid.",
+        "The READ statement is incorrect.",
+        "The IF-ELSE syntax is wrong."
+    ],
+    answer: 1
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET flag TO True<br>PRINT INT(flag)",
+    options: [
+        "1",
+        "0",
+        "True",
+        "Error"
+    ],
+    answer: 0
+},
+{
+    question: "What is the output of this pseudocode?<br>इस pseudocode का output क्या है?<br>SET text TO 'Level'<br>IF text == REVERSE(text) THEN<br>  PRINT 'Palindrome'<br>ELSE<br>  PRINT 'Not Palindrome'<br>END IF",
+    options: [
+        "Palindrome",
+        "Not Palindrome",
+        "Level",
+        "Error (REVERSE function not defined)"
+    ],
+    answer: 0
+}
+
+	   
+	   
+	   
+	   
     ];
 }
 
@@ -1007,8 +1912,8 @@ function startTest() {
     document.getElementById('nameModal').classList.remove('show');
     document.body.classList.remove('modal-open');
     
-    // Load questions directly
-    questions = generateQuestions();
+    // Load and shuffle questions
+    questions = shuffleQuestions(generateQuestions());
     userAnswers = Array(questions.length).fill(null);
     
     // Render question numbers
@@ -1030,7 +1935,7 @@ function startTest() {
 
 function startTimer() {
     clearInterval(timerInterval);
-    timeLeft = 40 * 60;
+    timeLeft = 60 * 60; // 60 minutes
     updateTimerDisplay();
     
     timerInterval = setInterval(function() {
@@ -1069,7 +1974,7 @@ function renderQuestion(index) {
     const optionsElement = document.getElementById("options");
 
     const question = questions[index];
-    questionElement.textContent = (index + 1) + '. ' + question.question;
+    questionElement.innerHTML = (index + 1) + '. ' + question.question;
 
     optionsElement.innerHTML = "";
     question.options.forEach(function(option, i) {
@@ -1196,7 +2101,7 @@ function showResults() {
         <h2>Hello ${userName}, Your Test Results</h2>
         ${congratsMessage ? '<div class="congrats-banner">' + congratsMessage + '</div>' : ''}
         <div class="result-summary">
-            <p><i class="fas fa-file-alt"></i> <strong>Test Name:</strong> ${testName}</p>
+            <p><i class="fas fa-file-alt"></i> <strong>Test Name:</strong> Programming and Problem Solving Through Python Language : M3</p>
             <p><i class="fas fa-pencil-alt"></i> <strong>Total Questions:</strong> ${questions.length}</p>
             <p><i class="fas fa-check-circle"></i> <strong>Attempted:</strong> ${attemptedCount}</p>
             <p class="correct"><i class="fas fa-check-circle"></i> <strong>Correct Answers:</strong> ${correctCount}</p>
@@ -1291,7 +2196,7 @@ async function downloadQuestionsPDF() {
                 }
             </style>
             <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e0e0e0;">
-                <h1 style="font-size: 22px; font-weight: 700; color: #2E7D32;">Programming and Problem Solving Through Python Language <strong>: M3</strong></h1>
+                <h1 style="font-size: 22px; font-weight: 700; color: #gray;">Programming and Problem Solving Through Python Language : M3</h1>
                 <h1 style="font-size: 42px; font-weight: 700; color: #2E7D32;">ASIT Institute</h1>
                 <p style="font-size: 18px; font-weight: 700;">Gauhania, Panwari Road, Near GSN Inter College</p>
                 <p style="font-size: 12px; font-weight: 700; margin-bottom: 8px;">Jasra, Allahabad, India 212107, Uttar Pradesh</p>
@@ -1302,7 +2207,7 @@ async function downloadQuestionsPDF() {
                         <p><strong>Date:</strong> ${now.toLocaleDateString()}</p>
                     </div>
                     <div style="text-align: right;">
-                        <p><strong>Test by:</strong>Er. Divyanshu Sir</p>
+                        <p><strong>Test by:</strong><font color="red">Er. Divyanshu Sir</font></p>
                         <p><strong>Contact:</strong> +91 9532595992</p>
                     </div>
                 </div>
@@ -1445,7 +2350,6 @@ async function downloadQuestionsPDF() {
         alert("Error generating PDF. Please try again.");
     }
 }
-
 
 function shareOnWhatsApp() {
     let correctCount = 0;
