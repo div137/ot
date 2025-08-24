@@ -780,15 +780,13 @@
         </div>
     </div>
 <script>
-
-
 // Global variables
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let questions = [];
 let userName = "";
 let timerInterval;
-let timeLeft = 40 * 60;
+let timeLeft = 60 * 60; // Changed to 60 minutes
 let testStarted = false;
 const testName = "General Knowledge Test";
 
@@ -802,7 +800,7 @@ function shuffleArray(array) {
 }
 
 function shuffleQuestions(questionsArray) {
-    // Only shuffle the array of questions, not the options inside each question
+    // First shuffle the questions array
     const shuffledQuestions = [...questionsArray];
     
     // Fisher-Yates shuffle algorithm for the questions array
@@ -811,17 +809,30 @@ function shuffleQuestions(questionsArray) {
         [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
     }
     
+    // Then shuffle options within each question
+    shuffledQuestions.forEach(question => {
+        // Store the correct answer index
+        const correctAnswer = question.options[question.answer];
+        
+        // Shuffle the options array
+        shuffleArray(question.options);
+        
+        // Find the new index of the correct answer
+        question.answer = question.options.indexOf(correctAnswer);
+    });
+    
     return shuffledQuestions;
 }
-
-// Usage example:
-// const myShuffledQuestions = shuffleQuestions(questionsArray);
 
 // Generate sample questions with Hindi text
 function generateQuestions() {
     return [
-		
-
+        
+		    
+			
+			
+			
+			
 {
     question: "What does URL stand for? / URL का फुल फॉर्म क्या है?",
     options: [
@@ -1828,8 +1839,9 @@ function generateQuestions() {
     answer: 0
 }
 
-		
-
+			
+			
+			
     ];
 }
 
@@ -1846,8 +1858,8 @@ function startTest() {
     document.getElementById('nameModal').classList.remove('show');
     document.body.classList.remove('modal-open');
     
-    // Load questions directly
-    questions = generateQuestions();
+    // Load and shuffle questions
+    questions = shuffleQuestions(generateQuestions());
     userAnswers = Array(questions.length).fill(null);
     
     // Render question numbers
@@ -1869,7 +1881,7 @@ function startTest() {
 
 function startTimer() {
     clearInterval(timerInterval);
-    timeLeft = 40 * 60;
+    timeLeft = 60 * 60; // 60 minutes
     updateTimerDisplay();
     
     timerInterval = setInterval(function() {
@@ -2284,7 +2296,6 @@ async function downloadQuestionsPDF() {
         alert("Error generating PDF. Please try again.");
     }
 }
-
 
 function shareOnWhatsApp() {
     let correctCount = 0;
